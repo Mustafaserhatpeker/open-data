@@ -17,9 +17,9 @@ function Footer() {
             <h2 className="text-lg font-bold mb-2">Klinik Hakkında</h2>
             <ul className="text-sm text-gray-500 space-y-2">
               <li>Hakkımızda</li>
-              <li>Uzman Kadromuz</li>
+              <li>Kocaeli Belediyesi</li>
               <li>Hizmetlerimiz</li>
-              <li>Blog & Bilgilendirme</li>
+              <li>Kurumsal</li>
             </ul>
           </div>
 
@@ -30,7 +30,7 @@ function Footer() {
                 <Phone size={16} /> +90 212 000 00 00
               </li>
               <li className="flex items-center gap-2">
-                <Mail size={16} /> info@klinikadiniz.com
+                <Mail size={16} /> info@kocaeli.bel.tr.com
               </li>
               <li className="flex items-start gap-2">
                 <MapPin size={16} /> İstanbul, Türkiye
