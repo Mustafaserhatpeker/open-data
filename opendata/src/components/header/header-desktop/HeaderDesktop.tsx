@@ -4,14 +4,14 @@ import { FaWhatsapp } from "react-icons/fa";
 import NavigationMenu from "../inner-components/NavigationMenu";
 import Logo from "@/assets/logo.png";
 import Logo2 from "@/assets/logo2.png";
-import Switch from "@/components/theme-switch/Switch";
+// import Switch from "@/components/theme-switch/Switch";
 import { Button } from "@/components/ui/button";
 import { useThemeContext } from "@/contexts/ThemeContext";
 
 function Header() {
   const { theme } = useThemeContext();
   return (
-    <div className="w-full flex flex-row justify-between  py-4  px-8 ">
+    <div className="w-full flex flex-row justify-between bg-[#D5C6FF]  py-4  px-8 ">
       <div className="text-lg font-bold">
         <img
           src={theme === "dark" ? Logo2 : Logo}
@@ -21,7 +21,7 @@ function Header() {
       </div>
       <NavigationMenu />
       <div className=" flex flex-row items-center justify-end">
-        <div className="flex flex-row items-center gap-2 pr-4 border-r-1 border-gray-800">
+        <div className="flex flex-row items-center gap-2 pr-4  border-gray-800">
           <Button variant="ghost">
             <Instagram />
           </Button>
@@ -34,9 +34,9 @@ function Header() {
         </div>
 
 
-        <div className="flex flex-row items-center gap-2 ml-4">
+        {/* <div className="flex flex-row items-center gap-2 ml-4">
           <Switch />
-        </div>
+        </div> */}
       </div>
     </div>
   );
