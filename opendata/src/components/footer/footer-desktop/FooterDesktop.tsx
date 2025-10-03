@@ -1,11 +1,16 @@
-import { Facebook, Instagram, Mail, Phone, MapPin } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Mail, Phone, MapPin } from "lucide-react";
+import Logo2 from "@/assets/logo2.png";
 
 function Footer() {
   return (
-    <div className="w-full flex flex-col md:flex-row p-6 border-t  bg-accent">
-      {/* Sol taraf: Bilgiler */}
+    <div className="w-full flex flex-col md:flex-row p-6 border-t px-12  bg-accent">
+
+      <div className="w-full md:w-1/3 flex flex-col items-start justify-start p-4 space-y-4 mt-6 md:mt-0">
+        <img className="h-32" src={Logo2} alt="" />
+        <span className="text-xs text-gray-400">
+          © 2025 Kocaeli Açık Veri Portalı. Tüm hakları saklıdır.
+        </span>
+      </div>
       <div className="w-full md:w-2/3 flex flex-col items-start justify-start p-4 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
           <div className="flex flex-col">
@@ -43,30 +48,11 @@ function Footer() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 mt-4">
-          <Instagram size={20} className="text-gray-500 cursor-pointer" />
-          <Facebook size={20} className="text-gray-500 cursor-pointer" />
-        </div>
 
-        <span className="text-xs text-gray-400">
-          © 2025 Klinik Adınız. Tüm hakları saklıdır.
-        </span>
       </div>
 
-      {/* Sağ taraf: Randevu Formu */}
-      <div className="w-full md:w-1/3 flex flex-col items-start justify-start p-4 space-y-4 mt-6 md:mt-0">
-        <h2 className="text-lg font-bold mb-2">Randevu Talep Formu</h2>
-        <Input type="text" placeholder="Ad Soyad" />
-        <Input type="email" placeholder="E-posta" />
-        <Input type="tel" placeholder="Telefon Numarası" />
-        {/* İsteğe bağlı mesaj alanı eklenebilir */}
-        {/* <Textarea placeholder="Mesajınız" /> */}
-        <Button className="w-full">Randevu Talebi Gönder</Button>
-        <p className="text-xs text-gray-400 mt-1">
-          Gönderdiğiniz bilgiler yalnızca randevu oluşturma amacıyla
-          kullanılacaktır.
-        </p>
-      </div>
+
+
     </div>
   );
 }
