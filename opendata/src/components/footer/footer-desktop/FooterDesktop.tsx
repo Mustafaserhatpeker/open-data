@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 function Footer() {
   return (
-    <div className="w-full flex flex-col md:flex-row p-6 border-t mt-12 bg-accent">
+    <div className="w-full flex flex-col md:flex-row p-6 border-t  bg-accent">
       {/* Sol taraf: Bilgiler */}
       <div className="w-full md:w-2/3 flex flex-col items-start justify-start p-4 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">

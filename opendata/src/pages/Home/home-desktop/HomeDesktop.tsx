@@ -4,6 +4,7 @@ import CardSwap, { Card } from '@/components/CardSwap';
 import photo1 from '@/assets/photo1.png';
 import photo2 from '@/assets/photo2.png';
 import photo3 from '@/assets/photo3.png';
+import LabelGrid from "./components/LabelGrid";
 function HomeDesktop() {
   return (
     <div className="flex flex-col items-center justify-start bg-[#6B61F1]">
@@ -41,6 +42,7 @@ function HomeDesktop() {
           </Card>
         </CardSwap>
       </div>
+      <LabelGrid />
 
     </div>
   );

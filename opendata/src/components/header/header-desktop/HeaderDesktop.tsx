@@ -3,7 +3,6 @@ import { FaWhatsapp } from "react-icons/fa";
 
 import NavigationMenu from "../inner-components/NavigationMenu";
 import Logo from "@/assets/logo.png";
-import Logo2 from "@/assets/logo2.png";
 // import Switch from "@/components/theme-switch/Switch";
 import { Button } from "@/components/ui/button";
 import { useThemeContext } from "@/contexts/ThemeContext";
@@ -14,7 +13,7 @@ function Header() {
     <div className="w-full flex flex-row justify-between bg-[#D5C6FF]  py-4  px-8 ">
       <div className="text-lg font-bold">
         <img
-          src={theme === "dark" ? Logo2 : Logo}
+          src={theme === "dark" ? Logo : Logo}
           alt="Logo"
           className="h-16  inline-block "
         />
