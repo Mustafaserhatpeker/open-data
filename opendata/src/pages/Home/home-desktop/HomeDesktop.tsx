@@ -8,7 +8,10 @@ function HomeDesktop() {
       <Welcome />
       <IntroductionArea />
 
-      <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex place-items-start mb-32">
+      <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex flex-row  items-center justify-around mb-32">
+        <h1 className="text-6xl font-bold text-white  absolute top-1/2 left-1/3 transform -translate-x-1/2">
+          Aradığınız Veri Setini Bulun.<br /> Bulamadınız mı? İsteyin!
+        </h1>
         <CardSwap
           cardDistance={60}
           verticalDistance={70}
