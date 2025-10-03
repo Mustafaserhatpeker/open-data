@@ -38,7 +38,7 @@ function Welcome() {
         </Button>
       </div>
 
-      <img className="w-full mt-24" src={Background} alt="" />
+      <img className="w-[100vw] mt-24" src={Background} alt="" />
 
     </div>
   );
