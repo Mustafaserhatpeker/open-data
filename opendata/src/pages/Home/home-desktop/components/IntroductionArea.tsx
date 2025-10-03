@@ -1,29 +1,8 @@
-function IntroductionArea({
-  header,
-  description,
-  img,
-}: {
-  header?: string;
-  description?: string;
-  img?: any;
-}) {
+function IntroductionArea() {
   return (
-    <div className="w-full flex flex-row items-start justify-between pt-4 border-t ">
-      <div className="w-1/2 flex flex-col gap-4">
-        <span className="text-3xl font-semibold">
-          {header || "No Header Provided"}
-        </span>
-        <span className="text-md text-muted-foreground">
-          {description || `No Description Provided`}
-        </span>
-      </div>
-      <div className="w-1/2 flex justify-end">
-        <img
-          src={img}
-          alt="Fizyoterapi"
-          className="object-cover w-2/3 h-auto aspect-square rounded"
-        />
-      </div>
+    <div className="w-full flex flex-col items-center justify-center pt-16 border-t bg-[#6A60F2] text-white space-y-8 ">
+      <span className=" text-2xl">Size Neler Sunuyoruz</span>
+      <span className="text-6xl font-bold max-w-7xl text-center">İstediğiniz Verileri Hızla Bulun ve İşinizi Kolaylaştırın</span>
     </div>
   );
 }
