@@ -155,15 +155,22 @@ export default function DataDialog({ dataset }: { dataset?: Dataset }) {
     const { Icon, color, accent, label } = meta
 
     return (
-        <Dialog>
+
+        <Dialog >
             <DialogTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <Eye className="h-4 w-4" />
                     <span className="sr-only">Veri detayını aç</span>
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-xl max-h-[80vh] overflow-y-auto">
+
+            <DialogContent onClick={(e) => e.stopPropagation()}
+                className="sm:max-w-xl max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <div className="flex items-start gap-3">
                         <div
@@ -256,5 +263,7 @@ export default function DataDialog({ dataset }: { dataset?: Dataset }) {
                 </div>
             </DialogContent>
         </Dialog>
+
+
     )
 }
