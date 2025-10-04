@@ -38,7 +38,43 @@ function Welcome() {
         </Button>
       </div>
 
-      <img className="w-[100vw] mt-24" src={Background} alt="" />
+      <div className="relative w-full mt-24">
+        <img className="w-[100vw]" src={Background} alt="" />
+
+        {/* Örnek buton */}
+        <Button
+          className="absolute top-10 left-72 w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+        >
+
+        </Button>
+
+        <Button
+          className="absolute top-58 left-2/7  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+        >
+
+        </Button>
+        <Button
+          className="absolute top-50 right-1/3  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+        >
+
+        </Button>
+        <Button
+          className="absolute top-92 left-2/5  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+        >
+
+        </Button>
+        <Button
+          className="absolute bottom-12 left-1/2  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+        >
+
+        </Button>
+        <Button
+          className="absolute bottom-64 right-1/3  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+        >
+
+        </Button>
+      </div>
+
 
     </div>
   );
