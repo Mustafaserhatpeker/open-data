@@ -3,147 +3,79 @@ import { Button } from "@/components/ui/button";
 import Background from "@/assets/background.svg";
 import { MousePointerClick } from "lucide-react";
 import { HomeTooltip } from "./inner-components/HomeTooltip";
-import { useEffect, useMemo, useState } from "react";
-
 function Welcome() {
-  // Tooltip içeriği (değişmedi)
-  const tooltips = useMemo(
-    () => [
-      {
-        id: 1,
-        content: (
-          <div className="flex flex-col items-start justify-between">
-            <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
-            <p className="text-start font-bold text-lg">
-              Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili
-              çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi,
-              su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında
-              detaylı bilgiler sunar.
-            </p>
-          </div>
-        ),
-        clasName:
-          "absolute top-10 left-72 w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full",
-      },
-      {
-        id: 2,
-        content: (
-          <div className="flex flex-col items-start justify-between">
-            <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
-            <p className="text-start font-bold text-lg">
-              Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili
-              çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi,
-              su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında
-              detaylı bilgiler sunar.
-            </p>
-          </div>
-        ),
-        clasName:
-          "absolute top-58 left-2/7  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full",
-      },
-      {
-        id: 3,
-        content: (
-          <div className="flex flex-col items-start justify-between">
-            <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
-            <p className="text-start font-bold text-lg">
-              Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili
-              çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi,
-              su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında
-              detaylı bilgiler sunar.
-            </p>
-          </div>
-        ),
-        clasName:
-          "absolute top-50 right-1/3  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full",
-      },
-      {
-        id: 4,
-        content: (
-          <div className="flex flex-col items-start justify-between">
-            <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
-            <p className="text-start font-bold text-lg">
-              Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili
-              çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi,
-              su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında
-              detaylı bilgiler sunar.
-            </p>
-          </div>
-        ),
-        clasName:
-          "absolute top-92 left-2/5  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full",
-      },
-      {
-        id: 5,
-        content: (
-          <div className="flex flex-col items-start justify-between">
-            <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
-            <p className="text-start font-bold text-lg">
-              Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili
-              çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi,
-              su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında
-              detaylı bilgiler sunar.
-            </p>
-          </div>
-        ),
-        clasName:
-          "absolute bottom-12 left-1/2  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full",
-      },
-      {
-        id: 6,
-        content: (
-          <div className="flex flex-col items-start justify-between">
-            <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
-            <p className="text-start font-bold text-lg">
-              Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili
-              çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi,
-              su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında
-              detaylı bilgiler sunar.
-            </p>
-          </div>
-        ),
-        clasName:
-          "absolute bottom-64 right-1/3  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full",
-      },
-      {
-        id: 7,
-        content: (
-          <div className="flex flex-col items-start justify-between">
-            <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
-            <p className="text-start font-bold text-lg">
-              Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili
-              çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi,
-              su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında
-              detaylı bilgiler sunar.
-            </p>
-          </div>
-        ),
-        clasName:
-          "absolute bottom-40 right-1/5  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full",
-      },
-    ],
-    []
-  );
+  const tooltips = [
+    {
+      id: 1, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
+        <p className="text-start font-bold text-lg">
+          Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
+        </p>
+      </div>,
+      clasName: "absolute top-10 left-72 w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
 
-  // Otomatik tur kontrolü
-  const [autoPlay, setAutoPlay] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+    },
+    {
+      id: 2, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
+        <p className="text-start font-bold text-lg">
+          Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
+        </p>
+      </div>,
+      clasName: "absolute top-58 left-2/7  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
 
-  // Her baloncuk için açık kalma süresi (ms)
-  const OPEN_DURATION = 2500;
-  // Baloncuklar arası kısa kapanma/transition payı (ms)
-  const GAP_DURATION = 300;
+    },
+    {
+      id: 3, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
+        <p className="text-start font-bold text-lg">
+          Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
+        </p>
+      </div>,
+      clasName: "absolute top-50 right-1/3  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
 
-  useEffect(() => {
-    if (!autoPlay) return;
+    },
+    {
+      id: 4, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
+        <p className="text-start font-bold text-lg">
+          Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
+        </p>
+      </div>,
+      clasName: "absolute top-92 left-2/5  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
 
-    const timer = setTimeout(() => {
-      setCurrentIndex((i) => (i + 1) % tooltips.length);
-    }, OPEN_DURATION + GAP_DURATION);
+    },
+    {
+      id: 5, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
+        <p className="text-start font-bold text-lg">
+          Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
+        </p>
+      </div>,
+      clasName: "absolute bottom-12 left-1/2  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
 
-    return () => clearTimeout(timer);
-  }, [autoPlay, currentIndex, tooltips.length]);
+    },
+    {
+      id: 6, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
+        <p className="text-start font-bold text-lg">
+          Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
+        </p>
+      </div>,
+      clasName: "absolute bottom-64 right-1/3  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
 
+    },
+    {
+      id: 7, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start font-extrabold text-xl">Çevre Verisi</h1>
+        <p className="text-start font-bold text-lg">
+          Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
+        </p>
+      </div>,
+      clasName: "absolute bottom-40 right-1/5  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
+
+    },
+  ];
   return (
     <div
       style={{
@@ -156,7 +88,7 @@ function Welcome() {
         <h1 className="text-sm font-extrabold text-center mb-8 flex items-center gap-2 bg-white/70 px-4 py-2 rounded-full">
           Kocaeli Veri Portalında
           <RotatingText
-            texts={["Veri İsteyin", "Veri Bulun", "Üye Olun", "Giriş Yapın"]}
+            texts={['Veri İsteyin', 'Veri Bulun', 'Üye Olun', 'Giriş Yapın']}
             mainClassName=" text-black overflow-hidden w-24 justify-start mt-1"
             staggerFrom={"last"}
             initial={{ y: "100%" }}
@@ -169,14 +101,11 @@ function Welcome() {
           />
         </h1>
         <h1 className="text-center text-[#221A4C] max-w-7xl px-4 mt-12 font-extrabold text-7xl">
-          Kocaeli Büyükşehir Belediyesi&apos;nin açık veri portalına hoş
-          geldiniz!
+          Kocaeli Büyükşehir Belediyesi&apos;nin açık veri portalına hoş geldiniz!
+
         </h1>
 
-        <Button
-          variant={"outline"}
-          className="mt-16 px-4 py-6 rounded-md bg-[#6558F6] border-none text-accent"
-        >
+        <Button variant={"outline"} className="mt-16 px-4 py-6 rounded-md bg-[#6558F6] border-none text-accent">
           <a href="#datasets" className="text-sm font-semibold">
             Veri Seti Arayın
           </a>
@@ -186,27 +115,18 @@ function Welcome() {
       <div className="relative w-full mt-24">
         <img className="w-[100vw]" src={Background} alt="" />
 
-        {tooltips.map((tooltip, i) => (
+
+        {tooltips.map((tooltip) => (
           <HomeTooltip
             key={tooltip.id}
             className={tooltip.clasName}
             content={tooltip.content}
-            // Otomatik modda sadece aktif olan açık; kullanıcı etkileşime girerse kontrolü bırak
-            open={autoPlay ? i === currentIndex : undefined}
-            onOpenChange={(nextOpen) => {
-              // Kullanıcı başka bir tooltip'i açmaya çalışırsa otomatiği durdur ve o index'e geç
-              if (nextOpen && autoPlay) {
-                setAutoPlay(false);
-                setCurrentIndex(i);
-              }
-            }}
-            onPointerEnter={() => setAutoPlay(false)}
-            onPointerLeave={() => setAutoPlay(true)}
-          >
-            <MousePointerClick />
-          </HomeTooltip>
+            children={<MousePointerClick />}
+          />
         ))}
       </div>
+
+
     </div>
   );
 }
