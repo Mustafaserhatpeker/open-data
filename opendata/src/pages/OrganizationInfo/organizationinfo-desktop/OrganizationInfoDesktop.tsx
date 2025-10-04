@@ -31,7 +31,6 @@ import {
     FolderClosed,
     Globe,
     Mail,
-    Users,
     Hash,
 } from "lucide-react"
 
@@ -213,7 +212,7 @@ export default function OrganizationInfoDesktop() {
                 {/* Two-column layout */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                     {/* Left: Organization info */}
-                    <div className="lg:col-span-4 space-y-6">
+                    <div className="lg:col-span-3 space-y-6">
                         <Card>
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-base">Organizasyon Bilgileri</CardTitle>
@@ -249,7 +248,7 @@ export default function OrganizationInfoDesktop() {
 
                                 <Separator />
 
-                                <div className="grid grid-cols-2 gap-3 text-sm">
+                                <div className="grid grid-cols-1 gap-3 text-sm">
                                     <div className="rounded-md border p-3">
                                         <div className="text-xs uppercase tracking-wide text-muted-foreground">Veri Setleri</div>
                                         <div className="mt-1 inline-flex items-center gap-2">
@@ -257,13 +256,7 @@ export default function OrganizationInfoDesktop() {
                                             <span className="font-medium">{orgDatasets.length}</span>
                                         </div>
                                     </div>
-                                    <div className="rounded-md border p-3">
-                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">Takipçi</div>
-                                        <div className="mt-1 inline-flex items-center gap-2">
-                                            <Users className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">{org.followersCount ?? 0}</span>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                                 <Separator />
@@ -290,7 +283,7 @@ export default function OrganizationInfoDesktop() {
                     </div>
 
                     {/* Right: Organization datasets */}
-                    <div className="lg:col-span-8 space-y-6">
+                    <div className="lg:col-span-9 space-y-6">
                         <Card>
                             <CardHeader className="pb-3">
                                 <div className="flex items-center justify-between gap-3">
