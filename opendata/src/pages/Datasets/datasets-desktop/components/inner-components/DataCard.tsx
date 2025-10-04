@@ -25,7 +25,9 @@ import {
     FolderClosed,
     Tags,
     CircleHelp,
+
 } from "lucide-react"
+import DataDialog from "./DataDialog"
 
 type DataType =
     | "XLSX"
@@ -123,7 +125,7 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
 
     return (
         <TooltipProvider delayDuration={200}>
-            <Card className="flex h-full flex-col overflow-hidden border border-border/60 shadow-sm transition-all hover:shadow-md">
+            <Card className="flex h-full flex-col overflow-hidden border border-border/60 shadow-sm transition-all hover:shadow-md relative">
                 <CardHeader className="space-y-3 pb-3">
                     <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
@@ -184,7 +186,6 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                                 </div>
                             </div>
                         </div>
-
                         <div className="flex items-start gap-2">
                             <Tags className="mt-0.5 h-4 w-4 shrink-0 opacity-80" />
                             <div className="min-w-0">
@@ -205,6 +206,9 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                         </div>
                     </div>
                 </CardContent>
+                <div className="absolute top-3 right-3 flex items-center gap-2 ">
+                    <DataDialog dataset={dataset} />
+                </div>
             </Card>
         </TooltipProvider>
     )
