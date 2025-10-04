@@ -146,7 +146,7 @@ export default function OrganizationInfoDesktop() {
 
     if (loading) {
         return (
-            <div className="container mx-auto px-4 py-8">
+            <div className="w-full bg-accent px-4 py-8">
                 <div className="animate-pulse space-y-4">
                     <div className="h-6 w-28 bg-muted rounded" />
                     <div className="h-10 w-1/2 bg-muted rounded" />
@@ -161,7 +161,7 @@ export default function OrganizationInfoDesktop() {
 
     if (!org) {
         return (
-            <div className="container mx-auto px-4 py-12">
+            <div className="w-full bg-accent px-4 py-12">
                 <div className="mx-auto max-w-xl text-center">
                     <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-muted mb-3">
                         <Building2 className="h-5 w-5 text-muted-foreground" />
@@ -184,166 +184,168 @@ export default function OrganizationInfoDesktop() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-6">
-            {/* Header */}
-            <div className="mb-6 flex items-center justify-between">
-                <Button asChild variant="ghost" className="pl-0">
-                    <Link to="/organizations">
-                        <ArrowLeft className="h-4 w-4 mr-2" />
-                        Geri
-                    </Link>
-                </Button>
+        <div className="w-full bg-accent px-4 py-6">
+            <div className="mx-auto w-full max-w-7xl">
+                {/* Header */}
+                <div className="mb-6 flex items-center justify-between">
+                    <Button asChild variant="ghost" className="pl-0">
+                        <Link to="/organizations">
+                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            Geri
+                        </Link>
+                    </Button>
 
-                <Badge variant="secondary">Toplam veri seti: {orgDatasets.length}</Badge>
-            </div>
-
-            {/* Title */}
-            <div className="mb-6 flex items-start gap-3">
-                <Avatar className="h-12 w-12 rounded-lg">
-                    <AvatarImage src={org.logoUrl} alt={org.name} />
-                    <AvatarFallback className="rounded-lg">{getInitials(org.name)}</AvatarFallback>
-                </Avatar>
-                <div className="min-w-0">
-                    <h1 className="text-2xl font-semibold leading-tight">{org.name}</h1>
-                    <p className="mt-2 text-muted-foreground">{org.description}</p>
-                </div>
-            </div>
-
-            {/* Two-column layout */}
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-                {/* Left: Organization info */}
-                <div className="lg:col-span-4 space-y-6">
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardTitle className="text-base">Organizasyon Bilgileri</CardTitle>
-                            <CardDescription>İletişim ve istatistikler</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                            <div className="grid grid-cols-1 gap-3 text-sm">
-                                <div className="flex items-center gap-2">
-                                    <Building2 className="h-4 w-4 text-muted-foreground" />
-                                    <span className="truncate">{org.name}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Globe className="h-4 w-4 text-muted-foreground" />
-                                    {org.website ? (
-                                        <a href={org.website} target="_blank" rel="noreferrer" className="hover:underline">
-                                            Web sitesi
-                                        </a>
-                                    ) : (
-                                        <span className="text-muted-foreground">Web sitesi yok</span>
-                                    )}
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Mail className="h-4 w-4 text-muted-foreground" />
-                                    {org.contactEmail ? (
-                                        <a href={`mailto:${org.contactEmail}`} className="hover:underline">
-                                            {org.contactEmail}
-                                        </a>
-                                    ) : (
-                                        <span className="text-muted-foreground">İletişim e-postası yok</span>
-                                    )}
-                                </div>
-                            </div>
-
-                            <Separator />
-
-                            <div className="grid grid-cols-2 gap-3 text-sm">
-                                <div className="rounded-md border p-3">
-                                    <div className="text-xs uppercase tracking-wide text-muted-foreground">Veri Setleri</div>
-                                    <div className="mt-1 inline-flex items-center gap-2">
-                                        <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                        <span className="font-medium">{orgDatasets.length}</span>
-                                    </div>
-                                </div>
-                                <div className="rounded-md border p-3">
-                                    <div className="text-xs uppercase tracking-wide text-muted-foreground">Takipçi</div>
-                                    <div className="mt-1 inline-flex items-center gap-2">
-                                        <Users className="h-4 w-4 text-muted-foreground" />
-                                        <span className="font-medium">{org.followersCount ?? 0}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <Separator />
-
-                            <div className="grid grid-cols-1 gap-2 text-sm">
-                                <div className="flex items-center gap-2">
-                                    <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-muted-foreground">Oluşturulma:</span>
-                                    <span className="text-foreground">{formatDate(org.createdAt) ?? "-"}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-muted-foreground">Güncelleme:</span>
-                                    <span className="text-foreground">{formatDate(org.updatedAt) ?? "-"}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Hash className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-muted-foreground">ID:</span>
-                                    <span className="text-foreground">{org.id}</span>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <Badge variant="secondary">Toplam veri seti: {orgDatasets.length}</Badge>
                 </div>
 
-                {/* Right: Organization datasets */}
-                <div className="lg:col-span-8 space-y-6">
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <div className="flex items-center justify-between gap-3">
-                                <div>
-                                    <CardTitle className="text-base">Veri Setleri</CardTitle>
-                                    <CardDescription>Bu organizasyon tarafından yayımlanan veri setleri</CardDescription>
-                                </div>
+                {/* Title */}
+                <div className="mb-6 flex items-start gap-3">
+                    <Avatar className="h-12 w-12 rounded-lg">
+                        <AvatarImage src={org.logoUrl} alt={org.name} />
+                        <AvatarFallback className="rounded-lg">{getInitials(org.name)}</AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0">
+                        <h1 className="text-2xl font-semibold leading-tight">{org.name}</h1>
+                        <p className="mt-2 text-muted-foreground">{org.description}</p>
+                    </div>
+                </div>
 
-                                <Badge variant="secondary">Toplam: {filteredAndSorted.length}</Badge>
-                            </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            {/* Controls */}
-                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                                <div className="sm:col-span-2">
-                                    <Input
-                                        placeholder="Veri setlerinde ara..."
-                                        value={query}
-                                        onChange={(e) => setQuery(e.target.value)}
-                                    />
-                                </div>
-                                <div className="sm:col-span-1">
+                {/* Two-column layout */}
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+                    {/* Left: Organization info */}
+                    <div className="lg:col-span-4 space-y-6">
+                        <Card>
+                            <CardHeader className="pb-3">
+                                <CardTitle className="text-base">Organizasyon Bilgileri</CardTitle>
+                                <CardDescription>İletişim ve istatistikler</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                                <div className="grid grid-cols-1 gap-3 text-sm">
                                     <div className="flex items-center gap-2">
-                                        <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
-                                            Sırala:
-                                        </label>
-                                        <select
-                                            id="sort"
-                                            value={sortBy}
-                                            onChange={(e) => setSortBy(e.target.value as SortKey)}
-                                            className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-                                        >
-                                            <option value="recent">En yeni</option>
-                                            <option value="views">Görüntülenme (çoktan aza)</option>
-                                            <option value="downloads">İndirme (çoktan aza)</option>
-                                            <option value="title">Başlık (A-Z)</option>
-                                        </select>
+                                        <Building2 className="h-4 w-4 text-muted-foreground" />
+                                        <span className="truncate">{org.name}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Globe className="h-4 w-4 text-muted-foreground" />
+                                        {org.website ? (
+                                            <a href={org.website} target="_blank" rel="noreferrer" className="hover:underline">
+                                                Web sitesi
+                                            </a>
+                                        ) : (
+                                            <span className="text-muted-foreground">Web sitesi yok</span>
+                                        )}
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Mail className="h-4 w-4 text-muted-foreground" />
+                                        {org.contactEmail ? (
+                                            <a href={`mailto:${org.contactEmail}`} className="hover:underline">
+                                                {org.contactEmail}
+                                            </a>
+                                        ) : (
+                                            <span className="text-muted-foreground">İletişim e-postası yok</span>
+                                        )}
                                     </div>
                                 </div>
-                            </div>
 
-                            <Separator />
+                                <Separator />
 
-                            {filteredAndSorted.length > 0 ? (
-                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                    {filteredAndSorted.map((d) => (
-                                        <DataCard key={d.id} dataset={toCardDataset(d)} />
-                                    ))}
+                                <div className="grid grid-cols-2 gap-3 text-sm">
+                                    <div className="rounded-md border p-3">
+                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">Veri Setleri</div>
+                                        <div className="mt-1 inline-flex items-center gap-2">
+                                            <FolderClosed className="h-4 w-4 text-muted-foreground" />
+                                            <span className="font-medium">{orgDatasets.length}</span>
+                                        </div>
+                                    </div>
+                                    <div className="rounded-md border p-3">
+                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">Takipçi</div>
+                                        <div className="mt-1 inline-flex items-center gap-2">
+                                            <Users className="h-4 w-4 text-muted-foreground" />
+                                            <span className="font-medium">{org.followersCount ?? 0}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            ) : (
-                                <p className="text-sm text-muted-foreground">Bu kriterlerle eşleşen veri seti bulunamadı.</p>
-                            )}
-                        </CardContent>
-                    </Card>
+
+                                <Separator />
+
+                                <div className="grid grid-cols-1 gap-2 text-sm">
+                                    <div className="flex items-center gap-2">
+                                        <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                        <span className="text-muted-foreground">Oluşturulma:</span>
+                                        <span className="text-foreground">{formatDate(org.createdAt) ?? "-"}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                        <span className="text-muted-foreground">Güncelleme:</span>
+                                        <span className="text-foreground">{formatDate(org.updatedAt) ?? "-"}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Hash className="h-4 w-4 text-muted-foreground" />
+                                        <span className="text-muted-foreground">ID:</span>
+                                        <span className="text-foreground">{org.id}</span>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                    {/* Right: Organization datasets */}
+                    <div className="lg:col-span-8 space-y-6">
+                        <Card>
+                            <CardHeader className="pb-3">
+                                <div className="flex items-center justify-between gap-3">
+                                    <div>
+                                        <CardTitle className="text-base">Veri Setleri</CardTitle>
+                                        <CardDescription>Bu organizasyon tarafından yayımlanan veri setleri</CardDescription>
+                                    </div>
+
+                                    <Badge variant="secondary">Toplam: {filteredAndSorted.length}</Badge>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                {/* Controls */}
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                                    <div className="sm:col-span-2">
+                                        <Input
+                                            placeholder="Veri setlerinde ara..."
+                                            value={query}
+                                            onChange={(e) => setQuery(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="sm:col-span-1">
+                                        <div className="flex items-center gap-2">
+                                            <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
+                                                Sırala:
+                                            </label>
+                                            <select
+                                                id="sort"
+                                                value={sortBy}
+                                                onChange={(e) => setSortBy(e.target.value as SortKey)}
+                                                className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+                                            >
+                                                <option value="recent">En yeni</option>
+                                                <option value="views">Görüntülenme (çoktan aza)</option>
+                                                <option value="downloads">İndirme (çoktan aza)</option>
+                                                <option value="title">Başlık (A-Z)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <Separator />
+
+                                {filteredAndSorted.length > 0 ? (
+                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                        {filteredAndSorted.map((d) => (
+                                            <DataCard key={d.id} dataset={toCardDataset(d)} />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">Bu kriterlerle eşleşen veri seti bulunamadı.</p>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             </div>
         </div>
