@@ -176,7 +176,7 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                         <div className="flex items-start gap-2">
                             <FolderClosed className="mt-0.5 h-4 w-4 shrink-0 opacity-80" />
                             <div className="min-w-0">
-                                <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                <div className="text-xs uppercase tracking-wide text-muted-foreground pb-2">
                                     Kategori
                                 </div>
                                 <div className="truncate text-foreground">
@@ -188,7 +188,7 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                         <div className="flex items-start gap-2">
                             <Tags className="mt-0.5 h-4 w-4 shrink-0 opacity-80" />
                             <div className="min-w-0">
-                                <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                <div className="text-xs uppercase tracking-wide text-muted-foreground pb-2">
                                     Etiketler
                                 </div>
                                 <div className="flex flex-wrap gap-1.5">
