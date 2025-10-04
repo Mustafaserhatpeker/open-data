@@ -1,85 +1,75 @@
 import {
     Accordion,
+    AccordionContent,
     AccordionItem,
     AccordionTrigger,
-    AccordionContent,
-} from '@/components/motion-primitives/accordion';
-import { ChevronUp } from 'lucide-react';
+} from "@/components/ui/accordion"
 
 export default function RightFilter() {
     return (
         <Accordion
-            className='flex w-full flex-col divide-y divide-zinc-200 dark:divide-zinc-700'
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
+            type="multiple"
+            className="w-full"
+            defaultValue={["item-1"]}
         >
-            <AccordionItem value='getting-started' className='py-2'>
-                <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
-                    <div className='flex items-center justify-between'>
-                        <div>Getting Started</div>
-                        <ChevronUp className='h-4 w-4 text-zinc-950 transition-transform duration-200 group-data-expanded:-rotate-180 dark:text-zinc-50' />
-                    </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                    <p className='text-zinc-500 dark:text-zinc-400'>
-                        Discover the fundamental concepts of Motion-Primitives. This section
-                        guides you through the installation process and provides an overview
-                        of how to integrate these components into your projects. Learn about
-                        the core functionalities and how to set up your first animation
-                        effectively.
+            <AccordionItem value="item-1">
+                <AccordionTrigger>Organizasyonlar</AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4 text-balance">
+                    <p>
+                        Our flagship product combines cutting-edge technology with sleek
+                        design. Built with premium materials, it offers unparalleled
+                        performance and reliability.
+                    </p>
+                    <p>
+                        Key features include advanced processing capabilities, and an
+                        intuitive user interface designed for both beginners and experts.
                     </p>
                 </AccordionContent>
             </AccordionItem>
-            <AccordionItem value='animation-properties' className='py-2'>
-                <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
-                    <div className='flex items-center justify-between'>
-                        <div>Animation Properties</div>
-                        <ChevronUp className='h-4 w-4 text-zinc-950 transition-transform duration-200 group-data-expanded:-rotate-180 dark:text-zinc-50' />
-                    </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                    <p className='text-zinc-500 dark:text-zinc-400'>
-                        Explore the comprehensive range of animation properties available in
-                        Motion-Primitives. Understand how to manipulate timing, easing, and
-                        delays to create smooth, dynamic animations. This segment also
-                        covers the customization of animations to fit the flow and style of
-                        your web applications.
+            <AccordionItem value="item-2">
+                <AccordionTrigger>Kategoriler</AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4 text-balance">
+                    <p>
+                        We offer worldwide shipping through trusted courier partners.
+                        Standard delivery takes 3-5 business days, while express shipping
+                        ensures delivery within 1-2 business days.
+                    </p>
+                    <p>
+                        All orders are carefully packaged and fully insured. Track your
+                        shipment in real-time through our dedicated tracking portal.
                     </p>
                 </AccordionContent>
             </AccordionItem>
-            <AccordionItem value='advanced-usage' className='py-2'>
-                <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
-                    <div className='flex items-center justify-between'>
-                        <div>Advanced Usage</div>
-                        <ChevronUp className='h-4 w-4 text-zinc-950 transition-transform duration-200 group-data-expanded:-rotate-180 dark:text-zinc-50' />
-                    </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                    <p className='text-zinc-500 dark:text-zinc-400'>
-                        Dive deeper into advanced techniques and features of
-                        Motion-Primitives. Learn about chaining animations, creating complex
-                        sequences, and utilizing motion sensors for interactive animations.
-                        Gain insights on how to leverage these advanced features to enhance
-                        user experience and engagement.
+            <AccordionItem value="item-3">
+                <AccordionTrigger>Etiketler</AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4 text-balance">
+                    <p>
+                        We stand behind our products with a comprehensive 30-day return
+                        policy. If you&apos;re not completely satisfied, simply return the
+                        item in its original condition.
+                    </p>
+                    <p>
+                        Our hassle-free return process includes free return shipping and
+                        full refunds processed within 48 hours of receiving the returned
+                        item.
                     </p>
                 </AccordionContent>
             </AccordionItem>
-            <AccordionItem value='community-and-support' className='py-2'>
-                <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
-                    <div className='flex items-center justify-between'>
-                        <div>Community and Support</div>
-                        <ChevronUp className='h-4 w-4 text-zinc-950 transition-transform duration-200 group-data-expanded:-rotate-180 dark:text-zinc-50' />
-                    </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                    <p className='text-zinc-500 dark:text-zinc-400'>
-                        Engage with the Motion-Primitives community to gain additional
-                        support and insight. Find out how to participate in discussions,
-                        contribute to the project, and access a wealth of shared knowledge
-                        and resources. Learn about upcoming features, best practices, and
-                        how to get help with your specific use cases.
+            <AccordionItem value="item-4">
+                <AccordionTrigger>Formatlar</AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4 text-balance">
+                    <p>
+                        We stand behind our products with a comprehensive 30-day return
+                        policy. If you&apos;re not completely satisfied, simply return the
+                        item in its original condition.
+                    </p>
+                    <p>
+                        Our hassle-free return process includes free return shipping and
+                        full refunds processed within 48 hours of receiving the returned
+                        item.
                     </p>
                 </AccordionContent>
             </AccordionItem>
         </Accordion>
-    );
+    )
 }
