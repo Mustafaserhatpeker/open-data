@@ -18,25 +18,25 @@ export default function MavigationMenu() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs">Veri Setleri</Link>
+            <Link to="/docs" className="text-[#221A4C]">Veri Setleri</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-          <Link to="/docs">Organizasyonlar</Link>
+          <Link to="/docs" className="text-[#221A4C]">Organizasyonlar</Link>
         </NavigationMenuLink>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs">Veri İsteği</Link>
+            <Link to="/docs" className="text-[#221A4C]">Veri İsteği</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs">Giriş Yap</Link>
+            <Link to="/docs" className="text-[#221A4C]">Giriş Yap</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs">Üye Ol</Link>
+            <Link to="/docs" className="text-[#221A4C]">Üye Ol</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

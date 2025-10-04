@@ -14,7 +14,7 @@ function Footer() {
       <div className="w-full md:w-2/3 flex flex-col items-start justify-start p-4 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
           <div className="flex flex-col">
-            <h2 className="text-lg font-bold mb-2">Klinik Hakkında</h2>
+            <h2 className="text-lg font-bold mb-2 text-[#221A4C]">Klinik Hakkında</h2>
             <ul className="text-sm text-gray-500 space-y-2">
               <li>Hakkımızda</li>
               <li>Kocaeli Belediyesi</li>
@@ -24,7 +24,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col">
-            <h2 className="text-lg font-bold mb-2">İletişim</h2>
+            <h2 className="text-lg font-bold mb-2 text-[#221A4C]">İletişim</h2>
             <ul className="text-sm text-gray-500 space-y-2">
               <li className="flex items-center gap-2">
                 <Phone size={16} /> +90 212 000 00 00
@@ -39,7 +39,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col">
-            <h2 className="text-lg font-bold mb-2">Çalışma Saatleri</h2>
+            <h2 className="text-lg font-bold mb-2 text-[#221A4C]">Çalışma Saatleri</h2>
             <ul className="text-sm text-gray-500 space-y-1">
               <li>Pazartesi - Cuma: 09:00 - 18:00</li>
               <li>Cumartesi: 10:00 - 14:00</li>
