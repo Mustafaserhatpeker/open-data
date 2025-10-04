@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 
 type HomeTooltipProps = {
     className?: string;
-    content?: string;
+    content?: ReactNode;
     children?: ReactNode;
 };
 export function HomeTooltip({ className, content, children }: HomeTooltipProps
@@ -20,7 +20,7 @@ export function HomeTooltip({ className, content, children }: HomeTooltipProps
                     {children}
                 </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="max-w-xs">
                 {content}
             </TooltipContent>
         </Tooltip>
