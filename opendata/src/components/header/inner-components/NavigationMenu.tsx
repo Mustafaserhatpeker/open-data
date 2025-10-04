@@ -18,7 +18,7 @@ export default function MavigationMenu() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs" className="text-[#221A4C]">Veri Setleri</Link>
+            <Link to="/datasets" className="text-[#221A4C]">Veri Setleri</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>

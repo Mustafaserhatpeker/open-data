@@ -10,8 +10,10 @@ import { useThemeContext } from "@/contexts/ThemeContext";
 function Header() {
   const { theme } = useThemeContext();
   return (
-    <div className="w-full flex flex-row justify-between   py-4  px-8 ">
-      <div className="text-lg font-bold">
+    <div className="w-full flex flex-row justify-between cursor-pointer py-4  px-8 ">
+      <div onClick={
+        () => { window.location.href = "/" }
+      } className="text-lg font-bold">
         <img
           src={theme === "dark" ? Logo : Logo}
           alt="Logo"

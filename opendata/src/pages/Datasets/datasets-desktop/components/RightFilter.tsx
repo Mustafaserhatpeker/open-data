@@ -12,7 +12,6 @@ export default function RightFilter() {
         <Accordion
             type="multiple"
             className="w-full"
-            defaultValue={["item-1"]}
         >
             <AccordionItem value="item-1">
                 <AccordionTrigger>Organizasyonlar</AccordionTrigger>
