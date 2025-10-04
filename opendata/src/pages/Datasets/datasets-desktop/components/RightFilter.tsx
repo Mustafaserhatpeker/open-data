@@ -11,7 +11,7 @@ export default function RightFilter() {
     return (
         <Accordion
             type="multiple"
-            className="w-full"
+            className="w-full bg-white p-4 rounded-lg "
         >
             <AccordionItem value="item-1">
                 <AccordionTrigger>Organizasyonlar</AccordionTrigger>
