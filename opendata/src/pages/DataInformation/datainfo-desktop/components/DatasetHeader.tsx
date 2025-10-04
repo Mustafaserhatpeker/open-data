@@ -53,7 +53,7 @@ export function DatasetHeader({
                     <Badge variant="outline" className="flex items-center gap-1">
                         {dataset.license}
                     </Badge>
-                    {dataset.version ? <Badge variant="outline">v{dataset.version}</Badge> : null}
+
                 </div>
             </div>
 
