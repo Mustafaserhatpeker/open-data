@@ -22,7 +22,7 @@ export default function MavigationMenu() {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-          <Link to="/docs" className="text-[#221A4C]">Organizasyonlar</Link>
+          <Link to="/organizations" className="text-[#221A4C]">Organizasyonlar</Link>
         </NavigationMenuLink>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
