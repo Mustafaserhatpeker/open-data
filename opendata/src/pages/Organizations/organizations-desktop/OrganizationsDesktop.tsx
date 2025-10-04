@@ -16,6 +16,13 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 import {
     Building2,
@@ -94,19 +101,25 @@ export default function OrganizationsDesktop() {
                         </div>
                         <div className="sm:col-span-1">
                             <div className="flex items-center gap-2">
-                                <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
+                                <label
+                                    htmlFor="sort"
+                                    className="text-sm text-muted-foreground whitespace-nowrap"
+                                >
                                     Sırala:
                                 </label>
-                                <select
-                                    id="sort"
+                                <Select
                                     value={sortBy}
-                                    onChange={(e) => setSortBy(e.target.value as SortKey)}
-                                    className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+                                    onValueChange={(value) => setSortBy(value as SortKey)}
                                 >
-                                    <option value="name">Ada göre (A-Z)</option>
-                                    <option value="datasets">Veri seti sayısı (çoktan aza)</option>
-                                    <option value="followers">Takipçi (çoktan aza)</option>
-                                </select>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Sıralama seç" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="name">Ada göre (A-Z)</SelectItem>
+                                        <SelectItem value="datasets">Veri seti sayısı (çoktan aza)</SelectItem>
+                                        <SelectItem value="followers">Takipçi (çoktan aza)</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </div>
                     </div>
@@ -186,7 +199,6 @@ export default function OrganizationsDesktop() {
                                         </a>
                                     </div>
 
-                                    {/* Gelecekte detay sayfasına yönlendirmek için Link eklenebilir */}
                                     <Button variant="secondary" asChild>
                                         <Link to={`/datasets?organizationId=${org.id}`}>
                                             <Building2 className="h-4 w-4 mr-2" />
