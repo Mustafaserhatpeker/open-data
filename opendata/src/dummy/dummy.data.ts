@@ -78,7 +78,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res1",
                 name: "Trafik Yoğunluğu (CSV)",
-                url: "https://data.ibb.gov.tr/trafik.csv",
+                url: "trafik.csv",
                 format: "CSV",
                 size: 204800,
                 createdAt: "2023-10-01"
@@ -86,7 +86,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res2",
                 name: "Trafik Yoğunluğu (JSON)",
-                url: "https://data.ibb.gov.tr/trafik.json",
+                url: "trafik.json",
                 format: "JSON",
                 createdAt: "2023-10-01"
             }
@@ -114,7 +114,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res3",
                 name: "Elektrik Üretim 2023",
-                url: "https://data.tuik.gov.tr/elektrik-2023.csv",
+                url: "elektrik-2023.csv",
                 format: "CSV",
                 size: 1048576,
                 createdAt: "2023-09-01"
@@ -143,7 +143,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res4",
                 name: "Otobüs Hatları (CSV)",
-                url: "https://data.ibb.gov.tr/otobus-hatlari.csv",
+                url: "otobus-hatlari.csv",
                 format: "CSV",
                 size: 356000,
                 createdAt: "2023-07-12"
@@ -151,7 +151,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res5",
                 name: "Otobüs Hatları (JSON)",
-                url: "https://data.ibb.gov.tr/otobus-hatlari.json",
+                url: "otobus-hatlari.json",
                 format: "JSON",
                 createdAt: "2023-07-12"
             }
@@ -179,7 +179,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res6",
                 name: "Hava Kalitesi (CSV)",
-                url: "https://data.ibb.gov.tr/hava-kalitesi.csv",
+                url: "hava-kalitesi.csv",
                 format: "CSV",
                 size: 512000,
                 createdAt: "2023-06-05"
@@ -187,14 +187,14 @@ export const datasets: Dataset[] = [
             {
                 id: "res7",
                 name: "Hava Kalitesi (JSON)",
-                url: "https://data.ibb.gov.tr/hava-kalitesi.json",
+                url: "hava-kalitesi.json",
                 format: "JSON",
                 createdAt: "2023-06-05"
             },
             {
                 id: "res8",
                 name: "Hava Kalitesi (XML)",
-                url: "https://data.ibb.gov.tr/hava-kalitesi.xml",
+                url: "hava-kalitesi.xml",
                 format: "XML",
                 createdAt: "2023-06-05"
             }
@@ -222,7 +222,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res9",
                 name: "İlçe Nüfus 2023 (CSV)",
-                url: "https://data.tuik.gov.tr/ilce-nufus-2023.csv",
+                url: "ilce-nufus-2023.csv",
                 format: "CSV",
                 size: 734003,
                 createdAt: "2023-12-20"
@@ -251,7 +251,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res10",
                 name: "Toplu Taşıma Kullanımı (JSON)",
-                url: "https://data.ibb.gov.tr/toplu-tasima.json",
+                url: "toplu-tasima.json",
                 format: "JSON",
                 createdAt: "2023-05-10"
             }
@@ -279,7 +279,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res11",
                 name: "Enerji Tüketimi (CSV)",
-                url: "https://data.tuik.gov.tr/enerji-tuketimi.csv",
+                url: "enerji-tuketimi.csv",
                 format: "CSV",
                 size: 845000,
                 createdAt: "2023-03-15"
@@ -287,7 +287,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res12",
                 name: "Enerji Tüketimi (JSON)",
-                url: "https://data.tuik.gov.tr/enerji-tuketimi.json",
+                url: "enerji-tuketimi.json",
                 format: "JSON",
                 createdAt: "2023-03-15"
             }
@@ -315,7 +315,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res13",
                 name: "Toplama Noktaları (JSON)",
-                url: "https://data.ibb.gov.tr/geri-donusum-noktalari.json",
+                url: "geri-donusum-noktalari.json",
                 format: "JSON",
                 createdAt: "2023-02-18"
             }
@@ -343,7 +343,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res14",
                 name: "Ortalama Hız (CSV)",
-                url: "https://data.ibb.gov.tr/ortalama-hiz.csv",
+                url: "ortalama-hiz.csv",
                 format: "CSV",
                 size: 278000,
                 createdAt: "2023-11-08"
@@ -372,7 +372,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res15",
                 name: "Kaynak Dağılımı 2024 (CSV)",
-                url: "https://data.tuik.gov.tr/elektrik-kaynak-2024.csv",
+                url: "elektrik-kaynak-2024.csv",
                 format: "CSV",
                 size: 602112,
                 createdAt: "2024-04-02"
@@ -380,7 +380,7 @@ export const datasets: Dataset[] = [
             {
                 id: "res16",
                 name: "Kaynak Dağılımı 2024 (XML)",
-                url: "https://data.tuik.gov.tr/elektrik-kaynak-2024.xml",
+                url: "elektrik-kaynak-2024.xml",
                 format: "XML",
                 createdAt: "2024-04-02"
             }
