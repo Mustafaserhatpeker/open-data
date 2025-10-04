@@ -102,23 +102,25 @@ export default function DataInfoDesktop() {
 
     return (
         <div className="w-full px-4 py-6 bg-accent min-h-[100vh]">
-            <DatasetHeader
-                dataset={dataset}
-                createdByName={createdByName}
-                categoryNames={categoryNames}
-                tagNames={tagNames}
-                primaryFormat={primaryFormat}
-            />
+            <div className="max-w-7xl mx-auto space-y-6">
+                <DatasetHeader
+                    dataset={dataset}
+                    createdByName={createdByName}
+                    categoryNames={categoryNames}
+                    tagNames={tagNames}
+                    primaryFormat={primaryFormat}
+                />
 
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-                <div className="lg:col-span-4 space-y-6">
-                    <OrganizationCard organization={organization} />
-                    <DatasetMetaCard dataset={dataset} createdByName={createdByName} />
-                </div>
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+                    <div className="lg:col-span-4 space-y-6">
+                        <OrganizationCard organization={organization} />
+                        <DatasetMetaCard dataset={dataset} createdByName={createdByName} />
+                    </div>
 
-                <div className="lg:col-span-8 space-y-6">
-                    <ResourcesList resources={dataset.resources} />
-                    <FormatsStatsCard dataset={dataset} primaryFormat={primaryFormat} />
+                    <div className="lg:col-span-8 space-y-6">
+                        <ResourcesList resources={dataset.resources} />
+                        <FormatsStatsCard dataset={dataset} primaryFormat={primaryFormat} />
+                    </div>
                 </div>
             </div>
         </div>

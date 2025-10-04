@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Download } from "lucide-react"
 import type { Dataset as DummyDataset } from "@/lib/types"
-import { formatBytes, formatDate, getTypeMeta } from "./utils"
+import { formatDate, getTypeMeta } from "./utils"
 
 type Props = {
     resources?: NonNullable<DummyDataset["resources"]>
@@ -43,7 +43,6 @@ export function ResourcesList({ resources }: Props) {
                                                 </Badge>
                                             </div>
                                             <div className="mt-1 text-sm text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1">
-                                                <span>Boyut: {formatBytes(r.size)}</span>
                                                 <span>Oluşturulma: {formatDate(r.createdAt) ?? "-"}</span>
                                                 {r.updatedAt ? <span>Güncelleme: {formatDate(r.updatedAt)}</span> : null}
                                             </div>

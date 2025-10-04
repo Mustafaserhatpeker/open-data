@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Building2, Eye, FolderClosed, Globe, Mail } from "lucide-react"
+import { Building2, FolderClosed, Globe, Mail } from "lucide-react"
 import type { Organization } from "@/lib/types"
 
 type Props = {
@@ -68,12 +68,7 @@ export function OrganizationCard({ organization }: Props) {
                             Veri seti sayısı: <span className="text-foreground">{organization?.datasetsCount ?? 0}</span>
                         </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <Eye className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">
-                            Takipçi: <span className="text-foreground">{organization?.followersCount ?? 0}</span>
-                        </span>
-                    </div>
+
                 </div>
             </CardContent>
         </Card>

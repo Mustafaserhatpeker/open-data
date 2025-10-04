@@ -36,7 +36,7 @@ export function FormatsStatsCard({ dataset, primaryFormat }: Props) {
 
                 <Separator />
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                     <div className="rounded-md border p-3">
                         <div className="text-xs uppercase tracking-wide text-muted-foreground">Görüntülenme</div>
                         <div className="mt-1 inline-flex items-center gap-2 text-base">
@@ -51,10 +51,7 @@ export function FormatsStatsCard({ dataset, primaryFormat }: Props) {
                             {dataset.downloadsCount ?? 0}
                         </div>
                     </div>
-                    <div className="rounded-md border p-3">
-                        <div className="text-xs uppercase tracking-wide text-muted-foreground">Takipçi</div>
-                        <div className="mt-1 text-base">{dataset.followersCount ?? 0}</div>
-                    </div>
+
                 </div>
             </CardContent>
         </Card>

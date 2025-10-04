@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CalendarClock, Hash, ShieldCheck, UserRound } from "lucide-react"
+
+import { CalendarClock, ShieldCheck, UserRound } from "lucide-react"
 import type { Dataset as DummyDataset } from "@/lib/types"
 import { formatDate } from "./utils"
 
@@ -17,22 +17,13 @@ export function DatasetMetaCard({ dataset, createdByName }: Props) {
                 <CardDescription>Kimlik ve sürüm bilgileri</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
-                <div className="flex items-center gap-2">
-                    <Hash className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">ID:</span>
-                    <span className="text-foreground">{dataset.id}</span>
-                </div>
+
                 <div className="flex items-center gap-2">
                     <ShieldCheck className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Lisans:</span>
                     <span className="text-foreground">{dataset.license}</span>
                 </div>
-                {dataset.version ? (
-                    <div className="flex items-center gap-2">
-                        <Badge className="h-5 px-2 rounded">v{dataset.version}</Badge>
-                        <span className="text-muted-foreground">sürüm</span>
-                    </div>
-                ) : null}
+
                 <div className="flex items-center gap-2">
                     <CalendarClock className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Oluşturulma:</span>

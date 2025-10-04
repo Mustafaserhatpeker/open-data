@@ -60,10 +60,10 @@ export function DatasetHeader({
             {/* Title and meta */}
             <div className="flex items-start gap-3">
                 <div
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-lg ${primaryFormatMeta.color}`}
+                    className={`inline-flex h-14 w-14 items-center justify-center rounded-lg ${primaryFormatMeta.color}`}
                     aria-hidden
                 >
-                    <primaryFormatMeta.Icon className="h-5 w-5" />
+                    <primaryFormatMeta.Icon className="h-8 w-8" />
                 </div>
                 <div className="min-w-0">
                     <h1 className="text-2xl font-semibold leading-tight">{dataset.title}</h1>
