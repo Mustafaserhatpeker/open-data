@@ -1,6 +1,7 @@
 import RotatingText from "@/components/RotatingText";
 import { Button } from "@/components/ui/button";
 import Background from "@/assets/background.svg";
+import { MousePointerClick } from "lucide-react";
 function Welcome() {
   return (
     <div
@@ -43,35 +44,40 @@ function Welcome() {
 
         {/* Örnek buton */}
         <Button
-          className="absolute top-10 left-72 w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+          className="absolute top-10 left-72 w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
         >
-
+          <MousePointerClick />
         </Button>
 
         <Button
-          className="absolute top-58 left-2/7  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+          className="absolute top-58 left-2/7  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
         >
-
+          <MousePointerClick />
         </Button>
         <Button
-          className="absolute top-50 right-1/3  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+          className="absolute top-50 right-1/3  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
         >
-
+          <MousePointerClick />
         </Button>
         <Button
-          className="absolute top-92 left-2/5  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+          className="absolute top-92 left-2/5  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
         >
-
+          <MousePointerClick />
         </Button>
         <Button
-          className="absolute bottom-12 left-1/2  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+          className="absolute bottom-12 left-1/2  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
         >
-
+          <MousePointerClick />
         </Button>
         <Button
-          className="absolute bottom-64 right-1/3  w-8 h-8 bg-[#DAFAB2] text-white rounded-full"
+          className="absolute bottom-64 right-1/3  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
         >
-
+          <MousePointerClick />
+        </Button>
+        <Button
+          className="absolute bottom-40 right-1/5  w-8 h-8 bg-[#DAFAB2] text-[#7F7DFB] rounded-full"
+        >
+          <MousePointerClick />
         </Button>
       </div>
 
