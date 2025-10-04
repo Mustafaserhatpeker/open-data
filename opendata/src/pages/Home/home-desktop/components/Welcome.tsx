@@ -6,8 +6,8 @@ import { HomeTooltip } from "./inner-components/HomeTooltip";
 function Welcome() {
   const tooltips = [
     {
-      id: 1, content: <div className="flex flex-col items-center justify-between">
-        <h1>Çevre Verisi</h1>
+      id: 1, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start">Çevre Verisi</h1>
         <p>
           Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
         </p>
@@ -16,8 +16,8 @@ function Welcome() {
 
     },
     {
-      id: 2, content: <div className="flex flex-col items-center justify-between">
-        <h1>Çevre Verisi</h1>
+      id: 2, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start">Çevre Verisi</h1>
         <p>
           Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
         </p>
@@ -26,8 +26,8 @@ function Welcome() {
 
     },
     {
-      id: 3, content: <div className="flex flex-col items-center justify-between">
-        <h1>Çevre Verisi</h1>
+      id: 3, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start">Çevre Verisi</h1>
         <p>
           Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
         </p>
@@ -36,8 +36,8 @@ function Welcome() {
 
     },
     {
-      id: 4, content: <div className="flex flex-col items-center justify-between">
-        <h1>Çevre Verisi</h1>
+      id: 4, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start">Çevre Verisi</h1>
         <p>
           Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
         </p>
@@ -46,8 +46,8 @@ function Welcome() {
 
     },
     {
-      id: 5, content: <div className="flex flex-col items-center justify-between">
-        <h1>Çevre Verisi</h1>
+      id: 5, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start">Çevre Verisi</h1>
         <p>
           Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
         </p>
@@ -56,8 +56,8 @@ function Welcome() {
 
     },
     {
-      id: 6, content: <div className="flex flex-col items-center justify-between">
-        <h1>Çevre Verisi</h1>
+      id: 6, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start">Çevre Verisi</h1>
         <p>
           Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
         </p>
@@ -66,8 +66,8 @@ function Welcome() {
 
     },
     {
-      id: 7, content: <div className="flex flex-col items-center justify-between">
-        <h1>Çevre Verisi</h1>
+      id: 7, content: <div className="flex flex-col items-start justify-between">
+        <h1 className="text-start">Çevre Verisi</h1>
         <p>
           Bu veri seti, Kocaeli Büyükşehir Belediyesi'nin çevre ile ilgili çeşitli ölçümlerini ve analizlerini içermektedir. Hava kalitesi, su kalitesi, atık yönetimi ve diğer çevresel faktörler hakkında detaylı bilgiler sunar.
         </p>
