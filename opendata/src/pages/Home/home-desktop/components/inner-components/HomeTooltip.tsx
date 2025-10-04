@@ -20,7 +20,7 @@ export function HomeTooltip({ className, content, children }: HomeTooltipProps
                     {children}
                 </Button>
             </TooltipTrigger>
-            <TooltipContent className="max-w-xs backdrop-blur-2xl bg-transparent ">
+            <TooltipContent className="max-w-xs backdrop-blur-2xl bg-white/30 border border-white/30 shadow-lg">
                 {content}
             </TooltipContent>
         </Tooltip>
