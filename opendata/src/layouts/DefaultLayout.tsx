@@ -10,7 +10,10 @@ function DefaultLayout() {
 
   return (
     <ThemeProvider>
-      <div className="flex h-screen overflow-x-hidden">
+      <div className="flex h-screen overflow-x-hidden " style={{
+        backgroundImage:
+          "radial-gradient(circle farthest-side at 50% -75%, #d6c7ff 54%, #8a9bff 76%)",
+      }}>
         <div className="flex-1 flex flex-col w-full  ">
           <Header />
           <main

@@ -7,12 +7,12 @@ import photo3 from '@/assets/photo3.png';
 import LabelGrid from "./components/LabelGrid";
 function HomeDesktop() {
   return (
-    <div className="flex flex-col items-center justify-start bg-[#6B61F1]">
+    <div className="flex flex-col items-center justify-start ">
       <Welcome />
       <IntroductionArea />
 
-      <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex flex-row  items-center justify-around mb-32">
-        <h1 className="text-6xl font-bold text-white  absolute top-1/2 left-1/3 transform -translate-x-1/2">
+      <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex flex-row  items-center justify-around pb-32 bg-[#6A60F2] ">
+        <h1 className="text-6xl font-bold text-white  absolute top-1/2 left-1/3 transform -translate-x-1/2 ">
           Aradığınız Veri Setini Bulun.<br /> Bulamadınız mı? İsteyin!
         </h1>
         <CardSwap

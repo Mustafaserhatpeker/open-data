@@ -10,7 +10,7 @@ import { useThemeContext } from "@/contexts/ThemeContext";
 function Header() {
   const { theme } = useThemeContext();
   return (
-    <div className="w-full flex flex-row justify-between bg-[#D5C6FF]  py-4  px-8 ">
+    <div className="w-full flex flex-row justify-between   py-4  px-8 ">
       <div className="text-lg font-bold">
         <img
           src={theme === "dark" ? Logo : Logo}

@@ -100,10 +100,6 @@ function Welcome() {
 
   return (
     <div
-      style={{
-        backgroundImage:
-          "radial-gradient(circle farthest-side at 50% -75%, #d6c7ff 54%, #8a9bff 76%)",
-      }}
       className="w-full min-h-[100vh] flex flex-col items-center justify-between pt-24"
     >
       <div className=" flex flex-col items-center justify-center w-full">
