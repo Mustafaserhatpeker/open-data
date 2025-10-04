@@ -124,7 +124,7 @@ function Welcome() {
         </h1>
 
         <Button variant={"outline"} className="mt-16 px-4 py-6 rounded-md bg-[#6558F6] border-none text-accent">
-          <a href="#datasets" className="text-sm font-semibold">
+          <a href="datasets" className="text-sm font-semibold">
             Veri Seti Arayın
           </a>
         </Button>
