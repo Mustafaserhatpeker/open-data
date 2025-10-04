@@ -132,7 +132,7 @@ export default function OrganizationsDesktop() {
                     {filtered.map((org: Organization) => (
                         <Card onClick={
                             () => { window.location.href = `/organizations/${org.id}` }
-                        } key={org.id} className="h-full overflow-hidden border border-border/60 flex flex-col justify-between">
+                        } key={org.id} className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer">
                             <CardHeader className="pb-3">
                                 <div className="flex items-start gap-3">
                                     <Avatar className="h-12 w-12 rounded-lg">
