@@ -4,6 +4,8 @@ export default function DatasetCards() {
     const data: Dataset[] = [
         {
             id: 1,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Dataset 1",
             description: "Description for Dataset 1",
             datatype: "CSV",
@@ -13,6 +15,8 @@ export default function DatasetCards() {
         },
         {
             id: 2,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Dataset 2",
             description: "Description for Dataset 2",
             datatype: "JSON", // JSON için ikon yoksa varsayılan görünecek
@@ -22,6 +26,8 @@ export default function DatasetCards() {
         },
         {
             id: 3,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Dataset 3",
             description: "Description for Dataset 3",
             datatype: "XML",
@@ -31,6 +37,8 @@ export default function DatasetCards() {
         },
         {
             id: 4,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Dataset 4",
             description: "Description for Dataset 4",
             datatype: "XLSX",
@@ -40,6 +48,8 @@ export default function DatasetCards() {
         },
         {
             id: 5,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Dataset 5",
             description: "Description for Dataset 5",
             datatype: "TXT",
@@ -49,6 +59,8 @@ export default function DatasetCards() {
         },
         {
             id: 6,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Dataset 6",
             description: "Description for Dataset 6",
             datatype: "PDF",
@@ -59,6 +71,8 @@ export default function DatasetCards() {
         // İstersen örnekleri genişletebilirsin:
         {
             id: 7,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Geospatial Data",
             description: "Sample GeoJSON dataset",
             datatype: "GeoJSON",
@@ -68,6 +82,8 @@ export default function DatasetCards() {
         },
         {
             id: 8,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "KML Route",
             description: "KML route data",
             datatype: "KML",
@@ -77,6 +93,8 @@ export default function DatasetCards() {
         },
         {
             id: 9,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Zipped KML",
             description: "KMZ compressed KML data",
             datatype: "KMZ",
@@ -86,6 +104,8 @@ export default function DatasetCards() {
         },
         {
             id: 10,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "Public API",
             description: "Open data API endpoint",
             datatype: "API",
@@ -95,6 +115,8 @@ export default function DatasetCards() {
         },
         {
             id: 11,
+            createdDate: "12.01.2025",
+            updatedDate: "14.02.2025",
             title: "HTML Snapshot",
             description: "Static HTML export",
             datatype: "HTML",

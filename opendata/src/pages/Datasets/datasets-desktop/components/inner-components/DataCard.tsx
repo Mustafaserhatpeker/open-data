@@ -4,7 +4,6 @@ import {
     CardTitle,
     CardDescription,
     CardContent,
-    CardFooter,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -16,6 +15,7 @@ import {
 } from "@/components/ui/tooltip"
 import {
     FileSpreadsheet,
+    FileJson,
     FileText,
     FileCode,
     Map,
@@ -38,6 +38,7 @@ type DataType =
     | "KML"
     | "TXT"
     | "KMZ"
+    | "JSON"
 
 export interface Dataset {
     id: number | string
@@ -47,6 +48,8 @@ export interface Dataset {
     organization?: string
     category?: string
     tags?: string[]
+    createdDate?: string
+    updatedDate?: string
 }
 
 function getTypeMeta(datatypeRaw: string) {
@@ -102,6 +105,12 @@ function getTypeMeta(datatypeRaw: string) {
             Icon = Network
             color = "bg-sky-50 text-sky-700 ring-1 ring-sky-100"
             accent = "text-sky-600"
+            label = t
+            break
+        case "JSON":
+            Icon = FileJson
+            color = "bg-violet-50 text-violet-700 ring-1 ring-violet-100"
+            accent = "text-violet-600"
             label = t
             break
     }
@@ -196,13 +205,6 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                         </div>
                     </div>
                 </CardContent>
-
-                <CardFooter className="mt-auto pt-2">
-                   <div className="flex w-full items-center justify-between text-xs text-muted-foreground">
-                        <span>ID: {String(dataset.id)}</span>
-                        {/* İstersen buraya bir "Görüntüle/İndir" butonu ekleyebilirsin */}
-                    </div>
-                </CardFooter>
             </Card>
         </TooltipProvider>
     )
