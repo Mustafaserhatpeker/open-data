@@ -11,10 +11,10 @@ function DefaultLayout() {
   return (
     <ThemeProvider>
       <div className="flex min-h-screen overflow-x-hidden " >
-        <div className="flex-1 flex flex-col w-full  ">
+        <div className="flex-1 flex flex-col w-full h-full  ">
           <Header />
           <main
-            className={`flex-1 flex flex-col w-full items-center ${deviceType !== "mobile" ? "" : "pt-24"
+            className={`flex-1 flex flex-col w-full h-full items-center ${deviceType !== "mobile" ? "" : "pt-24"
               }`}
           >
             <Outlet />
