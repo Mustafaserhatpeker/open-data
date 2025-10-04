@@ -1,130 +1,53 @@
 import DataCard, { type Dataset } from "./inner-components/DataCard"
+import {
+    datasets as dummyDatasets,
+    organizations,
+    categories as categoriesList,
+    tags as tagsList,
+} from "@/dummy/dummy.data"
+import type { Dataset as DummyDataset } from "@/lib/types"
+
+function resolveOrganizationName(d: DummyDataset): string | undefined {
+    return d.organization?.name ?? organizations.find((o) => o.id === d.organizationId)?.name
+}
+
+function resolveCategoryName(d: DummyDataset): string | undefined {
+    const firstCatId = d.categories?.[0]
+    if (!firstCatId) return undefined
+    return categoriesList.find((c) => c.id === firstCatId)?.name
+}
+
+function resolveTagNames(d: DummyDataset): string[] | undefined {
+    if (!d.tags || d.tags.length === 0) return undefined
+    const names = d.tags
+        .map((id) => tagsList.find((t) => t.id === id)?.name)
+        .filter((x): x is string => Boolean(x))
+    return names.length ? names : undefined
+}
+
+function resolveDatatype(d: DummyDataset): string {
+    // Öncelik: formats[0] -> resource[0].format -> "Unknown"
+    if (d.formats && d.formats.length > 0) return d.formats[0]
+    if (d.resources && d.resources.length > 0) return d.resources[0].format
+    return "Unknown"
+}
+
+function toCardDataset(d: DummyDataset): Dataset {
+    return {
+        id: d.id,
+        title: d.title,
+        description: d.description,
+        datatype: resolveDatatype(d),
+        organization: resolveOrganizationName(d),
+        category: resolveCategoryName(d),
+        tags: resolveTagNames(d),
+        createdDate: d.createdAt,
+        updatedDate: d.updatedAt,
+    }
+}
 
 export default function DatasetCards() {
-    const data: Dataset[] = [
-        {
-            id: 1,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Dataset 1",
-            description: "Description for Dataset 1",
-            datatype: "CSV",
-            organization: "Org 1",
-            category: "Category 1",
-            tags: ["tag1", "tag2"],
-        },
-        {
-            id: 2,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Dataset 2",
-            description: "Description for Dataset 2",
-            datatype: "JSON", // JSON için ikon yoksa varsayılan görünecek
-            organization: "Org 2",
-            category: "Category 2",
-            tags: ["tag3", "tag4"],
-        },
-        {
-            id: 3,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Dataset 3",
-            description: "Description for Dataset 3",
-            datatype: "XML",
-            organization: "Org 3",
-            category: "Category 3",
-            tags: ["tag5", "tag6"],
-        },
-        {
-            id: 4,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Dataset 4",
-            description: "Description for Dataset 4",
-            datatype: "XLSX",
-            organization: "Org 4",
-            category: "Category 4",
-            tags: ["tag7", "tag8"],
-        },
-        {
-            id: 5,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Dataset 5",
-            description: "Description for Dataset 5",
-            datatype: "TXT",
-            organization: "Org 5",
-            category: "Category 5",
-            tags: ["tag9", "tag10"],
-        },
-        {
-            id: 6,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Dataset 6",
-            description: "Description for Dataset 6",
-            datatype: "PDF",
-            organization: "Org 6",
-            category: "Category 6",
-            tags: ["tag11", "tag12"],
-        },
-        // İstersen örnekleri genişletebilirsin:
-        {
-            id: 7,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Geospatial Data",
-            description: "Sample GeoJSON dataset",
-            datatype: "GeoJSON",
-            organization: "Geo Org",
-            category: "Maps",
-            tags: ["geo", "map", "features"],
-        },
-        {
-            id: 8,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "KML Route",
-            description: "KML route data",
-            datatype: "KML",
-            organization: "Transport Dept",
-            category: "Routes",
-            tags: ["kml", "routes"],
-        },
-        {
-            id: 9,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Zipped KML",
-            description: "KMZ compressed KML data",
-            datatype: "KMZ",
-            organization: "Survey",
-            category: "Survey",
-            tags: ["kmz", "compressed"],
-        },
-        {
-            id: 10,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "Public API",
-            description: "Open data API endpoint",
-            datatype: "API",
-            organization: "Open Data",
-            category: "Services",
-            tags: ["api", "rest"],
-        },
-        {
-            id: 11,
-            createdDate: "12.01.2025",
-            updatedDate: "14.02.2025",
-            title: "HTML Snapshot",
-            description: "Static HTML export",
-            datatype: "HTML",
-            organization: "Web Archive",
-            category: "Snapshots",
-            tags: ["html", "archive"],
-        },
-    ]
+    const data: Dataset[] = dummyDatasets.map(toCardDataset)
 
     return (
         <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-2">
