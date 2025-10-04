@@ -64,7 +64,7 @@ export default function DataInfoDesktop() {
 
     if (loading) {
         return (
-            <div className="container mx-auto px-4 py-8">
+            <div className="w-full px-4 py-8">
                 <div className="animate-pulse space-y-4">
                     <div className="h-6 w-28 bg-muted rounded" />
                     <div className="h-10 w-1/2 bg-muted rounded" />
@@ -80,7 +80,7 @@ export default function DataInfoDesktop() {
 
     if (!dataset) {
         return (
-            <div className="container mx-auto px-4 py-12 bg-accent">
+            <div className="w-full px-4 py-12 bg-accent">
                 <div className="mx-auto max-w-xl text-center">
                     <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-muted mb-3">
                         <Hash className="h-5 w-5 text-muted-foreground" />
