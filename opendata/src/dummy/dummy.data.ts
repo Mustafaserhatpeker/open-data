@@ -129,5 +129,270 @@ export const datasets: Dataset[] = [
         viewsCount: 950,
         downloadsCount: 220,
         followersCount: 18
+    },
+    {
+        id: "ds3",
+        title: "İstanbul Otobüs Hatları",
+        description: "İstanbul genelindeki otobüs hatları ve durak bilgileri.",
+        organizationId: "org1",
+        organization: organizations[0],
+        categories: ["cat1"],
+        tags: ["tag1"],
+        formats: ["CSV", "JSON"],
+        resources: [
+            {
+                id: "res4",
+                name: "Otobüs Hatları (CSV)",
+                url: "https://data.ibb.gov.tr/otobus-hatlari.csv",
+                format: "CSV",
+                size: 356000,
+                createdAt: "2023-07-12"
+            },
+            {
+                id: "res5",
+                name: "Otobüs Hatları (JSON)",
+                url: "https://data.ibb.gov.tr/otobus-hatlari.json",
+                format: "JSON",
+                createdAt: "2023-07-12"
+            }
+        ],
+        createdBy: "usr2",
+        createdAt: "2023-07-12",
+        updatedAt: "2023-08-01",
+        isOpenData: true,
+        license: "CC-BY-4.0",
+        version: "1.0",
+        viewsCount: 780,
+        downloadsCount: 290,
+        followersCount: 16
+    },
+    {
+        id: "ds4",
+        title: "Hava Kalitesi İstasyon Ölçümleri",
+        description: "İstanbul genelindeki hava kalitesi istasyonlarından PM2.5, PM10, NO2 ölçümleri.",
+        organizationId: "org1",
+        organization: organizations[0],
+        categories: ["cat3"],
+        tags: ["tag2"],
+        formats: ["CSV", "JSON", "XML"],
+        resources: [
+            {
+                id: "res6",
+                name: "Hava Kalitesi (CSV)",
+                url: "https://data.ibb.gov.tr/hava-kalitesi.csv",
+                format: "CSV",
+                size: 512000,
+                createdAt: "2023-06-05"
+            },
+            {
+                id: "res7",
+                name: "Hava Kalitesi (JSON)",
+                url: "https://data.ibb.gov.tr/hava-kalitesi.json",
+                format: "JSON",
+                createdAt: "2023-06-05"
+            },
+            {
+                id: "res8",
+                name: "Hava Kalitesi (XML)",
+                url: "https://data.ibb.gov.tr/hava-kalitesi.xml",
+                format: "XML",
+                createdAt: "2023-06-05"
+            }
+        ],
+        createdBy: "usr2",
+        createdAt: "2023-06-05",
+        updatedAt: "2023-07-01",
+        isOpenData: true,
+        license: "CC-BY-4.0",
+        version: "1.1",
+        viewsCount: 1120,
+        downloadsCount: 410,
+        followersCount: 22
+    },
+    {
+        id: "ds5",
+        title: "İlçe Nüfus Dağılımı 2023",
+        description: "Türkiye genelinde ilçe bazında nüfus dağılımı (2023).",
+        organizationId: "org2",
+        organization: organizations[1],
+        categories: ["cat3"],
+        tags: ["tag4"],
+        formats: ["CSV"],
+        resources: [
+            {
+                id: "res9",
+                name: "İlçe Nüfus 2023 (CSV)",
+                url: "https://data.tuik.gov.tr/ilce-nufus-2023.csv",
+                format: "CSV",
+                size: 734003,
+                createdAt: "2023-12-20"
+            }
+        ],
+        createdBy: "usr1",
+        createdAt: "2023-12-20",
+        updatedAt: "2024-01-05",
+        isOpenData: true,
+        license: "CC-BY-SA-4.0",
+        version: "1.0",
+        viewsCount: 1380,
+        downloadsCount: 560,
+        followersCount: 35
+    },
+    {
+        id: "ds6",
+        title: "Toplu Taşıma Kullanım İstatistikleri",
+        description: "Aylık metro, metrobüs ve otobüs kullanım istatistikleri.",
+        organizationId: "org1",
+        organization: organizations[0],
+        categories: ["cat1"],
+        tags: ["tag1"],
+        formats: ["JSON"],
+        resources: [
+            {
+                id: "res10",
+                name: "Toplu Taşıma Kullanımı (JSON)",
+                url: "https://data.ibb.gov.tr/toplu-tasima.json",
+                format: "JSON",
+                createdAt: "2023-05-10"
+            }
+        ],
+        createdBy: "usr2",
+        createdAt: "2023-05-10",
+        updatedAt: "2023-06-01",
+        isOpenData: true,
+        license: "CC-BY-4.0",
+        version: "1.0",
+        viewsCount: 665,
+        downloadsCount: 180,
+        followersCount: 12
+    },
+    {
+        id: "ds7",
+        title: "Enerji Tüketimi Mahalle Bazlı",
+        description: "Mahalle bazında elektrik tüketim istatistikleri.",
+        organizationId: "org2",
+        organization: organizations[1],
+        categories: ["cat2"],
+        tags: ["tag3"],
+        formats: ["CSV", "JSON"],
+        resources: [
+            {
+                id: "res11",
+                name: "Enerji Tüketimi (CSV)",
+                url: "https://data.tuik.gov.tr/enerji-tuketimi.csv",
+                format: "CSV",
+                size: 845000,
+                createdAt: "2023-03-15"
+            },
+            {
+                id: "res12",
+                name: "Enerji Tüketimi (JSON)",
+                url: "https://data.tuik.gov.tr/enerji-tuketimi.json",
+                format: "JSON",
+                createdAt: "2023-03-15"
+            }
+        ],
+        createdBy: "usr1",
+        createdAt: "2023-03-15",
+        updatedAt: "2023-04-01",
+        isOpenData: true,
+        license: "CC-BY-SA-4.0",
+        version: "1.0",
+        viewsCount: 720,
+        downloadsCount: 245,
+        followersCount: 14
+    },
+    {
+        id: "ds8",
+        title: "Geri Dönüşüm Toplama Noktaları",
+        description: "İstanbul genelinde geri dönüşüm konteyner ve toplama noktalarının konumları.",
+        organizationId: "org1",
+        organization: organizations[0],
+        categories: ["cat3"],
+        tags: ["tag2"],
+        formats: ["JSON"],
+        resources: [
+            {
+                id: "res13",
+                name: "Toplama Noktaları (JSON)",
+                url: "https://data.ibb.gov.tr/geri-donusum-noktalari.json",
+                format: "JSON",
+                createdAt: "2023-02-18"
+            }
+        ],
+        createdBy: "usr2",
+        createdAt: "2023-02-18",
+        updatedAt: "2023-03-01",
+        isOpenData: true,
+        license: "CC-BY-4.0",
+        version: "1.0",
+        viewsCount: 540,
+        downloadsCount: 160,
+        followersCount: 9
+    },
+    {
+        id: "ds9",
+        title: "Şehir İçi Ortalama Hız",
+        description: "İstanbul ilçelerinde saatlik ortalama araç hızları.",
+        organizationId: "org1",
+        organization: organizations[0],
+        categories: ["cat1"],
+        tags: ["tag1"],
+        formats: ["CSV"],
+        resources: [
+            {
+                id: "res14",
+                name: "Ortalama Hız (CSV)",
+                url: "https://data.ibb.gov.tr/ortalama-hiz.csv",
+                format: "CSV",
+                size: 278000,
+                createdAt: "2023-11-08"
+            }
+        ],
+        createdBy: "usr2",
+        createdAt: "2023-11-08",
+        updatedAt: "2023-11-20",
+        isOpenData: true,
+        license: "CC-BY-4.0",
+        version: "1.0",
+        viewsCount: 810,
+        downloadsCount: 230,
+        followersCount: 17
+    },
+    {
+        id: "ds10",
+        title: "Elektrik Üretim Kaynak Dağılımı 2024",
+        description: "2024 yılı için kaynak bazında elektrik üretim dağılımı.",
+        organizationId: "org2",
+        organization: organizations[1],
+        categories: ["cat2"],
+        tags: ["tag3"],
+        formats: ["CSV", "XML"],
+        resources: [
+            {
+                id: "res15",
+                name: "Kaynak Dağılımı 2024 (CSV)",
+                url: "https://data.tuik.gov.tr/elektrik-kaynak-2024.csv",
+                format: "CSV",
+                size: 602112,
+                createdAt: "2024-04-02"
+            },
+            {
+                id: "res16",
+                name: "Kaynak Dağılımı 2024 (XML)",
+                url: "https://data.tuik.gov.tr/elektrik-kaynak-2024.xml",
+                format: "XML",
+                createdAt: "2024-04-02"
+            }
+        ],
+        createdBy: "usr1",
+        createdAt: "2024-04-02",
+        updatedAt: "2024-04-15",
+        isOpenData: true,
+        license: "CC-BY-SA-4.0",
+        version: "1.0",
+        viewsCount: 690,
+        downloadsCount: 210,
+        followersCount: 13
     }
 ]
