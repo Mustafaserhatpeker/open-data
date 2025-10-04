@@ -192,3 +192,23 @@
 .item8 {
   animation-delay: calc(30s / 8 * (8 - 8) * -1);
 }
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(circle farthest-side at 50% -75%, #d6c7ff 54%, #8a9bff 76%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
