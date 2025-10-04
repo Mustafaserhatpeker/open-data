@@ -6,6 +6,7 @@ import DataInfo from "./pages/DataInformation/DataInfo";
 import Organizations from "./pages/Organizations/Organizations";
 
 import { DeviceTypeProvider } from "@/contexts/DeviceTypeContext";
+import OrganizationInfo from "./pages/OrganizationInfo/OrganizationInfo";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/datasets" element={<Datasets />} />
             <Route path="/datasets/:id" element={<DataInfo />} />
             <Route path="/organizations" element={<Organizations />} />
+            <Route path="/organizations/:id" element={<OrganizationInfo />} />
           </Route>
         </Routes>
       </BrowserRouter>
