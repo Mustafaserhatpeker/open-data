@@ -16,7 +16,7 @@ function statusColor(status: string): string {
         case "approved":
             return "bg-green-100 text-green-800 ring-green-600/20"
         case "in_review":
-            return "bg-amber-100 text-amber-800 ring-amber-600/20"
+            return "bg-blue-100 text-blue-800 ring-blue-600/20"
         case "rejected":
             return "bg-red-100 text-red-800 ring-red-600/20"
         case "pending":
