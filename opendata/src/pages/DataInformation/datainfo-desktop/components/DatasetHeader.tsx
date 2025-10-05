@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     ArrowLeft,
-    CalendarClock,
     Download,
     Eye,
     FolderClosed,
@@ -11,7 +10,7 @@ import {
     UserRound,
 } from "lucide-react"
 import type { Dataset as DummyDataset } from "@/lib/types"
-import { getTypeMeta, formatDate } from "./utils"
+import { getTypeMeta } from "./utils"
 
 type Props = {
     dataset: DummyDataset
@@ -42,17 +41,26 @@ export function DatasetHeader({
                 </Button>
 
                 <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className={`border ${primaryFormatMeta.accent} bg-transparent`}>
-                        {primaryFormatMeta.label}
-                    </Badge>
                     {dataset.isOpenData ? (
-                        <Badge className="bg-emerald-600 hover:bg-emerald-600/90">Açık Veri</Badge>
+                        <Badge className="bg-emerald-600 hover:bg-emerald-600/90 px-2.5 py-1">Açık Veri</Badge>
                     ) : (
                         <Badge variant="outline">Kısıtlı</Badge>
                     )}
-                    <Badge variant="outline" className="flex items-center gap-1">
+                    <Badge variant="outline" className={`border ${primaryFormatMeta.accent} px-2.5 py-1`}>
+                        {primaryFormatMeta.label}
+                    </Badge>
+
+                    <Badge variant="outline" className="flex items-center gap-1.5 px-2.5 py-1">
                         {dataset.license}
                     </Badge>
+                    <span className="inline-flex items-center text-xs gap-1.5 bg-accent-foreground/10 px-2.5 py-1 rounded-md">
+                        <Download className="h-4 w-4" />
+                        {dataset.downloadsCount ?? 0}
+                    </span>
+                    <span className="inline-flex items-center text-xs gap-1.5 bg-accent-foreground/10 px-2.5 py-1 rounded-md">
+                        <Eye className="h-4 w-4" />
+                        {dataset.viewsCount ?? 0}
+                    </span>
 
                 </div>
             </div>
@@ -68,22 +76,6 @@ export function DatasetHeader({
                 <div className="min-w-0">
                     <h1 className="text-2xl font-semibold leading-tight">{dataset.title}</h1>
                     <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-                        <span className="inline-flex items-center gap-1.5">
-                            <Eye className="h-4 w-4" />
-                            {dataset.viewsCount ?? 0} görüntülenme
-                        </span>
-                        <span className="inline-flex items-center gap-1.5">
-                            <Download className="h-4 w-4" />
-                            {dataset.downloadsCount ?? 0} indirme
-                        </span>
-                        <span className="inline-flex items-center gap-1.5">
-                            <CalendarClock className="h-4 w-4" />
-                            Oluşturulma: {formatDate(dataset.createdAt)}
-                        </span>
-                        <span className="inline-flex items-center gap-1.5">
-                            <CalendarClock className="h-4 w-4" />
-                            Güncellenme: {formatDate(dataset.updatedAt)}
-                        </span>
                         {createdByName ? (
                             <span className="inline-flex items-center gap-1.5">
                                 <UserRound className="h-4 w-4" />
