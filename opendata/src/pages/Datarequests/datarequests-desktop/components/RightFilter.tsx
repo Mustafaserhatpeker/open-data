@@ -12,7 +12,7 @@ export default function RightFilter() {
     return (
         <Accordion
             type="multiple"
-            className="w-full bg-white p-4 rounded-lg "
+            className="w-full bg-white  px-4 rounded-lg "
         >
             <AccordionItem value="item-1">
                 <AccordionTrigger>Durum Bilgisi</AccordionTrigger>
