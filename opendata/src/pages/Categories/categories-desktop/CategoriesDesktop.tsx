@@ -140,11 +140,10 @@ export default function CategoriesDesktop() {
                                 onClick={
                                     () => { window.location.href = `/categories/${cat.id}` }
                                 }
-                                key={cat.id} className="h-full overflow-hidden border border-border/60">
+                                key={cat.id} className="h-full overflow-hidden border border-border/60 cursor-pointer">
                                 <CardHeader className="pb-3">
                                     <div className="flex items-start gap-3">
                                         <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">
-                                            {/* No image for categories, show initials */}
                                             <AvatarFallback className="rounded-lg">{getInitials(cat.name)}</AvatarFallback>
                                         </Avatar>
                                         <div className="min-w-0">

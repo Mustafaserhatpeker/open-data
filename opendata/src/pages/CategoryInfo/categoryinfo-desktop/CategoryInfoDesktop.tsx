@@ -250,7 +250,7 @@ export default function CategoryInfo() {
                 {/* Two-column layout */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                     {/* Left: Category info */}
-                    <div className="lg:col-span-4 space-y-6">
+                    <div className="lg:col-span-3 space-y-6">
                         <Card>
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-base">Kategori Bilgileri</CardTitle>
@@ -346,7 +346,7 @@ export default function CategoryInfo() {
                     </div>
 
                     {/* Right: Datasets in this category */}
-                    <div className="lg:col-span-8 space-y-6">
+                    <div className="lg:col-span-9 space-y-6">
                         <Card>
                             <CardHeader className="pb-3">
                                 <div className="flex items-center justify-between gap-3">
