@@ -231,7 +231,7 @@ export default function CategoryInfo() {
                 {/* Title */}
                 <div className="mb-6 flex items-start gap-3">
                     <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">
-                        <AvatarFallback className="rounded-lg">
+                        <AvatarFallback className="rounded-lg bg-purple-400">
                             {getInitials(category.name)}
                         </AvatarFallback>
                     </Avatar>

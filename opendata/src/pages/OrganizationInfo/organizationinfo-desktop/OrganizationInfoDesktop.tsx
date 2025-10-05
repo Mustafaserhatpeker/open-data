@@ -201,7 +201,7 @@ export default function OrganizationInfoDesktop() {
                 <div className="mb-6 flex items-start gap-3">
                     <Avatar className="h-12 w-12 rounded-lg">
                         <AvatarImage src={org.logoUrl} alt={org.name} />
-                        <AvatarFallback className="rounded-lg">{getInitials(org.name)}</AvatarFallback>
+                        <AvatarFallback className="rounded-lg bg-purple-400">{getInitials(org.name)}</AvatarFallback>
                     </Avatar>
                     <div className="min-w-0">
                         <h1 className="text-2xl font-semibold leading-tight">{org.name}</h1>
