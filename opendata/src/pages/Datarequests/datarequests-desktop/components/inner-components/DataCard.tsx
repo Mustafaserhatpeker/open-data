@@ -36,7 +36,12 @@ export default function DataRequestCard({ request }: { request: DataRequestCardM
                     )}`}
                     title={`Durum: ${request.status}`}
                 >
-                    {request.status}
+                    {
+                        request.status === "approved" ? "Onaylandı" :
+                            request.status === "in_review" ? "İnceleniyor" :
+                                request.status === "rejected" ? "Reddedildi" :
+                                    "Beklemede"
+                    }
                 </span>
             </div>
 
