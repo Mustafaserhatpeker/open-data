@@ -136,7 +136,11 @@ export default function CategoriesDesktop() {
                         const latestText = latest ? new Date(latest).toLocaleDateString() : "-"
 
                         return (
-                            <Card key={cat.id} className="h-full overflow-hidden border border-border/60">
+                            <Card
+                                onClick={
+                                    () => { window.location.href = `/categories/${cat.id}` }
+                                }
+                                key={cat.id} className="h-full overflow-hidden border border-border/60">
                                 <CardHeader className="pb-3">
                                     <div className="flex items-start gap-3">
                                         <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">

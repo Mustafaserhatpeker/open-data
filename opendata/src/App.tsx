@@ -8,6 +8,7 @@ import Categories from "./pages/Categories/Categories";
 
 import { DeviceTypeProvider } from "@/contexts/DeviceTypeContext";
 import OrganizationInfo from "./pages/OrganizationInfo/OrganizationInfo";
+import CategoryInfo from "./pages/CategoryInfo/CategoryInfo";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/organizations" element={<Organizations />} />
             <Route path="/organizations/:id" element={<OrganizationInfo />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/categories/:id" element={<CategoryInfo />} />
           </Route>
         </Routes>
       </BrowserRouter>
