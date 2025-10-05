@@ -1,4 +1,4 @@
-import { type Dataset, type Organization, type Category, type Tag, type Format, type User } from "@/lib/types"
+import { type Dataset, type Organization, type Category, type Tag, type Format, type User, type DataRequest, type Comment } from "@/lib/types"
 
 export const organizations: Organization[] = [
     {
@@ -394,5 +394,49 @@ export const datasets: Dataset[] = [
         viewsCount: 690,
         downloadsCount: 210,
         followersCount: 13
+    }
+]
+
+export const comments: Comment[] = [
+    {
+        id: "c1",
+        dataRequestId: "dr1",
+        authorId: "usr2",
+        content: "Bu veri talebi üzerinde çalışıyoruz, yakında paylaşacağız.",
+        createdAt: "2024-01-15"
+    },
+    {
+        id: "c2",
+        dataRequestId: "dr2",
+        authorId: "usr1",
+        content: "Veri seti onaylandı ve yayında!",
+        createdAt: "2024-02-10"
+    }
+]
+
+export const dataRequests: DataRequest[] = [
+    {
+        id: "dr1",
+        title: "İstanbul Bisiklet Yolları Verisi",
+        description: "İstanbul'daki bisiklet yollarının konum ve uzunluk bilgisi.",
+        requestedBy: "usr2",
+        organizationId: "org1",
+        status: "in_review",
+        createdAt: "2024-01-10",
+        updatedAt: "2024-01-20",
+        commentsCount: 1,
+        comments: comments.filter(c => c.dataRequestId === "dr1"),
+    },
+    {
+        id: "dr2",
+        title: "Türkiye Yağış Miktarları 2023",
+        description: "Türkiye genelinde 2023 yılına ait aylık yağış miktarları.",
+        requestedBy: "usr1",
+        organizationId: "org2",
+        status: "approved",
+        createdAt: "2024-02-05",
+        updatedAt: "2024-02-05",
+        commentsCount: 1,
+        comments: comments.filter(c => c.dataRequestId === "dr2"),
     }
 ]

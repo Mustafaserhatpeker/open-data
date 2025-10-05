@@ -83,3 +83,29 @@ export interface Dataset {
     downloadsCount?: number
     followersCount?: number
 }
+
+// 📢 DataRequest (veri talebi)
+export interface DataRequest {
+    id: string
+    title: string
+    description: string
+    requestedBy: string // user id
+    organizationId: string // talep edilen kurumun id'si
+    status: "in_review" | "approved" | "rejected"
+    createdAt: string
+    updatedAt?: string
+    fulfilledAt?: string
+    commentsCount?: number
+    upvotesCount?: number
+    comments?: Comment[] // isteğe bağlı olarak yorumlar
+}
+
+// 💬 Comment (yorum)
+export interface Comment {
+    id: string
+    dataRequestId: string
+    authorId: string // user id
+    content: string
+    createdAt: string
+    updatedAt?: string
+}
