@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Download } from "lucide-react"
+import { Download, Eye } from "lucide-react"
 import type { Dataset as DummyDataset } from "@/lib/types"
 import { formatDate, getTypeMeta } from "./utils"
 
@@ -48,11 +48,17 @@ export function ResourcesList({ resources }: Props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="shrink-0">
+                                    <div className="shrink-0 gap-2 flex flex-row sm:flex-row">
                                         <Button asChild>
                                             <a href={r.url} target="_blank" rel="noreferrer">
                                                 <Download className="h-4 w-4 mr-2" />
                                                 İndir
+                                            </a>
+                                        </Button>
+                                        <Button asChild>
+                                            <a href={r.url} target="_blank" rel="noreferrer">
+                                                <Eye className="h-4 w-4 mr-2" />
+                                                Önizleme
                                             </a>
                                         </Button>
                                     </div>
