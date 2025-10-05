@@ -28,8 +28,9 @@ function App() {
             <Route path="/categories/:id" element={<CategoryInfo />} />
             <Route path="/datarequests" element={<Datarequests />} />
             <Route path="/datarequests/:id" element={<RequestInfo />} />
+            <Route path="/auth" element={<Auth />} />
           </Route>
-          <Route path="/auth" element={<Auth />} />
+
         </Routes>
       </BrowserRouter>
     </DeviceTypeProvider>
