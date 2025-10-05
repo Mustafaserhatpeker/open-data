@@ -9,6 +9,7 @@ import Categories from "./pages/Categories/Categories";
 import { DeviceTypeProvider } from "@/contexts/DeviceTypeContext";
 import OrganizationInfo from "./pages/OrganizationInfo/OrganizationInfo";
 import CategoryInfo from "./pages/CategoryInfo/CategoryInfo";
+import Datarequests from "./pages/Datarequests/Datarequests";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/organizations/:id" element={<OrganizationInfo />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/categories/:id" element={<CategoryInfo />} />
+            <Route path="/datarequests" element={<Datarequests />} />
           </Route>
         </Routes>
       </BrowserRouter>
