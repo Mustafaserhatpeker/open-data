@@ -30,7 +30,7 @@ export function RequestHeader({
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <Button asChild variant="ghost" size="sm" className="-ml-2">
-                    <Link to="/data-requests">
+                    <Link to="/datarequests">
                         <ArrowLeft className="h-4 w-4 mr-1.5" />
                         Geri
                     </Link>

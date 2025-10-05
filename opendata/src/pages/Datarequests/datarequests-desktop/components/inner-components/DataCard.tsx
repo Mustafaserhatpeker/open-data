@@ -27,7 +27,9 @@ function statusColor(status: string): string {
 
 export default function DataRequestCard({ request }: { request: DataRequestCardModel }) {
     return (
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm cursor-pointer">
+        <div onClick={
+            () => { window.location.href = `/datarequests/${request.id}` }
+        } className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm cursor-pointer">
             <div className="flex items-start justify-between gap-3">
                 <h3 className="text-base font-semibold text-gray-900 line-clamp-2">{request.title}</h3>
                 <span
