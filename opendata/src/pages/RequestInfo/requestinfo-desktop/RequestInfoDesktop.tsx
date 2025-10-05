@@ -1,7 +1,9 @@
 
 function RequestInfoDesktop() {
     return (
-        <div>RequestInfoDesktop</div>
+        <div className="min-h-screen">
+            Request Info Desktop Page
+        </div>
     )
 }
 
