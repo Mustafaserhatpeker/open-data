@@ -22,12 +22,12 @@ function Header() {
       <div className=" flex flex-row items-center justify-end">
         <div className="flex flex-row items-center gap-2 pr-4  border-gray-800">
           <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
-            <a href="auth" rel="noopener noreferrer">
+            <a href="/auth" >
               Giriş Yap
             </a>
           </Button>
           <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
-            <a href="auth" rel="noopener noreferrer">
+            <a href="/auth" >
               Üye Ol
             </a>
           </Button>
