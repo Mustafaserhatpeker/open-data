@@ -5,7 +5,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
-import { PhoneIncomingIcon } from "lucide-react"
+import { BadgeCheck, BadgeInfo, BadgeX } from "lucide-react"
 
 export default function RightFilter() {
     return (
@@ -14,97 +14,20 @@ export default function RightFilter() {
             className="w-full bg-white p-4 rounded-lg "
         >
             <AccordionItem value="item-1">
-                <AccordionTrigger>Organizasyonlar</AccordionTrigger>
+                <AccordionTrigger>Durum Bilgisi</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance">
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
+                    <Button variant="outline" >
+                        <BadgeCheck color="green" /> Onaylandı
                     </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
+                    <Button variant="outline" >
+                        <BadgeInfo color="orange" /> Bekleniyor
                     </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
+                    <Button variant="outline" >
+                        <BadgeX color="red" /> Reddedildi
                     </Button>
                 </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-2">
-                <AccordionTrigger>Kategoriler</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-                <AccordionTrigger>Etiketler</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4">
-                <AccordionTrigger>Formatlar</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <PhoneIncomingIcon /> New Branch
-                    </Button>
-                </AccordionContent>
-            </AccordionItem>
+
         </Accordion>
     )
 }
