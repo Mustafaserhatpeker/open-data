@@ -11,6 +11,7 @@ import OrganizationInfo from "./pages/OrganizationInfo/OrganizationInfo";
 import CategoryInfo from "./pages/CategoryInfo/CategoryInfo";
 import Datarequests from "./pages/Datarequests/Datarequests";
 import RequestInfo from "./pages/RequestInfo/ReguestInfo";
+import Auth from "./pages/Auth/Auth";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/categories/:id" element={<CategoryInfo />} />
             <Route path="/datarequests" element={<Datarequests />} />
             <Route path="/datarequests/:id" element={<RequestInfo />} />
+            <Route path="/auth" element={<Auth />} />
           </Route>
         </Routes>
       </BrowserRouter>
