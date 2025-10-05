@@ -1,220 +1,82 @@
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-    CardContent,
-} from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-import {
-    FileSpreadsheet,
-    FileJson,
-    FileText,
-    FileCode,
-    Map,
-    Network,
-    FileArchive,
-    Building2,
-    FolderClosed,
-    Tags,
-    CircleHelp,
 
-} from "lucide-react"
-import DataDialog from "./DataDialog"
-
-type DataType =
-    | "XLSX"
-    | "CSV"
-    | "PDF"
-    | "API"
-    | "GeoJSON"
-    | "XML"
-    | "HTML"
-    | "KML"
-    | "TXT"
-    | "KMZ"
-    | "JSON"
-
-export interface Dataset {
-    id: number | string
+export type DataRequestCardModel = {
+    id: string
     title: string
     description?: string
-    datatype: DataType | string
+    status: string
     organization?: string
-    category?: string
-    tags?: string[]
+    requestedBy?: string
     createdDate?: string
     updatedDate?: string
+    commentsCount?: number
 }
 
-function getTypeMeta(datatypeRaw: string) {
-    const t = (datatypeRaw || "").toUpperCase().trim()
-
-    // Varsayılan değerler
-    let Icon = CircleHelp
-    let color = "bg-gray-100 text-gray-700 ring-1 ring-gray-200"
-    let accent = "text-gray-500"
-    let label = datatypeRaw || "Unknown"
-
-    switch (t) {
-        case "XLSX":
-        case "CSV":
-            Icon = FileSpreadsheet
-            color = "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100"
-            accent = "text-emerald-600"
-            label = t
-            break
-        case "PDF":
-            Icon = FileText
-            color = "bg-red-50 text-red-700 ring-1 ring-red-100"
-            accent = "text-red-600"
-            label = t
-            break
-        case "TXT":
-            Icon = FileText
-            color = "bg-slate-50 text-slate-700 ring-1 ring-slate-200"
-            accent = "text-slate-600"
-            label = t
-            break
-        case "XML":
-        case "HTML":
-            Icon = FileCode
-            color = "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100"
-            accent = "text-indigo-600"
-            label = t
-            break
-        case "GEOJSON":
-        case "KML":
-            Icon = Map
-            color = "bg-teal-50 text-teal-700 ring-1 ring-teal-100"
-            accent = "text-teal-600"
-            label = t
-            break
-        case "KMZ":
-            Icon = FileArchive
-            color = "bg-amber-50 text-amber-700 ring-1 ring-amber-100"
-            accent = "text-amber-600"
-            label = t
-            break
-        case "API":
-            Icon = Network
-            color = "bg-sky-50 text-sky-700 ring-1 ring-sky-100"
-            accent = "text-sky-600"
-            label = t
-            break
-        case "JSON":
-            Icon = FileJson
-            color = "bg-violet-50 text-violet-700 ring-1 ring-violet-100"
-            accent = "text-violet-600"
-            label = t
-            break
+function statusColor(status: string): string {
+    switch (status) {
+        case "approved":
+            return "bg-green-100 text-green-800 ring-green-600/20"
+        case "in_review":
+            return "bg-amber-100 text-amber-800 ring-amber-600/20"
+        case "rejected":
+            return "bg-red-100 text-red-800 ring-red-600/20"
+        case "pending":
+        default:
+            return "bg-gray-100 text-gray-800 ring-gray-600/20"
     }
-
-    return { Icon, color, accent, label }
 }
 
-export default function DataCard({ dataset }: { dataset: Dataset }) {
-    const { Icon, color, accent, label } = getTypeMeta(dataset.datatype)
-
+export default function DataRequestCard({ request }: { request: DataRequestCardModel }) {
     return (
-        <TooltipProvider delayDuration={200}>
-            <div className="cursor-pointer" onClick={(e) => {
-                e.stopPropagation();
-                window.location.href = `/datasets/${dataset.id}`;
-            }}>
-                <Card className="flex h-full flex-col overflow-hidden border border-border/60 shadow-sm transition-all hover:shadow-md relative">
-                    <CardHeader className="space-y-3 pb-3">
-                        <div className="flex items-center justify-between gap-3">
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${color}`}
-                                    aria-hidden
-                                >
-                                    <Icon className="h-5 w-5" />
-                                </div>
-
-                                <div className="min-w-0">
-                                    <CardTitle className="text-base md:text-lg truncate">
-                                        {dataset.title}
-                                    </CardTitle>
-                                    <div className="mt-1 flex items-center gap-2">
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <Badge
-                                                    variant="secondary"
-                                                    className={`border ${accent} bg-transparent`}
-                                                >
-                                                    {label}
-                                                </Badge>
-                                            </TooltipTrigger>
-                                            <TooltipContent side="bottom">
-                                                Veri türü: {label}
-                                            </TooltipContent>
-                                        </Tooltip>
-                                        {dataset.organization ? (
-                                            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                                                <Building2 className="h-3.5 w-3.5" />
-                                                <span className="truncate">{dataset.organization}</span>
-                                            </span>
-                                        ) : null}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {dataset.description ? (
-                            <CardDescription className="mt-1 line-clamp-2">
-                                {dataset.description}
-                            </CardDescription>
-                        ) : null}
-                    </CardHeader>
-
-                    <CardContent className="pt-0">
-                        <Separator className="mb-3" />
-                        <div className="grid grid-cols-1 gap-3 text-sm text-muted-foreground md:grid-cols-2">
-                            <div className="flex items-start gap-2">
-                                <FolderClosed className="mt-0.5 h-4 w-4 shrink-0 opacity-80" />
-                                <div className="min-w-0">
-                                    <div className="text-xs uppercase tracking-wide text-muted-foreground pb-2">
-                                        Kategori
-                                    </div>
-                                    <div className="truncate text-foreground">
-                                        {dataset.category || "-"}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex items-start gap-2">
-                                <Tags className="mt-0.5 h-4 w-4 shrink-0 opacity-80" />
-                                <div className="min-w-0">
-                                    <div className="text-xs uppercase tracking-wide text-muted-foreground pb-2">
-                                        Etiketler
-                                    </div>
-                                    <div className="flex flex-wrap gap-1.5">
-                                        {(dataset.tags && dataset.tags.length > 0
-                                            ? dataset.tags
-                                            : ["etiket yok"]
-                                        ).map((t, i) => (
-                                            <Badge key={`${t}-${i}`} variant="outline" className="px-2 py-0.5">
-                                                {t}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContent>
-                    <div className="absolute top-3 right-3 flex items-center gap-2 ">
-                        <DataDialog dataset={dataset} />
-                    </div>
-                </Card>
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+            <div className="flex items-start justify-between gap-3">
+                <h3 className="text-base font-semibold text-gray-900 line-clamp-2">{request.title}</h3>
+                <span
+                    className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${statusColor(
+                        request.status
+                    )}`}
+                    title={`Durum: ${request.status}`}
+                >
+                    {request.status}
+                </span>
             </div>
-        </TooltipProvider >
+
+            {request.description ? (
+                <p className="mt-2 text-sm text-gray-600 line-clamp-3">{request.description}</p>
+            ) : null}
+
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-gray-600">
+                {request.organization ? (
+                    <span className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 21h18v-2H3v2zm2-4h14V5H5v12zm2-2V7h10v8H7z" />
+                        </svg>
+                        {request.organization}
+                    </span>
+                ) : null}
+
+                {request.requestedBy ? (
+                    <span className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.67 0 8 1.34 8 4v2H4v-2c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z" />
+                        </svg>
+                        {request.requestedBy}
+                    </span>
+                ) : null}
+
+                {request.commentsCount !== undefined ? (
+                    <span className="ml-auto inline-flex items-center gap-1 rounded-md bg-gray-50 px-2 py-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4 4h16v12H5.17L4 17.17V4zM2 2v20l4-4h16V2H2z" />
+                        </svg>
+                        {request.commentsCount}
+                    </span>
+                ) : null}
+            </div>
+
+            <div className="mt-3 flex items-center justify-between text-[11px] text-gray-500">
+                {request.createdDate ? <span>Oluşturma: {request.createdDate}</span> : <span />}
+                {request.updatedDate ? <span>Güncelleme: {request.updatedDate}</span> : null}
+            </div>
+        </div>
     )
 }

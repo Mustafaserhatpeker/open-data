@@ -1,58 +1,43 @@
-import DataCard, { type Dataset } from "./inner-components/DataCard"
+import DataRequestCard, { type DataRequestCardModel } from "./inner-components/DataCard"
 import {
-    datasets as dummyDatasets,
+    dataRequests as dataRequestsList,
     organizations,
-    categories as categoriesList,
-    tags as tagsList,
+    users,
 } from "@/dummy/dummy.data"
-import type { Dataset as DummyDataset } from "@/lib/types"
+import type { DataRequest } from "@/lib/types"
 
-function resolveOrganizationName(d: DummyDataset): string | undefined {
-    return d.organization?.name ?? organizations.find((o) => o.id === d.organizationId)?.name
+function resolveOrganizationNameById(orgId?: string): string | undefined {
+    if (!orgId) return undefined
+    return organizations.find((o) => o.id === orgId)?.name
 }
 
-function resolveCategoryName(d: DummyDataset): string | undefined {
-    const firstCatId = d.categories?.[0]
-    if (!firstCatId) return undefined
-    return categoriesList.find((c) => c.id === firstCatId)?.name
+function resolveUserNameById(userId?: string): string | undefined {
+    if (!userId) return undefined
+    const u = users.find((x) => x.id === userId)
+    return u?.fullName || u?.username
 }
 
-function resolveTagNames(d: DummyDataset): string[] | undefined {
-    if (!d.tags || d.tags.length === 0) return undefined
-    const names = d.tags
-        .map((id) => tagsList.find((t) => t.id === id)?.name)
-        .filter((x): x is string => Boolean(x))
-    return names.length ? names : undefined
-}
-
-function resolveDatatype(d: DummyDataset): string {
-    // Öncelik: formats[0] -> resource[0].format -> "Unknown"
-    if (d.formats && d.formats.length > 0) return d.formats[0]
-    if (d.resources && d.resources.length > 0) return d.resources[0].format
-    return "Unknown"
-}
-
-function toCardDataset(d: DummyDataset): Dataset {
+function toCardDataRequest(dr: DataRequest): DataRequestCardModel {
     return {
-        id: d.id,
-        title: d.title,
-        description: d.description,
-        datatype: resolveDatatype(d),
-        organization: resolveOrganizationName(d),
-        category: resolveCategoryName(d),
-        tags: resolveTagNames(d),
-        createdDate: d.createdAt,
-        updatedDate: d.updatedAt,
+        id: dr.id,
+        title: dr.title,
+        description: dr.description,
+        status: dr.status,
+        organization: resolveOrganizationNameById(dr.organizationId),
+        requestedBy: resolveUserNameById(dr.requestedBy),
+        createdDate: dr.createdAt,
+        updatedDate: dr.updatedAt,
+        commentsCount: dr.commentsCount ?? dr.comments?.length,
     }
 }
 
 export default function DatarequestCards() {
-    const data: Dataset[] = dummyDatasets.map(toCardDataset)
+    const data: DataRequestCardModel[] = dataRequestsList.map(toCardDataRequest)
 
     return (
         <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-2">
-            {data.map((dataset) => (
-                <DataCard key={dataset.id} dataset={dataset} />
+            {data.map((request) => (
+                <DataRequestCard key={request.id} request={request} />
             ))}
         </div>
     )
