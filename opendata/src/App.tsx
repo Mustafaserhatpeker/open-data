@@ -10,6 +10,7 @@ import { DeviceTypeProvider } from "@/contexts/DeviceTypeContext";
 import OrganizationInfo from "./pages/OrganizationInfo/OrganizationInfo";
 import CategoryInfo from "./pages/CategoryInfo/CategoryInfo";
 import Datarequests from "./pages/Datarequests/Datarequests";
+import RequestInfo from "./pages/RequestInfo/ReguestInfo";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/categories/:id" element={<CategoryInfo />} />
             <Route path="/datarequests" element={<Datarequests />} />
+            <Route path="/datarequests/:id" element={<RequestInfo />} />
           </Route>
         </Routes>
       </BrowserRouter>
