@@ -32,16 +32,7 @@ export default function MavigationMenu() {
             <Link to="/docs" className="text-[#221A4C]">Veri İsteği</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs" className="text-[#221A4C]">Giriş Yap</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs" className="text-[#221A4C]">Üye Ol</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+
       </NavigationMenuList>
     </NavigationMenu>
   );

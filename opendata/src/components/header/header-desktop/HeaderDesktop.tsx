@@ -1,5 +1,3 @@
-import { Facebook, Instagram } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
 
 import NavigationMenu from "../inner-components/NavigationMenu";
 import Logo from "@/assets/logo.png";
@@ -23,14 +21,15 @@ function Header() {
       <NavigationMenu />
       <div className=" flex flex-row items-center justify-end">
         <div className="flex flex-row items-center gap-2 pr-4  border-gray-800">
-          <Button variant="ghost">
-            <Instagram />
+          <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
+            <a href="login" rel="noopener noreferrer">
+              Giriş Yap
+            </a>
           </Button>
-          <Button variant="ghost">
-            <Facebook />
-          </Button>
-          <Button variant="ghost">
-            <FaWhatsapp size={26} />
+          <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
+            <a href="register" rel="noopener noreferrer">
+              Üye Ol
+            </a>
           </Button>
         </div>
 
