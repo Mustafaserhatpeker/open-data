@@ -91,7 +91,7 @@ function App() {
                 }
               />
               <Route
-                path="/login"
+                path="/register"
                 element={
                   <RedirectAuthenticated>
                     <RegisterPage />
