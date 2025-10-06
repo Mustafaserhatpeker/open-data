@@ -12,6 +12,8 @@ import CategoryInfo from "./pages/CategoryInfo/CategoryInfo";
 import Datarequests from "./pages/Datarequests/Datarequests";
 import RequestInfo from "./pages/RequestInfo/ReguestInfo";
 import Auth from "./pages/Auth/Auth";
+import LoginPage from "./pages/Login/LoginPage";
+import RegisterPage from "./pages/Register/RegisterPage";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/datarequests" element={<Datarequests />} />
             <Route path="/datarequests/:id" element={<RequestInfo />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Route>
 
         </Routes>
