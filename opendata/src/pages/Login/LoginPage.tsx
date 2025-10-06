@@ -22,12 +22,9 @@ const formSchema = z
 
     email: z.string().email(),
     password: z.string().min(1, { message: "Şifre Zorunludur" }),
-    confirmPassword: z.string().min(1, { message: "Şifre Zorunludur" }),
+
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Şifreler eşleşmiyor",
-    path: ["confirmPassword"],
-  });
+
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -39,11 +36,11 @@ const LoginPage = () => {
     defaultValues: {
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    console.log("aaa");
     await login(data.email, data.password);
     if (isAuthenticated) {
       navigate("/");
