@@ -39,21 +39,18 @@ const ProtectedUserRoute = ({ children }: { children: any }) => {
   return children;
 }
 
-const RedirectAuthenticatedUser = ({ children }: { children: any }) => {
+const RedirectAuthenticated = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
   if (isAuthenticated && role === "user") {
     return <Navigate to="/userdashboard" replace />;
   }
-  return children;
-};
-
-const RedirectAuthenticatedOrganizator = ({ children }: { children: any }) => {
-  const { isAuthenticated, role } = useAuthStore();
-  if (isAuthenticated && role === "organization") {
+  else if (isAuthenticated && role === "organization") {
     return <Navigate to="/dashboard" replace />;
   }
   return children;
-}
+};
+
+
 
 function App() {
 
@@ -88,12 +85,19 @@ function App() {
               <Route
                 path="/login"
                 element={
-                  <RedirectAuthenticatedUser>
+                  <RedirectAuthenticated>
                     <LoginPage />
-                  </RedirectAuthenticatedUser>
+                  </RedirectAuthenticated>
                 }
               />
-              <Route path="/register" element={<RegisterPage />} />
+              <Route
+                path="/login"
+                element={
+                  <RedirectAuthenticated>
+                    <RegisterPage />
+                  </RedirectAuthenticated>
+                }
+              />
             </Route>
 
             <Route
