@@ -60,7 +60,9 @@ function App() {
   const { checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
+
     checkAuth();
+
   }, [checkAuth]);
 
 
@@ -92,8 +94,6 @@ function App() {
                 }
               />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/userdashboard" element={<UserDashboard />} />
             </Route>
 
             <Route
