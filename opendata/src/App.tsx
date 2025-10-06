@@ -5,7 +5,6 @@ import Datasets from "./pages/Datasets/Datasets";
 import DataInfo from "./pages/DataInformation/DataInfo";
 import Organizations from "./pages/Organizations/Organizations";
 import Categories from "./pages/Categories/Categories";
-
 import { DeviceTypeProvider } from "@/contexts/DeviceTypeContext";
 import OrganizationInfo from "./pages/OrganizationInfo/OrganizationInfo";
 import CategoryInfo from "./pages/CategoryInfo/CategoryInfo";
