@@ -103,7 +103,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   const order = useRef<number[]>(Array.from({ length: childArr.length }, (_, i) => i));
 
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-  const intervalRef = useRef<number>();
+  const intervalRef = useRef<number>(1);
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
