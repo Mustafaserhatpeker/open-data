@@ -10,7 +10,6 @@ import OrganizationInfo from "./pages/OrganizationInfo/OrganizationInfo";
 import CategoryInfo from "./pages/CategoryInfo/CategoryInfo";
 import Datarequests from "./pages/Datarequests/Datarequests";
 import RequestInfo from "./pages/RequestInfo/ReguestInfo";
-import Auth from "./pages/Auth/Auth";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -80,7 +79,6 @@ function App() {
               <Route path="/categories/:id" element={<CategoryInfo />} />
               <Route path="/datarequests" element={<Datarequests />} />
               <Route path="/datarequests/:id" element={<RequestInfo />} />
-              <Route path="/auth" element={<Auth />} />
               <Route
                 path="/login"
                 element={
