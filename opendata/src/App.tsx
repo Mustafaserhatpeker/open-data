@@ -28,6 +28,7 @@ const ProtectedOrganizatorRoute = ({ children }: { children: any }) => {
 
   return children;
 };
+
 const ProtectedUserRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
   if (!isAuthenticated || role !== "user") {
