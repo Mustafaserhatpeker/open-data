@@ -13,7 +13,7 @@ import RequestInfo from "./pages/RequestInfo/ReguestInfo";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import UserDashboard from "./pages/Dashboard/UserDashboard";
+import UserDashboard from "./pages/UserDashboard/UDashboard";
 import { useAuthStore } from "./stores/auth.store";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
