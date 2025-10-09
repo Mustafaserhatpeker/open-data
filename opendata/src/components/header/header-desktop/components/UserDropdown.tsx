@@ -42,7 +42,6 @@ export default function UserDropdown() {
                     }>
                         Kullanıcı Panelim
                     </DropdownMenuItem>
-
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
