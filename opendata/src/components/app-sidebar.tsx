@@ -7,6 +7,7 @@ import {
   GalleryVerticalEnd,
   SquareTerminal,
 } from "lucide-react"
+import LLogo from "@/assets/llogo.png"
 
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
@@ -20,6 +21,12 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
+function LogoIcon() {
+  return <img src={LLogo} alt="Logo" width={16} height={16} />
+}
+
+// data.teams
+
 // This is sample data.
 const data = {
   user: {
@@ -29,10 +36,10 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
+      name: "Trtek Yazılım",
+      logo: LogoIcon,
+      plan: "Admin Paneli",
+    }
   ],
   navMain: [
     {
