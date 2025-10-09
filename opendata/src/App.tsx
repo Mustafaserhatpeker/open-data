@@ -59,7 +59,6 @@ function App() {
       <BrowserRouter>
         <RouteTrackerProvider>
           <Routes>
-            {/* Public routes (layoutlu) */}
             <Route element={<DefaultLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/datasets" element={<Datasets />} />

@@ -43,7 +43,7 @@ const LoginPage = () => {
     console.log("aaa");
     await login(data.email, data.password);
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/dashboard");
     }
   };
 
