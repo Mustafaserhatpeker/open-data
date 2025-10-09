@@ -2,9 +2,7 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
   Bot,
-  Command,
   Frame,
   GalleryVerticalEnd,
   SquareTerminal,
