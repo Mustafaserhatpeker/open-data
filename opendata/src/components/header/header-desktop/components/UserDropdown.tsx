@@ -8,8 +8,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useAuthStore } from "@/stores/auth.store";
+
 
 export default function UserDropdown() {
+    const { logout } = useAuthStore();
     const email = localStorage.getItem("email") || "";
     return (
         <DropdownMenu>
@@ -39,7 +42,7 @@ export default function UserDropdown() {
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>
                     Çıkış Yap
                 </DropdownMenuItem>
             </DropdownMenuContent>
