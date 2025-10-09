@@ -5,6 +5,8 @@ import Logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useThemeContext } from "@/contexts/ThemeContext";
 import { useAuthStore } from "@/stores/auth.store";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import UserDropdown from "./components/UserDropdown";
 
 function Header() {
   const { theme } = useThemeContext();
@@ -25,7 +27,7 @@ function Header() {
         <div className="flex flex-row items-center gap-2 pr-4  border-gray-800">
 
           {isAuthenticated ? (
-            <a href="/dashboard">Dashboard</a>
+            <UserDropdown />
           ) : (
             <>
               <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
