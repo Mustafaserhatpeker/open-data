@@ -59,6 +59,7 @@ function App() {
       <BrowserRouter>
         <RouteTrackerProvider>
           <Routes>
+            {/* Public routes (layoutlu) */}
             <Route element={<DefaultLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/datasets" element={<Datasets />} />
@@ -87,15 +88,15 @@ function App() {
               />
             </Route>
 
+            {/* Protected routes (layout’suz) */}
             <Route
+              path="/dashboard"
               element={
                 <ProtectedRoute>
-                  <DefaultLayout />
+                  <MainDashboard />
                 </ProtectedRoute>
               }
-            >
-              <Route path="/dashboard" element={<MainDashboard />} />
-            </Route>
+            />
 
 
           </Routes>
