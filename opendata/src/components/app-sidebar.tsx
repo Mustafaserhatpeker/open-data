@@ -3,14 +3,10 @@
 import * as React from "react"
 import {
   AudioWaveform,
-  BookOpen,
   Bot,
   Command,
   Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
   SquareTerminal,
 } from "lucide-react"
 
@@ -39,119 +35,54 @@ const data = {
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Organizasyonlarım",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "A Organizasyon",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "B Organizasyon",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "C Organizasyon",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Tüm Kategoriler",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "A Kategori",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "B Kategori",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "C Kategori",
           url: "#",
         },
       ],
     },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
+
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Veri İstekleri",
       url: "#",
       icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 }
