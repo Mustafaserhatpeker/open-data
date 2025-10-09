@@ -2,9 +2,9 @@ import { useDeviceTypeContext } from "@/contexts/DeviceTypeContext";
 import DashboardDesktop from "./dashboard-desktop/DashboardDesktop";
 import DashboardMobile from "./dashboard-mobile/DashboardMobile";
 
-function UDashboard() {
+function Dashboard() {
     const deviceType = useDeviceTypeContext();
     return deviceType === "mobile" ? <DashboardMobile /> : <DashboardDesktop />;
 }
 
-export default UDashboard;
+export default Dashboard;

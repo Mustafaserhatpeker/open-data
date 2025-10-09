@@ -12,26 +12,18 @@ import Datarequests from "./pages/Datarequests/Datarequests";
 import RequestInfo from "./pages/RequestInfo/ReguestInfo";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import UserDashboard from "./pages/UserDashboard/UDashboard";
 import { useAuthStore } from "./stores/auth.store";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { RouteTrackerProvider } from "./contexts/RouteTrackContext";
+import MainDashboard from "./pages/MainDashboard/MainDashboard";
 
 
-const ProtectedOrganizatorRoute = ({ children }: { children: any }) => {
+
+
+const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
-  if (!isAuthenticated || role !== "organization") {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
-};
-
-const ProtectedUserRoute = ({ children }: { children: any }) => {
-  const { isAuthenticated, role } = useAuthStore();
-  if (!isAuthenticated || role !== "user") {
+  if (!isAuthenticated || (role !== "user" && role !== "organization")) {
     return <Navigate to="/login" replace />;
   }
 
@@ -40,10 +32,7 @@ const ProtectedUserRoute = ({ children }: { children: any }) => {
 
 const RedirectAuthenticated = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
-  if (isAuthenticated && role === "user") {
-    return <Navigate to="/userdashboard" replace />;
-  }
-  else if (isAuthenticated && role === "organization") {
+  if (isAuthenticated && (role !== "user" && role !== "organization")) {
     return <Navigate to="/dashboard" replace />;
   }
   return children;
@@ -100,23 +89,15 @@ function App() {
 
             <Route
               element={
-                <ProtectedOrganizatorRoute>
+                <ProtectedRoute>
                   <DefaultLayout />
-                </ProtectedOrganizatorRoute>
+                </ProtectedRoute>
               }
             >
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<MainDashboard />} />
             </Route>
 
-            <Route
-              element={
-                <ProtectedUserRoute>
-                  <DefaultLayout />
-                </ProtectedUserRoute>
-              }
-            >
-              <Route path="/userdashboard" element={<UserDashboard />} />
-            </Route>
+
           </Routes>
         </RouteTrackerProvider>
       </BrowserRouter>

@@ -1,8 +1,26 @@
+import { useAuthStore } from "@/stores/auth.store";
+import { Navigate } from "react-router-dom";
+import Dashboard from "@/pages/Dashboard/Dashboard";
+import UDashboard from "@/pages/UserDashboard/UDashboard";
 
 function MainDashboardDesktop() {
-    return (
-        <div>MainDashboardDesktop</div>
-    )
+    // ✅ Hook burada, ana bileşenin üst düzeyinde
+    const { isAuthenticated, role } = useAuthStore();
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    if (role === "user") {
+        return <UDashboard />;
+    }
+
+    if (role === "organization") {
+        return <Dashboard />;
+    }
+
+    // (opsiyonel: bilinmeyen rol durumunda)
+    return <Navigate to="/login" replace />;
 }
 
-export default MainDashboardDesktop
+export default MainDashboardDesktop;
