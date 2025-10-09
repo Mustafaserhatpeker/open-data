@@ -47,7 +47,6 @@ export default function UserDropdown() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                     Çıkış Yap
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
