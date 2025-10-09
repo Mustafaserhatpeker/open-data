@@ -19,7 +19,6 @@ function MainDashboardDesktop() {
         return <Dashboard />;
     }
 
-    // (opsiyonel: bilinmeyen rol durumunda)
     return <Navigate to="/login" replace />;
 }
 
