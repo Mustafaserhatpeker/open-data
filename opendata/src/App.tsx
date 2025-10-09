@@ -32,9 +32,11 @@ const ProtectedRoute = ({ children }: { children: any }) => {
 
 const RedirectAuthenticated = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
-  if (isAuthenticated && (role !== "user" && role !== "organization")) {
+
+  if (isAuthenticated && (role === "user" || role === "organization")) {
     return <Navigate to="/dashboard" replace />;
   }
+
   return children;
 };
 
