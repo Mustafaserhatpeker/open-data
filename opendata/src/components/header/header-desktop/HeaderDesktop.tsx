@@ -4,9 +4,11 @@ import Logo from "@/assets/logo.png";
 // import Switch from "@/components/theme-switch/Switch";
 import { Button } from "@/components/ui/button";
 import { useThemeContext } from "@/contexts/ThemeContext";
+import { useAuthStore } from "@/stores/auth.store";
 
 function Header() {
   const { theme } = useThemeContext();
+  const { isAuthenticated } = useAuthStore();
   return (
     <div className="w-full flex flex-row justify-between cursor-pointer py-4  px-8 ">
       <div onClick={
@@ -21,16 +23,24 @@ function Header() {
       <NavigationMenu />
       <div className=" flex flex-row items-center justify-end">
         <div className="flex flex-row items-center gap-2 pr-4  border-gray-800">
-          <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
-            <a href="/login" >
-              Giriş Yap
-            </a>
-          </Button>
-          <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
-            <a href="/register" >
-              Üye Ol
-            </a>
-          </Button>
+
+          {isAuthenticated ? (
+            <a href="/dashboard">Dashboard</a>
+          ) : (
+            <>
+              <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
+                <a href="/login" >
+                  Giriş Yap
+                </a>
+              </Button>
+              <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
+                <a href="/register" >
+                  Üye Ol
+                </a>
+              </Button>
+            </>
+          )}
+
         </div>
 
 
@@ -38,7 +48,7 @@ function Header() {
           <Switch />
         </div> */}
       </div>
-    </div>
+    </div >
   );
 }
 
