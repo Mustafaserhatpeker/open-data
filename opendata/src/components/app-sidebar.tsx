@@ -4,7 +4,6 @@ import * as React from "react"
 import {
   Bot,
   Frame,
-  GalleryVerticalEnd,
   SquareTerminal,
 } from "lucide-react"
 import LLogo from "@/assets/llogo.png"
