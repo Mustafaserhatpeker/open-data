@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import Home from "@/pages/Home/Home";
 import Datasets from "./pages/Datasets/Datasets";
