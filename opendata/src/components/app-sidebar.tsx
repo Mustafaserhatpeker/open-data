@@ -85,7 +85,7 @@ const data = {
   projects: [
     {
       name: "Veri İstekleri",
-      url: "#",
+      url: "/dashboard/datarequests",
       icon: Frame,
     },
     {

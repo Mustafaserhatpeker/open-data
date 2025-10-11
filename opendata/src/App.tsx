@@ -23,6 +23,8 @@ import OrganizationsGuarded from "./pages/Guarded/Organizations/Organizations";
 import CategoriesGuarded from "./pages/Guarded/Categories/Categories";
 import OrganizationInfoGuarded from "./pages/Guarded/OrganizationInfo/OrganizationInfo";
 import CategoryInfoGuarded from "./pages/Guarded/CategoryInfo/CategoryInfo";
+import DatarequestsGuarded from "./pages/Guarded/Datarequests/Datarequests";
+import RequestInfoGuarded from "./pages/Guarded/RequestInfo/ReguestInfo";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
@@ -92,6 +94,8 @@ function App() {
               <Route path="categories" element={<CategoriesGuarded />} />
               <Route path="organizations/:id" element={<OrganizationInfoGuarded />} />
               <Route path="categories/:id" element={<CategoryInfoGuarded />} />
+              <Route path="datarequests" element={<DatarequestsGuarded />} />
+              <Route path="datarequests/:id" element={<RequestInfoGuarded />} />
             </Route>
           </Routes>
         </RouteTrackerProvider>
