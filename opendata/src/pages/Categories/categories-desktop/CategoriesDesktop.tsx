@@ -1,10 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  categories as cats,
-  datasets as allDatasets,
-} from "@/dummy/dummy.data";
 import type { Category } from "@/lib/types";
 
 import {
@@ -40,42 +36,57 @@ function toTime(s?: string) {
 
 type SortKey = "name" | "datasets" | "recent";
 
+type ApiCategory = {
+  _id?: string;
+  id?: string;
+  name?: string;
+  categoryName?: string;
+  description?: string;
+  datasetCount?: number;
+  datasetsCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export default function CategoriesDesktop() {
   const [query, setQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortKey>("name");
 
-  const { data: categories } = useQuery({
+  const { data: categoriesResp } = useQuery({
     queryKey: ["categories"],
     queryFn: () => getCategories(),
   });
 
-  // Derive dataset counts from datasets to stay consistent with future API
-  const categoryCounts = useMemo(() => {
-    const map = new Map<string, number>();
-    for (const d of allDatasets) {
-      for (const cid of d.categories ?? []) {
-        map.set(cid, (map.get(cid) ?? 0) + 1);
-      }
-    }
-    return map;
-  }, []);
+  // API'nin döndürdüğü veriyi uygulama içi Category tipine map ediyoruz
+  const categories: Category[] = useMemo(() => {
+    const apiData: ApiCategory[] = (categoriesResp as any)?.data ?? [];
+    return (apiData ?? []).map((c) => ({
+      id: c._id ?? c.id ?? "",
+      name: c.name ?? c.categoryName ?? "",
+      description: c.description ?? "",
+      // Uygulama içi beklenen alan adı datasetsCount olabilir; her iki ismi de destekleyelim
+      datasetsCount: c.datasetCount ?? c.datasetsCount ?? 0,
+      createdAt: c.createdAt,
+      updatedAt: c.updatedAt,
+    }));
+  }, [categoriesResp]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLocaleLowerCase("tr");
     const base = q
-      ? cats.filter((c) => {
-          const hay = `${c.name} ${c.description ?? ""}`.toLocaleLowerCase(
-            "tr"
-          );
-          return hay.includes(q);
-        })
-      : cats.slice();
+      ? categories.filter((c) => {
+        const hay = `${c.name} ${c.description ?? ""}`.toLocaleLowerCase(
+          "tr"
+        );
+        return hay.includes(q);
+      })
+      : categories.slice();
 
     base.sort((a, b) => {
       switch (sortBy) {
         case "datasets": {
-          const ac = categoryCounts.get(a.id) ?? 0;
-          const bc = categoryCounts.get(b.id) ?? 0;
+          const ac = a.datasetsCount ?? 0;
+          const bc = b.datasetsCount ?? 0;
           return bc - ac;
         }
         case "recent": {
@@ -90,7 +101,7 @@ export default function CategoriesDesktop() {
     });
 
     return base;
-  }, [query, sortBy, categoryCounts]);
+  }, [query, sortBy, categories]);
 
   return (
     <div className="w-full bg-accent px-4 py-6 min-h-screen">
@@ -106,7 +117,7 @@ export default function CategoriesDesktop() {
             </div>
 
             <div className="hidden sm:flex items-center gap-2">
-              <Badge variant="secondary">Toplam: {cats.length}</Badge>
+              <Badge variant="secondary">Toplam: {categories.length}</Badge>
             </div>
           </div>
 
@@ -148,13 +159,13 @@ export default function CategoriesDesktop() {
         {/* Grid */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((cat: Category) => {
-            const count = categoryCounts.get(cat.id) ?? cat.datasetsCount ?? 0;
+            const count = cat.datasetsCount ?? 0;
             const latest = Math.max(
               toTime(cat.updatedAt),
               toTime(cat.createdAt)
             );
             const latestText = latest
-              ? new Date(latest).toLocaleDateString()
+              ? new Date(latest).toLocaleDateString("tr-TR")
               : "-";
 
             return (

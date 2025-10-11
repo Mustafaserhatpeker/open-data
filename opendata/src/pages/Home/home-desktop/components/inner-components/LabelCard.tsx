@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const LabelCard = () => {
+const LabelCard = (
+  { category }: { category: any }
+) => {
   return (
     <StyledWrapper>
       <div className="e-card playing">
@@ -24,9 +26,11 @@ const LabelCard = () => {
         19.8922 11.8742V14.7235C19.8922 15.2278 19.7589 15.7254 19.5119 16.1662C18.7615 15.3596 17.6806 14.8528
          16.4783 14.8528C14.2136 14.8528 12.3781 16.6466 12.3781 18.8598C12.3781 19.3937 12.4861 19.9021 12.68
          20.3676C11.9347 20.5316 11.1396 20.4203 10.4684 20.0413H10.4676Z" /></svg><br />
-          UI / EX Designer
+          {category.categoryName}
           <br />
-          <div className="name">MikeAndrewDesigner</div>
+          <div className="name">
+            {category.datasetCount} Veri Seti
+          </div>
         </div>
       </div>
     </StyledWrapper>
