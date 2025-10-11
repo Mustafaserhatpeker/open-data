@@ -22,7 +22,7 @@ const chartData = [
     { month: "A Organizasyon", desktop: 186, mobile: 80 },
     { month: "B Organizasyon", desktop: 305, mobile: 200 },
     { month: "C Organizasyon", desktop: 237, mobile: 120 },
-    { month: "D Organizasyon", desktop: 73, mobile: 190 },
+    { month: "D Organizasyon", desktop: 100, mobile: 190 },
     { month: "E Organizasyon", desktop: 209, mobile: 130 },
     { month: "F Organizasyon", desktop: 214, mobile: 140 },
 ]
@@ -97,7 +97,7 @@ export function OrganizationChart() {
                     </BarChart>
                 </ChartContainer>
             </CardContent>
-           
+
         </Card>
     )
 }
