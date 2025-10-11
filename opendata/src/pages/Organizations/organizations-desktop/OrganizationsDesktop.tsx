@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 
-import { organizations as orgs } from "@/dummy/dummy.data"
 import type { Organization } from "@/lib/types"
 
 import {
@@ -24,12 +23,9 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-import {
-    Building2,
-    FolderClosed,
-    Globe,
-    Mail,
-} from "lucide-react"
+import { Building2, FolderClosed, Globe, Mail } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
+import { getOrganizations } from "@/services/organization.service"
 
 function getInitials(name?: string) {
     if (!name) return "ORG"
@@ -41,19 +37,59 @@ function getInitials(name?: string) {
 
 type SortKey = "name" | "datasets" | "followers"
 
+type ApiOrganization = {
+    _id?: string
+    id?: string
+    name?: string
+    organizationName?: string
+    description?: string
+    logoUrl?: string
+    websiteUrl?: string
+    website?: string
+    contactEmail?: string
+    datasetCount?: number
+    datasetsCount?: number
+    followersCount?: number
+    createdAt?: string
+    updatedAt?: string
+}
+
 export default function OrganizationsDesktop() {
     const [query, setQuery] = useState("")
     const [sortBy, setSortBy] = useState<SortKey>("name")
 
+    const { data: organizationsResp } = useQuery({
+        queryKey: ["organizations"],
+        queryFn: () => getOrganizations(),
+    })
+
+    // API -> Organization tipine map
+    const organizations: Organization[] = useMemo(() => {
+        const apiData: ApiOrganization[] = (organizationsResp as any)?.data ?? []
+        return (apiData ?? []).map((o) => ({
+            id: o._id ?? o.id ?? "",
+            name: o.name ?? o.organizationName ?? "",
+            description: o.description ?? "",
+            logoUrl: o.logoUrl ?? "",
+            // UI 'website' bekliyor, API 'websiteUrl' veriyor
+            website: o.websiteUrl ?? o.website ?? "",
+            contactEmail: o.contactEmail ?? "",
+            datasetsCount: o.datasetCount ?? o.datasetsCount ?? 0,
+            followersCount: o.followersCount ?? 0,
+            createdAt: o.createdAt,
+            updatedAt: o.updatedAt,
+        })) as Organization[]
+    }, [organizationsResp])
+
     const filtered = useMemo(() => {
-        const q = query.trim().toLocaleLowerCase()
+        const q = query.trim().toLocaleLowerCase("tr")
         const base = q
-            ? orgs.filter(
+            ? organizations.filter(
                 (o) =>
-                    o.name.toLocaleLowerCase().includes(q) ||
-                    o.description.toLocaleLowerCase().includes(q)
+                    (o.name ?? "").toLocaleLowerCase("tr").includes(q) ||
+                    (o.description ?? "").toLocaleLowerCase("tr").includes(q)
             )
-            : orgs.slice()
+            : organizations.slice()
 
         base.sort((a, b) => {
             switch (sortBy) {
@@ -63,12 +99,12 @@ export default function OrganizationsDesktop() {
                     return (b.followersCount ?? 0) - (a.followersCount ?? 0)
                 case "name":
                 default:
-                    return a.name.localeCompare(b.name, "tr")
+                    return (a.name ?? "").localeCompare(b.name ?? "", "tr")
             }
         })
 
         return base
-    }, [query, sortBy])
+    }, [query, sortBy, organizations])
 
     return (
         <div className="w-full bg-accent px-4 py-6 min-h-screen">
@@ -85,7 +121,7 @@ export default function OrganizationsDesktop() {
 
                         <div className="hidden sm:flex items-center gap-2">
                             <Badge variant="secondary">
-                                Toplam: {orgs.length}
+                                Toplam: {organizations.length}
                             </Badge>
                         </div>
                     </div>
@@ -115,8 +151,12 @@ export default function OrganizationsDesktop() {
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="name">Ada göre (A-Z)</SelectItem>
-                                        <SelectItem value="datasets">Veri seti sayısı (çoktan aza)</SelectItem>
-                                        <SelectItem value="followers">Takipçi (çoktan aza)</SelectItem>
+                                        <SelectItem value="datasets">
+                                            Veri seti sayısı (çoktan aza)
+                                        </SelectItem>
+                                        <SelectItem value="followers">
+                                            Takipçi (çoktan aza)
+                                        </SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -129,9 +169,13 @@ export default function OrganizationsDesktop() {
                 {/* Grid */}
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {filtered.map((org: Organization) => (
-                        <Card onClick={
-                            () => { window.location.href = `/organizations/${org.id}` }
-                        } key={org.id} className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer">
+                        <Card
+                            onClick={() => {
+                                window.location.href = `/organizations/${org.id}`
+                            }}
+                            key={org.id}
+                            className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer"
+                        >
                             <CardHeader className="pb-3">
                                 <div className="flex items-start gap-3">
                                     <Avatar className="h-12 w-12 rounded-lg">
@@ -160,7 +204,6 @@ export default function OrganizationsDesktop() {
                                             <span className="font-medium">{org.datasetsCount ?? 0}</span>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 {/* Actions */}
@@ -173,7 +216,10 @@ export default function OrganizationsDesktop() {
                                             }}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className={`inline-flex items-center gap-1.5 ${org.website ? "text-foreground hover:underline" : "text-muted-foreground cursor-default"}`}
+                                            className={`inline-flex items-center gap-1.5 ${org.website
+                                                    ? "text-foreground hover:underline"
+                                                    : "text-muted-foreground cursor-default"
+                                                }`}
                                             title={org.website ? "Web sitesine git" : "Web sitesi yok"}
                                         >
                                             <Globe className="h-4 w-4" />
@@ -184,7 +230,10 @@ export default function OrganizationsDesktop() {
                                             onClick={(e) => {
                                                 if (!org.contactEmail) e.preventDefault()
                                             }}
-                                            className={`inline-flex items-center gap-1.5 ${org.contactEmail ? "text-foreground hover:underline" : "text-muted-foreground cursor-default"}`}
+                                            className={`inline-flex items-center gap-1.5 ${org.contactEmail
+                                                    ? "text-foreground hover:underline"
+                                                    : "text-muted-foreground cursor-default"
+                                                }`}
                                             title={org.contactEmail ? "E-posta gönder" : "E-posta yok"}
                                         >
                                             <Mail className="h-4 w-4" />
