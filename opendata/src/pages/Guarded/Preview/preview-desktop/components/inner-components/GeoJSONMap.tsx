@@ -10,7 +10,7 @@ interface Props {
     height?: number;
 }
 
-export const GeoJSONMap: React.FC<Props> = ({ geojson, className, height = 480 }) => {
+export const GeoJSONMap: React.FC<Props> = ({ geojson, className, height = 720 }) => {
     const [ready, setReady] = useState(false);
     const mapRef = useRef<any>(null);
 
