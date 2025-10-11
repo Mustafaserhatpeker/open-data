@@ -91,7 +91,6 @@ function App() {
               />
             </Route>
 
-            {/* Dashboard (guarded) layout */}
             <Route
               path="/dashboard"
               element={
