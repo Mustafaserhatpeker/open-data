@@ -23,6 +23,9 @@ export default function MavigationMenu() {
           <Link to="/organizations" className="text-[#221A4C]">Organizasyonlar</Link>
         </NavigationMenuLink>
         <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+          <Link to="/statistics" className="text-[#221A4C]">İstatistikler</Link>
+        </NavigationMenuLink>
+        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
           <Link to="/categories" className="text-[#221A4C]">Kategoriler</Link>
         </NavigationMenuLink>
         <NavigationMenuItem>

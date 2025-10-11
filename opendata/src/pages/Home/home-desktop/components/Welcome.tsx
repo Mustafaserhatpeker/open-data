@@ -118,7 +118,7 @@ function Welcome() {
             rotationInterval={2000}
           />
         </h1>
-        <h1 className="text-center text-[#221A4C] max-w-7xl px-4 mt-12 font-extrabold text-7xl">
+        <h1 className="text-center text-[#221A4C] max-w-[80%] px-4 mt-12 font-extrabold text-7xl">
           Kocaeli Büyükşehir Belediyesi&apos;nin açık veri portalına hoş geldiniz!
 
         </h1>

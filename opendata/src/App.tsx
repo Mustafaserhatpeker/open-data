@@ -18,6 +18,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import { RouteTrackerProvider } from "./contexts/RouteTrackContext";
 import MainDashboard from "./pages/Guarded/MainDashboard/MainDashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
+import StaticsDesktop from "./pages/Statistics/statics-desktop/StaticsDesktop";
 
 import OrganizationsGuarded from "./pages/Guarded/Organizations/Organizations";
 import CategoriesGuarded from "./pages/Guarded/Categories/Categories";
@@ -69,6 +70,7 @@ function App() {
               <Route path="/categories/:id" element={<CategoryInfo />} />
               <Route path="/datarequests" element={<Datarequests />} />
               <Route path="/datarequests/:id" element={<RequestInfo />} />
+              <Route path="/statistics" element={<StaticsDesktop />} />
               <Route
                 path="/login"
                 element={

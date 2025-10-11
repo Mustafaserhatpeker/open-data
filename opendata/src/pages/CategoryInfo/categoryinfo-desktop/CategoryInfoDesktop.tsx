@@ -216,7 +216,7 @@ export default function CategoryInfo() {
 
     return (
         <div className="w-full bg-accent px-4 py-6">
-            <div className="mx-auto w-full max-w-7xl">
+            <div className="mx-auto w-full max-w-[80%]">
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
                     <BackButton />

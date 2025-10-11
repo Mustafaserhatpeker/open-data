@@ -5,7 +5,6 @@ import Logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useThemeContext } from "@/contexts/ThemeContext";
 import { useAuthStore } from "@/stores/auth.store";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import UserDropdown from "./components/UserDropdown";
 
 function Header() {
