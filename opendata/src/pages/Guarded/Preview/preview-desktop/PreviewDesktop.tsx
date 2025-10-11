@@ -2,6 +2,7 @@ import { FilePicker } from "./components/inner-components/FilePicker";
 import { PreviewRenderer } from "./components/PreviewRenderer";
 import { PreviewToolbar } from "./components/inner-components/PreviewToolbar";
 import { useFilePreview } from "../hooks/useFilePreview";
+import BackButton from "@/components/back-button";
 
 function PreviewDesktop() {
     const { state, onFileSelect, reset, downloadUrl } = useFilePreview();
@@ -9,10 +10,11 @@ function PreviewDesktop() {
     return (
         <div className="w-full bg-accent">
             <div className="w-full h-full  mx-auto p-4 space-y-4">
+
+                <BackButton />
                 <div className="text-2xl font-semibold">
                     Dosya Önizleme
                 </div>
-
                 {!state.file && (
                     <FilePicker onSelect={onFileSelect} />
                 )}
