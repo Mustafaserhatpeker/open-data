@@ -17,7 +17,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 
-import { FolderClosed, CalendarClock } from "lucide-react"
+import { FolderClosed, CalendarClock, Plus } from "lucide-react"
 
 function getInitials(name?: string) {
     if (!name) return "CT"
@@ -141,8 +141,8 @@ export default function CategoriesDesktop() {
                                     () => { window.location.href = `/dashboard/categories/${cat.id}` }
                                 }
                                 key={cat.id} className="h-full overflow-hidden border border-border/60 cursor-pointer">
-                                <CardHeader className="pb-3">
-                                    <div className="flex items-start gap-3">
+                                <CardHeader className="pb-3 flex items-center justify-between  w-full">
+                                    <div className="flex items-center gap-3 ">
                                         <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">
                                             <AvatarFallback className="rounded-lg">{getInitials(cat.name)}</AvatarFallback>
                                         </Avatar>
@@ -152,7 +152,16 @@ export default function CategoriesDesktop() {
                                                 <CardDescription className="mt-1 line-clamp-2">{cat.description}</CardDescription>
                                             ) : null}
                                         </div>
+
                                     </div>
+                                    <Button onClick={
+                                        (e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                        }
+                                    } variant={"outline"}>
+                                        <Plus /> Veri Seti Ekle
+                                    </Button>
                                 </CardHeader>
 
                                 <CardContent className="space-y-4">
