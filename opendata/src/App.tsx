@@ -21,6 +21,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import StaticsDesktop from "./pages/Statistics/statics-desktop/StaticsDesktop";
 import Preview from "./pages/Preview/Preview";
 
+
 import OrganizationsGuarded from "./pages/Guarded/Organizations/Organizations";
 import CategoriesGuarded from "./pages/Guarded/Categories/Categories";
 import OrganizationInfoGuarded from "./pages/Guarded/OrganizationInfo/OrganizationInfo";
@@ -28,6 +29,7 @@ import CategoryInfoGuarded from "./pages/Guarded/CategoryInfo/CategoryInfo";
 import DatarequestsGuarded from "./pages/Guarded/Datarequests/Datarequests";
 import RequestInfoGuarded from "./pages/Guarded/RequestInfo/ReguestInfo";
 import DataInfoGuarded from "./pages/Guarded/DataInformation/DataInfo";
+import PreviewGuarded from "./pages/Guarded/Preview/Preview";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
@@ -107,6 +109,7 @@ function App() {
               <Route path="datarequests" element={<DatarequestsGuarded />} />
               <Route path="datarequests/:id" element={<RequestInfoGuarded />} />
               <Route path="datasets/:id" element={<DataInfoGuarded />} />
+              <Route path="preview/:id" element={<PreviewGuarded />} />
             </Route>
           </Routes>
         </RouteTrackerProvider>
