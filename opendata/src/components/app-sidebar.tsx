@@ -88,6 +88,11 @@ const data = {
       url: "#",
       icon: Frame,
     },
+    {
+      name: "Ana Sayfa",
+      url: "/",
+      icon: Frame,
+    },
   ],
 }
 
