@@ -163,7 +163,6 @@ export default function CategoriesDesktop() {
                                         <Plus /> Veri Seti Ekle
                                     </Button>
                                 </CardHeader>
-
                                 <CardContent className="space-y-4">
                                     {/* Stats */}
                                     <div className="grid grid-cols-2 gap-3 text-sm">

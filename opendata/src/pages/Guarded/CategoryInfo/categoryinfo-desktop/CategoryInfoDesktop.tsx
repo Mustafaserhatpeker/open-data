@@ -33,6 +33,7 @@ import {
     Eye,
     FolderClosed,
     Hash,
+    Plus,
     Tags as TagsIcon,
 } from "lucide-react"
 
@@ -362,15 +363,15 @@ export default function CategoryInfo() {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {/* Controls */}
-                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                                    <div className="sm:col-span-2">
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-7">
+                                    <div className="sm:col-span-4">
                                         <Input
                                             placeholder="Veri setlerinde ara..."
                                             value={query}
                                             onChange={(e) => setQuery(e.target.value)}
                                         />
                                     </div>
-                                    <div className="sm:col-span-1">
+                                    <div className="sm:col-span-3">
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="sort"
@@ -389,6 +390,14 @@ export default function CategoryInfo() {
                                                 <option value="downloads">İndirme (çoktan aza)</option>
                                                 <option value="title">Başlık (A-Z)</option>
                                             </select>
+                                            <Button onClick={
+                                                (e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                }
+                                            } variant={"outline"}>
+                                                <Plus /> Veri Seti Ekle
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
