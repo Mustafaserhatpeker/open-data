@@ -72,7 +72,7 @@ function App() {
               <Route path="/datarequests" element={<Datarequests />} />
               <Route path="/datarequests/:id" element={<RequestInfo />} />
               <Route path="/statistics" element={<StaticsDesktop />} />
-              <Route path="/preview" element={<Preview />} />
+              <Route path="/preview/:id" element={<Preview />} />
               <Route
                 path="/login"
                 element={
