@@ -38,6 +38,7 @@ export default function Statics() {
                     </div>
                 ))}
             </div>
+            
         </section>
     );
 }
