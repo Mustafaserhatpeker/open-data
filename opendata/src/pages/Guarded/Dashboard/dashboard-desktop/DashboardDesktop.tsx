@@ -2,9 +2,8 @@ import { Building2, FolderTree, ListChecks } from "lucide-react"
 
 import { organizations, categories, datasets, users, dataRequests } from "@/dummy/dummy.data"
 
-import DatarequestList from "./components/DatarequestsList"
 
-import StatCard from "./components/inner-components/DashboardHeader"
+import StatCard from "./components/DashboardHeader"
 
 
 function DashboardDesktop() {
@@ -60,7 +59,7 @@ function DashboardDesktop() {
                     url={"/dashboard/datarequests"}
                 />
             </div>
-            <DatarequestList />
+
         </div>
     )
 }
