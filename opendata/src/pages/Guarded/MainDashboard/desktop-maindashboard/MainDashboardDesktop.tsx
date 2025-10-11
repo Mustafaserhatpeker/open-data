@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/stores/auth.store";
 import { Navigate } from "react-router-dom";
-import Dashboard from "@/pages/Dashboard/Dashboard";
-import UDashboard from "@/pages/UserDashboard/UDashboard";
+import Dashboard from "@/pages/Guarded/Dashboard/Dashboard";
+import UDashboard from "@/pages/Guarded/UserDashboard/UDashboard";
 
 function MainDashboardDesktop() {
     // ✅ Hook burada, ana bileşenin üst düzeyinde

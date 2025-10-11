@@ -16,7 +16,7 @@ import { useAuthStore } from "./stores/auth.store";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { RouteTrackerProvider } from "./contexts/RouteTrackContext";
-import MainDashboard from "./pages/MainDashboard/MainDashboard";
+import MainDashboard from "./pages/Guarded/MainDashboard/MainDashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
 
 
