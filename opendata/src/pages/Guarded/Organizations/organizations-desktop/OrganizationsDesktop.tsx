@@ -29,6 +29,7 @@ import {
     FolderClosed,
     Globe,
     Mail,
+    Plus,
 } from "lucide-react"
 
 function getInitials(name?: string) {
@@ -77,7 +78,7 @@ export default function OrganizationsDesktop() {
                 <div className="mb-6">
                     <div className="flex items-center justify-between gap-4">
                         <div>
-                            <h1 className="text-2xl font-semibold">Organizasyonlar</h1>
+                            <h1 className="text-2xl font-semibold">Organizasyonlarım</h1>
                             <p className="text-muted-foreground mt-1">
                                 Veri setlerini sağlayan kurum ve kuruluşlar
                             </p>
@@ -90,15 +91,15 @@ export default function OrganizationsDesktop() {
                         </div>
                     </div>
 
-                    <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <div className="sm:col-span-2">
+                    <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-7">
+                        <div className="sm:col-span-4">
                             <Input
                                 placeholder="Ara: isim veya açıklama..."
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                             />
                         </div>
-                        <div className="sm:col-span-1">
+                        <div className="sm:col-span-2">
                             <div className="flex items-center gap-2">
                                 <label
                                     htmlFor="sort"
@@ -120,6 +121,12 @@ export default function OrganizationsDesktop() {
                                     </SelectContent>
                                 </Select>
                             </div>
+                        </div>
+                        <div className="sm:col-span-1 flex items-center gap-2">
+                            <Button variant={"outline"}>
+                                <Plus />
+                                Yeni Organizasyon
+                            </Button>
                         </div>
                     </div>
                 </div>
