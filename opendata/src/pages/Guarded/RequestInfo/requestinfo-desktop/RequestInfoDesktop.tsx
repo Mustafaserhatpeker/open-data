@@ -102,7 +102,7 @@ export default function RequestInfoDesktop() {
 
     return (
         <div className="w-full px-4 py-6 bg-accent min-h-[100vh]">
-            <div className="max-w-7xl mx-auto space-y-6">
+            <div className=" mx-auto space-y-6">
                 <RequestHeader
                     request={request}
                     requestedByName={requestedByName}

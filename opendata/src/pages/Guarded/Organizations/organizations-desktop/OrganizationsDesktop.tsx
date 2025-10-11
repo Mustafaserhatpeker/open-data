@@ -73,7 +73,7 @@ export default function OrganizationsDesktop() {
 
     return (
         <div className="w-full bg-accent px-4 py-6 min-h-screen">
-            <div className="mx-auto w-full max-w-7xl ">
+            <div className="mx-auto w-full  ">
                 {/* Header */}
                 <div className="mb-6">
                     <div className="flex items-center justify-between gap-4">
