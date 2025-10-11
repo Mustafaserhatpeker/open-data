@@ -68,21 +68,17 @@ function StatCard({
     title,
     icon: Icon,
     items,
-    gradient,
+
 }: {
     title: string
     icon: LucideIcon
-    gradient?: string
+
     items: Array<{ label: string; value: number }>
 }) {
     return (
         <div
-            className={`relative overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900`}
+            className={`relative overflow-hidden rounded-xl border  shadow-sm transition-all hover:shadow-md `}
         >
-            <div
-                className={`absolute inset-0 opacity-10 ${gradient ??
-                    "bg-gradient-to-br from-indigo-500 via-sky-500 to-cyan-400"}`}
-            />
             <div className="relative p-4">
                 <div className="mb-3 flex items-center gap-2">
                     <div className="rounded-lg bg-zinc-100 p-2 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
@@ -175,27 +171,26 @@ function DashboardDesktop() {
                 <StatCard
                     title="Organizasyonlar"
                     icon={Building2}
-                    gradient="bg-gradient-to-br from-sky-400 via-cyan-400 to-emerald-400"
                     items={[
                         { label: "Toplam", value: totalOrganizations },
                         { label: "Size Ait", value: userOrganizationsCount },
-                        { label: "Bu Kurumlardaki Dataset", value: datasetsInUserOrganizations },
+                        { label: "Bu Kurumlardaki", value: datasetsInUserOrganizations },
                     ]}
                 />
                 <StatCard
                     title="Kategoriler"
                     icon={FolderTree}
-                    gradient="bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-400"
+
                     items={[
                         { label: "Toplam", value: totalCategories },
                         { label: "Size Ait", value: userCategoriesCount },
-                        { label: "Bu Kategorilerdeki Veri", value: datasetsInUserCategories },
+                        { label: "Bu Kategorilerdeki", value: datasetsInUserCategories },
                     ]}
                 />
                 <StatCard
                     title="Veri Talepleri"
                     icon={ListChecks}
-                    gradient="bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400"
+
                     items={[
                         { label: "Toplam", value: totalDataRequests },
                         { label: "Size Yapılan", value: dataRequestsToUser },
