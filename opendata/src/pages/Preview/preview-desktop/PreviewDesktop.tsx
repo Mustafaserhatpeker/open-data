@@ -8,8 +8,10 @@ function PreviewDesktop() {
 
     return (
         <div className="w-full bg-accent">
-            <div className="w-full h-full max-w-7xl mx-auto p-4 space-y-4">
-                <div className="text-2xl font-semibold">PreviewDesktop</div>
+            <div className="w-full h-full  mx-auto p-4 space-y-4">
+                <div className="text-2xl font-semibold">
+                    Dosya Önizleme
+                </div>
 
                 {!state.file && (
                     <FilePicker onSelect={onFileSelect} />
