@@ -11,7 +11,7 @@ import type { Category, Dataset as DummyDataset } from "@/lib/types"
 
 import DataCard, {
     type Dataset as CardDataset,
-} from "@/pages/Datasets/datasets-desktop/components/inner-components/DataCard"
+} from "./components/DataCard"
 
 import {
     Card,
@@ -32,7 +32,6 @@ import {
     Download,
     Eye,
     FolderClosed,
-    Hash,
     Plus,
     Tags as TagsIcon,
 } from "lucide-react"
@@ -115,17 +114,6 @@ export default function CategoryInfo() {
         if (!category) return []
         return allDatasets.filter((d) => (d.categories ?? []).includes(category.id))
     }, [category])
-
-    const latestDatasetTimestamp = useMemo(() => {
-        if (catDatasets.length === 0) return undefined
-        const ts = Math.max(
-            ...catDatasets.map((d) =>
-                new Date(d.updatedAt ?? d.createdAt).getTime(),
-            ),
-        )
-        return isNaN(ts) ? undefined : new Date(ts).toISOString()
-    }, [catDatasets])
-
     const topTags = useMemo(() => {
         // Count tag frequencies within this category's datasets
         const map = new Map<string, number>()
@@ -263,16 +251,11 @@ export default function CategoryInfo() {
                                         <FolderClosed className="h-4 w-4 text-muted-foreground" />
                                         <span className="truncate">{category.name}</span>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <Hash className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-muted-foreground">ID:</span>
-                                        <span className="text-foreground">{category.id}</span>
-                                    </div>
                                 </div>
 
                                 <Separator />
 
-                                <div className="grid grid-cols-2 gap-3 text-sm">
+                                <div className="grid grid-cols-1 gap-3 text-sm">
                                     <div className="rounded-md border p-3">
                                         <div className="text-xs uppercase tracking-wide text-muted-foreground">
                                             Veri Setleri
@@ -282,19 +265,7 @@ export default function CategoryInfo() {
                                             <span className="font-medium">{catDatasets.length}</span>
                                         </div>
                                     </div>
-                                    <div className="rounded-md border p-3">
-                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                                            En Son Güncelleme
-                                        </div>
-                                        <div className="mt-1 inline-flex items-center gap-2">
-                                            <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">
-                                                {latestDatasetTimestamp
-                                                    ? new Date(latestDatasetTimestamp).toLocaleDateString()
-                                                    : "-"}
-                                            </span>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                                 <Separator />
