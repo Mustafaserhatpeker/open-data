@@ -38,6 +38,7 @@ function DashboardDesktop() {
                         { label: "Toplam", value: totalOrganizations },
                         { label: "Size Ait", value: userOrganizationsCount },
                     ]}
+                    url={"/dashboard/organizations"}
                 />
                 <StatCard
                     title="Kategoriler"
@@ -46,6 +47,8 @@ function DashboardDesktop() {
                         { label: "Toplam", value: totalCategories },
                         { label: "Size Ait", value: userCategoriesCount },
                     ]}
+                    url={"/dashboard/categories"}
+
                 />
                 <StatCard
                     title="Veri Talepleri"
@@ -54,6 +57,7 @@ function DashboardDesktop() {
                         { label: "Toplam", value: totalDataRequests },
                         { label: "Size Yapılan", value: dataRequestsToUser },
                     ]}
+                    url={"/dashboard/datarequests"}
                 />
             </div>
             <DatarequestList />

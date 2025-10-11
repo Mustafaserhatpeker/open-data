@@ -6,13 +6,18 @@ export default function StatCard({
     title,
     icon: Icon,
     items,
+    url
 }: {
     title: string
     icon: LucideIcon
     items: Array<{ label: string; value: number }>
+    url: string
 }) {
+    const handleClick = () => {
+        window.location.href = url;
+    };
     return (
-        <div className="relative overflow-hidden rounded-xl border shadow-sm transition-all hover:shadow-md">
+        <div onClick={handleClick} className="relative overflow-hidden rounded-xl border shadow-sm transition-all hover:shadow-md">
             <div className="relative p-4">
                 <div className="mb-3 flex items-center gap-2">
                     <div className="rounded-lg bg-zinc-100 p-2 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
