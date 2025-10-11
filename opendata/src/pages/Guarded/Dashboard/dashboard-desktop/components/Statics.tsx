@@ -1,6 +1,6 @@
-import { CategoryChart } from "./CategoryChart";
-import { DatarequestChart } from "./DatarequestChart";
-import { OrganizationChart } from "./OrganizationChart";
+import { CategoryChart } from "./linecharts/CategoryChart";
+import { DatarequestChart } from "./linecharts/DatarequestChart";
+import { OrganizationChart } from "./linecharts/OrganizationChart";
 import { DataStaticCard } from "./inner-components/DataStaticCard"
 
 export default function Statics() {
