@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Download, Eye } from "lucide-react"
+import { Download, Eye, Plus } from "lucide-react"
 import type { Dataset as DummyDataset } from "@/lib/types"
 import { formatDate, getTypeMeta } from "./utils"
 
@@ -15,6 +15,10 @@ export function ResourcesList({ resources }: Props) {
             <CardHeader className="pb-3">
                 <CardTitle className="text-base">Kaynaklar</CardTitle>
                 <CardDescription>Dosyalar ve bağlantılar</CardDescription>
+                <Button variant={"outline"}>
+                    <Plus />
+                    Yeni Kaynak Ekle
+                </Button>
             </CardHeader>
             <CardContent className="space-y-3">
                 {resources && resources.length > 0 ? (
