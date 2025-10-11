@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate, Outlet } from "react-router-dom";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import Home from "@/pages/Home/Home";
 import Datasets from "./pages/Datasets/Datasets";
@@ -19,41 +19,30 @@ import { RouteTrackerProvider } from "./contexts/RouteTrackContext";
 import MainDashboard from "./pages/Guarded/MainDashboard/MainDashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
 
-
+import OrganizationsGuarded from "./pages/Guarded/Organizations/Organizations";
+import CategoriesGuarded from "./pages/Guarded/Categories/Categories";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
   if (!isAuthenticated || (role !== "user" && role !== "organization")) {
     return <Navigate to="/login" replace />;
   }
-
   return children;
 }
 
 const RedirectAuthenticated = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
-
   if (isAuthenticated && (role === "user" || role === "organization")) {
     return <Navigate to="/dashboard" replace />;
   }
-
   return children;
 };
 
-
-
 function App() {
-
   const { checkAuth, isCheckingAuth } = useAuthStore();
-
   useEffect(() => {
-
     checkAuth();
-
   }, [checkAuth]);
-
-
-
   if (isCheckingAuth) return <LoadingSpinner />;
 
   return (
@@ -88,20 +77,18 @@ function App() {
                 }
               />
             </Route>
-
-            <Route element={<DashboardLayout />}>
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <MainDashboard />
-                  </ProtectedRoute>
-                }
-              />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<MainDashboard />} />
+              <Route path="organizations" element={<OrganizationsGuarded />} />
+              <Route path="categories" element={<CategoriesGuarded />} />
             </Route>
-
-
-
           </Routes>
         </RouteTrackerProvider>
       </BrowserRouter>
