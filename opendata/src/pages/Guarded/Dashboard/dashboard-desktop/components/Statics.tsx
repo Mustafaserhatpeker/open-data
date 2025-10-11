@@ -1,36 +1,30 @@
-import { Database, Users, Folder, BarChart3, Building2 } from "lucide-react";
+import { Database, Users, Folder, BarChart3 } from "lucide-react";
 import { DataStaticCard } from "./inner-components/DataStaticCard"
 export default function Statics() {
     const stats = [
         {
-            label: "Toplam Organizasyon",
+            label: "Veri Seti Sayısı",
             value: 120,
-            icon: Building2,
-            href: "/organizasyonlar",
+            icon: Database,
+
         },
         {
-            label: "Toplam Kategori",
+            label: "Veri Kaynağı Sayısı",
             value: 45,
             icon: Folder,
-            href: "/kategoriler",
+
         },
         {
-            label: "Toplam Veri Seti",
+            label: "Kullanıcı Sayısı",
             value: 300,
-            icon: Database,
-            href: "/veri-setleri",
-        },
-        {
-            label: "Toplam Kullanıcı",
-            value: 1500,
             icon: Users,
-            href: "/kullanicilar",
+
         },
         {
-            label: "Toplam Veri Talebi",
+            label: "Toplam Veri İsteği",
             value: 75,
             icon: BarChart3,
-            href: "/veri-talebi",
+
         },
     ];
 
@@ -45,10 +39,8 @@ export default function Statics() {
                 {stats.map((s, idx) => (
                     <div key={idx} className="w-full">
                         <DataStaticCard
-                            title={s.label}
                             icon={s.icon}
                             items={[{ label: s.label, value: s.value }]}
-                            href={s.href}
                         />
                     </div>
                 ))}
