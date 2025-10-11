@@ -9,7 +9,7 @@ import {
 } from "@/dummy/dummy.data"
 import type { Dataset as DummyDataset, Organization } from "@/lib/types"
 
-import DataCard, { type Dataset as CardDataset } from "@/pages/Datasets/datasets-desktop/components/inner-components/DataCard"
+import DataCard, { type Dataset as CardDataset } from "./components/DataCard"
 
 import {
     Card,

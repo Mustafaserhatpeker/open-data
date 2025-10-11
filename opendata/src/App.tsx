@@ -25,6 +25,7 @@ import OrganizationInfoGuarded from "./pages/Guarded/OrganizationInfo/Organizati
 import CategoryInfoGuarded from "./pages/Guarded/CategoryInfo/CategoryInfo";
 import DatarequestsGuarded from "./pages/Guarded/Datarequests/Datarequests";
 import RequestInfoGuarded from "./pages/Guarded/RequestInfo/ReguestInfo";
+import DataInfoGuarded from "./pages/Guarded/DataInformation/DataInfo";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
@@ -96,6 +97,7 @@ function App() {
               <Route path="categories/:id" element={<CategoryInfoGuarded />} />
               <Route path="datarequests" element={<DatarequestsGuarded />} />
               <Route path="datarequests/:id" element={<RequestInfoGuarded />} />
+              <Route path="datasets/:id" element={<DataInfoGuarded />} />
             </Route>
           </Routes>
         </RouteTrackerProvider>
