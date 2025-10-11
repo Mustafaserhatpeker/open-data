@@ -34,6 +34,7 @@ import {
     Hash,
     Plus,
 } from "lucide-react"
+import BackButton from "@/components/back-button"
 
 function getInitials(name?: string) {
     if (!name) return "ORG"
@@ -188,12 +189,7 @@ export default function OrganizationInfoDesktop() {
             <div className="mx-auto w-full max-w-7xl">
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
-                    <Button asChild variant="ghost" className="pl-0">
-                        <Link to="/dashboard/organizations">
-                            <ArrowLeft className="h-4 w-4 mr-2" />
-                            Geri
-                        </Link>
-                    </Button>
+                    <BackButton />
 
                     <Badge variant="secondary">Toplam veri seti: {orgDatasets.length}</Badge>
                 </div>

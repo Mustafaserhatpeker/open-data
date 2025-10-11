@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Building2, User } from "lucide-react"
+
+import {  Building2, User } from "lucide-react"
 import type { DataRequest } from "@/lib/types"
+import BackButton from "@/components/back-button"
 
 function statusBadgeClasses(status: string): string {
     switch (status) {
@@ -29,12 +29,7 @@ export function RequestHeader({
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <Button asChild variant="ghost" size="sm" className="-ml-2">
-                    <Link to="/dashboard/datarequests">
-                        <ArrowLeft className="h-4 w-4 mr-1.5" />
-                        Geri
-                    </Link>
-                </Button>
+                <BackButton />
 
                 <span
                     className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-medium ring-1 ring-inset ${statusBadgeClasses(
