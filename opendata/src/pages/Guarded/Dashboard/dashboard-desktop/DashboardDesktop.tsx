@@ -4,6 +4,7 @@ import { organizations, categories, datasets, users, dataRequests } from "@/dumm
 
 
 import StatCard from "./components/DashboardHeader"
+import Statics from "./components/Statics"
 
 
 function DashboardDesktop() {
@@ -59,6 +60,7 @@ function DashboardDesktop() {
                     url={"/dashboard/datarequests"}
                 />
             </div>
+            <Statics />
 
 
         </div>
