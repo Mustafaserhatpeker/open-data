@@ -33,7 +33,7 @@ const ProtectedRoute = ({ children }: { children: any }) => {
     return <Navigate to="/login" replace />;
   }
   return children;
-}
+};
 
 const RedirectAuthenticated = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
@@ -45,16 +45,20 @@ const RedirectAuthenticated = ({ children }: { children: any }) => {
 
 function App() {
   const { checkAuth, isCheckingAuth } = useAuthStore();
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
   if (isCheckingAuth) return <LoadingSpinner />;
 
   return (
     <DeviceTypeProvider>
       <BrowserRouter>
+        {/* Route tracking artık burada */}
         <RouteTrackerProvider>
           <Routes>
+            {/* Public layout */}
             <Route element={<DefaultLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/datasets" element={<Datasets />} />
@@ -82,6 +86,8 @@ function App() {
                 }
               />
             </Route>
+
+            {/* Dashboard (guarded) layout */}
             <Route
               path="/dashboard"
               element={

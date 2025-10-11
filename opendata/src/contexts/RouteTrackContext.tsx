@@ -1,38 +1,31 @@
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useRef,
-    type ReactNode,
-    type JSX,
-} from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-// Context'in tipi: string veya null olabilir
-const RouteTrackerContext = createContext<string | null>(null);
+type RouteTrackerContextType = {
+    prevPath: string | null;
+};
 
-// Provider bileşeni için prop tipi tanımlanıyor
-interface RouteTrackerProviderProps {
-    children: ReactNode;
-}
+const RouteTrackerContext = createContext<RouteTrackerContextType>({
+    prevPath: null,
+});
 
-export function RouteTrackerProvider({
-    children,
-}: RouteTrackerProviderProps): JSX.Element {
+export const RouteTrackerProvider = ({ children }: { children: React.ReactNode }) => {
     const location = useLocation();
-    const previousPathRef = useRef<string | null>(null);
+    const [prevPath, setPrevPath] = useState<string | null>(null);
+    const lastPath = useRef(location.pathname);
 
     useEffect(() => {
-        previousPathRef.current = location.pathname;
-    }, [location.pathname]);
+        if (location.pathname !== lastPath.current) {
+            setPrevPath(lastPath.current);
+            lastPath.current = location.pathname;
+        }
+    }, [location]);
 
     return (
-        <RouteTrackerContext.Provider value={previousPathRef.current}>
+        <RouteTrackerContext.Provider value={{ prevPath }}>
             {children}
         </RouteTrackerContext.Provider>
     );
-}
+};
 
-export function usePreviousPath(): string | null {
-    return useContext(RouteTrackerContext);
-}
+export const useRouteTracker = () => useContext(RouteTrackerContext);
