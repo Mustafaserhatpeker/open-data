@@ -1,4 +1,8 @@
+import { CategoryChart } from "./CategoryChart";
+import { DatarequestChart } from "./DatarequestChart";
+import { OrganizationChart } from "./OrganizationChart";
 import { DataStaticCard } from "./inner-components/DataStaticCard"
+
 export default function Statics() {
     const stats = [
         {
@@ -38,7 +42,18 @@ export default function Statics() {
                     </div>
                 ))}
             </div>
-            
+            <div className="grid grid-cols-3 gap-2 pt-8">
+                <div className="grid-cols-1">
+                    <OrganizationChart />
+                </div>
+                <div className="grid-cols-1">
+                    <CategoryChart />
+                </div>
+                <div className="grid-cols-1">
+                    <DatarequestChart />
+                </div>
+            </div>
+
         </section>
     );
 }
