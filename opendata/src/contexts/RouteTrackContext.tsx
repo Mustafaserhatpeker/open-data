@@ -15,6 +15,7 @@ export const RouteTrackerProvider = ({ children }: { children: React.ReactNode }
     const lastPath = useRef(location.pathname);
 
     useEffect(() => {
+        // Sayfa değişiminde önceki route'u güncelle
         if (location.pathname !== lastPath.current) {
             setPrevPath(lastPath.current);
             lastPath.current = location.pathname;

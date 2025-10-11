@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom"
+
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+
 import {
-    ArrowLeft,
+
     Download,
     Eye,
     FolderClosed,
@@ -11,6 +11,7 @@ import {
 } from "lucide-react"
 import type { Dataset as DummyDataset } from "@/lib/types"
 import { getTypeMeta } from "./utils"
+import BackButton from "@/components/back-button"
 
 type Props = {
     dataset: DummyDataset
@@ -33,13 +34,7 @@ export function DatasetHeader({
         <div className="mb-6">
             {/* Header bar */}
             <div className="mb-4 flex items-center justify-between">
-                <Button asChild variant="ghost" className="pl-0">
-                    <Link to="/datasets">
-                        <ArrowLeft className="h-4 w-4 mr-2" />
-                        Geri
-                    </Link>
-                </Button>
-
+                <BackButton />
                 <div className="flex items-center gap-2">
                     {dataset.isOpenData ? (
                         <Badge className="bg-emerald-600 hover:bg-emerald-600/90 px-2.5 py-1">Açık Veri</Badge>

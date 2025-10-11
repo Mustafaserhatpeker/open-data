@@ -3,23 +3,22 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRouteTracker } from "@/contexts/RouteTrackContext";
 
-interface BackButtonProps {
-    fallback?: string; // opsiyonel — default: "/"
-    label?: string; // opsiyonel — default: "Geri"
-}
-
-export default function BackButton({ fallback = "/", label = "Geri" }: BackButtonProps) {
+export default function BackButton({ label = "Geri" }: { label?: string }) {
     const navigate = useNavigate();
     const { prevPath } = useRouteTracker();
 
     const handleBack = () => {
-        // Aynı sayfaya dönmeye çalışmayı engelle
+        // Eğer bir önceki route biliniyorsa, oraya git
         if (prevPath && prevPath !== window.location.pathname) {
             navigate(prevPath);
-        } else if (window.history.length > 1) {
+        }
+        // Eğer kullanıcı geçmişten geldiyse
+        else if (window.history.length > 1) {
             navigate(-1);
-        } else {
-            navigate(fallback);
+        }
+        // Fallback: hiçbir geçmiş yoksa (örneğin sayfa direkt açıldıysa)
+        else {
+            navigate("/");
         }
     };
 
