@@ -2,6 +2,9 @@ import { CategoryChart } from "./linecharts/CategoryChart";
 import { DatarequestChart } from "./linecharts/DatarequestChart";
 import { OrganizationChart } from "./linecharts/OrganizationChart";
 import { DataStaticCard } from "./inner-components/DataStaticCard"
+import { ResourceFormatChart } from "./piecharts/ResourceFormatChart";
+import { DatarequestStatusChart } from "./piecharts/DatarequestStatusChart";
+import { CategoryDistributionChart } from "./piecharts/CategoryDistributionChart";
 
 export default function Statics() {
     const stats = [
@@ -29,7 +32,7 @@ export default function Statics() {
     ];
 
     return (
-        <section className="w-full">
+        <section className="w-full pb-12">
             <div className="mb-4 mt-8 flex items-center justify-between">
                 <h2 className="text-lg font-semibold">Genel İstatistikler</h2>
             </div>
@@ -51,6 +54,17 @@ export default function Statics() {
                 </div>
                 <div className="grid-cols-1">
                     <DatarequestChart />
+                </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2 pt-8">
+                <div className="grid-cols-1">
+                    <ResourceFormatChart />
+                </div>
+                <div className="grid-cols-1">
+                    <DatarequestStatusChart />
+                </div>
+                <div className="grid-cols-1">
+                    <CategoryDistributionChart />
                 </div>
             </div>
 
