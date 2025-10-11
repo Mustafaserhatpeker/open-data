@@ -84,11 +84,6 @@ const data = {
   ],
   projects: [
     {
-      name: "Veri İstekleri",
-      url: "/dashboard/datarequests",
-      icon: Frame,
-    },
-    {
       name: "Ana Sayfa",
       url: "/dashboard",
       icon: Frame,
@@ -101,6 +96,11 @@ const data = {
     {
       name: "Kategoriler",
       url: "/dashboard/categories",
+      icon: Frame,
+    },
+    {
+      name: "Veri İstekleri",
+      url: "/dashboard/datarequests",
       icon: Frame,
     },
   ],
