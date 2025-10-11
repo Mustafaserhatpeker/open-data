@@ -90,7 +90,17 @@ const data = {
     },
     {
       name: "Ana Sayfa",
-      url: "/",
+      url: "/dashboard",
+      icon: Frame,
+    },
+    {
+      name: "Organizasyonlar",
+      url: "/dashboard/organizations",
+      icon: Frame,
+    },
+    {
+      name: "Kategoriler",
+      url: "/dashboard/categories",
       icon: Frame,
     },
   ],
