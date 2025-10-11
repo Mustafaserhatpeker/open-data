@@ -130,7 +130,7 @@ export default function OrganizationsDesktop() {
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {filtered.map((org: Organization) => (
                         <Card onClick={
-                            () => { window.location.href = `/organizations/${org.id}` }
+                            () => { window.location.href = `/dashboard/organizations/${org.id}` }
                         } key={org.id} className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer">
                             <CardHeader className="pb-3">
                                 <div className="flex items-start gap-3">

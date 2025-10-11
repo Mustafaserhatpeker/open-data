@@ -21,6 +21,8 @@ import DashboardLayout from "./layouts/DashboardLayout";
 
 import OrganizationsGuarded from "./pages/Guarded/Organizations/Organizations";
 import CategoriesGuarded from "./pages/Guarded/Categories/Categories";
+import OrganizationInfoGuarded from "./pages/Guarded/OrganizationInfo/OrganizationInfo";
+import CategoryInfoGuarded from "./pages/Guarded/CategoryInfo/CategoryInfo";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
@@ -88,6 +90,8 @@ function App() {
               <Route index element={<MainDashboard />} />
               <Route path="organizations" element={<OrganizationsGuarded />} />
               <Route path="categories" element={<CategoriesGuarded />} />
+              <Route path="organizations/:id" element={<OrganizationInfoGuarded />} />
+              <Route path="categories/:id" element={<CategoryInfoGuarded />} />
             </Route>
           </Routes>
         </RouteTrackerProvider>

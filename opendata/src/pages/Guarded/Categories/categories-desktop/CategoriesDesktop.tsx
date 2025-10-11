@@ -138,7 +138,7 @@ export default function CategoriesDesktop() {
                         return (
                             <Card
                                 onClick={
-                                    () => { window.location.href = `/categories/${cat.id}` }
+                                    () => { window.location.href = `/dashboard/categories/${cat.id}` }
                                 }
                                 key={cat.id} className="h-full overflow-hidden border border-border/60 cursor-pointer">
                                 <CardHeader className="pb-3">

@@ -219,7 +219,7 @@ export default function CategoryInfo() {
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
                     <Button asChild variant="ghost" className="pl-0">
-                        <Link to="/categories">
+                        <Link to="/dashboard/categories">
                             <ArrowLeft className="h-4 w-4 mr-2" />
                             Geri
                         </Link>

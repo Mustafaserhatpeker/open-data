@@ -188,7 +188,7 @@ export default function OrganizationInfoDesktop() {
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
                     <Button asChild variant="ghost" className="pl-0">
-                        <Link to="/organizations">
+                        <Link to="/dashboard/organizations">
                             <ArrowLeft className="h-4 w-4 mr-2" />
                             Geri
                         </Link>
