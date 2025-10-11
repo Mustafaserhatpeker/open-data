@@ -88,7 +88,7 @@ function StatCard({
                         {title}
                     </h3>
                 </div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                     {items.map((it) => (
                         <div
                             key={it.label}
@@ -110,14 +110,12 @@ function DashboardDesktop() {
     // Not: Uygulama kimliği bağlanana kadar örnek kullanıcı olarak 'usr2' (data.editor) kullanıyoruz
     const currentUser =
         users.find((u) => u.id === "usr2") ?? users[0] // fallback: admin
-    const userOrg = organizations.find(
-        (o) => o.id === currentUser.organizationId
-    )
+
 
     // 1) Organizasyon istatistikleri
     const totalOrganizations = organizations.length
     const userOrganizationsCount = currentUser.organizationId ? 1 : 0
-    const datasetsInUserOrganizations = userOrg ? userOrg.datasetsCount : 0
+
 
     // 2) Kategori istatistikleri
     const totalCategories = categories.length
@@ -127,9 +125,7 @@ function DashboardDesktop() {
     )
     const userCategoriesCount = userCategoryIds.size
     // Bu kullanıcının kullandığı kategorilerdeki toplam dataset sayısı (genel)
-    const datasetsInUserCategories = datasets.filter((d) =>
-        d.categories.some((c) => userCategoryIds.has(c))
-    ).length
+
 
     // 3) Veri talebi (request) istatistikleri
     const totalDataRequests = dataRequests.length
@@ -174,7 +170,7 @@ function DashboardDesktop() {
                     items={[
                         { label: "Toplam", value: totalOrganizations },
                         { label: "Size Ait", value: userOrganizationsCount },
-                        { label: "Bu Kurumlardaki", value: datasetsInUserOrganizations },
+
                     ]}
                 />
                 <StatCard
@@ -184,7 +180,7 @@ function DashboardDesktop() {
                     items={[
                         { label: "Toplam", value: totalCategories },
                         { label: "Size Ait", value: userCategoriesCount },
-                        { label: "Bu Kategorilerdeki", value: datasetsInUserCategories },
+
                     ]}
                 />
                 <StatCard
@@ -194,10 +190,7 @@ function DashboardDesktop() {
                     items={[
                         { label: "Toplam", value: totalDataRequests },
                         { label: "Size Yapılan", value: dataRequestsToUser },
-                        {
-                            label: "Onaylanan",
-                            value: dataRequests.filter((d) => d.status === "approved").length,
-                        },
+
                     ]}
                 />
             </div>
