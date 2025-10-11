@@ -56,8 +56,6 @@ function DashboardDesktop() {
                     ]}
                 />
             </div>
-
-            {/* Veri Talepleri Listesi */}
             <DatarequestList />
         </div>
     )
