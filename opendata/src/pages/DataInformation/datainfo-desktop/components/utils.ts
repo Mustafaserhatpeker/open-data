@@ -17,7 +17,7 @@ export type TypeMeta = {
     label: string
 }
 
-export function getTypeMeta(raw: string): TypeMeta {
+export function getTypeMeta(raw: any): TypeMeta {
     const t = (raw || "a")?.toUpperCase()?.trim()
     let Icon = CircleHelp
     let color = "bg-gray-100 text-gray-700 ring-1 ring-gray-200"
@@ -80,16 +80,7 @@ export function getTypeMeta(raw: string): TypeMeta {
     return { Icon, color, accent, label }
 }
 
-export function formatDate(input?: string) {
-    if (!input) return undefined
-    const d = new Date(input)
-    if (isNaN(d.getTime())) return input
-    try {
-        return d.toLocaleString()
-    } catch {
-        return d.toISOString()
-    }
-}
+
 
 export function formatBytes(bytes?: number) {
     if (bytes === undefined || bytes === null) return "-"
