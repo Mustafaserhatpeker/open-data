@@ -49,7 +49,7 @@ export function ResourcesList({ resources }: Props) {
                                     </div>
                                     <div className="shrink-0 gap-2 flex flex-row sm:flex-row">
                                         <Button asChild>
-                                            <a href={r.fileUrl} target="_blank" rel="noreferrer">
+                                            <a href={`http:localhost:3000/api/file/download/${r.fileUrl}`} target="_blank" >
                                                 <Download className="h-4 w-4 mr-2" />
                                                 İndir
                                             </a>
