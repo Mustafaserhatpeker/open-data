@@ -29,6 +29,9 @@ import { useQuery } from "@tanstack/react-query"
 import { getDatasets } from "@/services/dataset.service"
 import { getCategories } from "@/services/category.service"
 import { getOrganizations } from "@/services/organization.service"
+import { getTags } from "@/services/tag.service"
+import { getFormats } from "@/services/format.service"
+import { getLicences } from "@/services/licence.service"
 
 function DatasetsDesktop() {
 
@@ -44,16 +47,31 @@ function DatasetsDesktop() {
         queryKey: ["organizations"],
         queryFn: () => getOrganizations(),
     });
-    
+    const { data: tagsResp } = useQuery({
+        queryKey: ["tags"],
+        queryFn: () => getTags(),
+    });
+    const { data: formatsResp } = useQuery({
+        queryKey: ["formats"],
+        queryFn: () => getFormats(),
+    });
+    const { data: licencesResp } = useQuery({
+        queryKey: ["licences"],
+        queryFn: () => getLicences(),
+    });
 
     return (
         <div className="w-full flex flex-col items-center justify-between bg-accent min-h-screen  ">
             <div className="grid grid-cols-4 w-full gap-8 px-4 py-8 max-w-[80%] mx-auto ">
                 <div className="col-span-1   rounded-xl">
                     <RightFilter
-                        categories={categoriesResp}
-                        organizations={organizationsResp}
+                        categories={categoriesResp || { data: [] }}
+                        organizations={organizationsResp || { data: [] }}
+                        tags={tagsResp || { data: [] }}
+                        formats={formatsResp || { data: [] }}
+                        licences={licencesResp || { data: [] }}
                     />
+
                 </div>
                 <div className="col-span-3 bg-white p-2 rounded-xl">
                     <div className="grid grid-cols-5 w-full gap-6">
