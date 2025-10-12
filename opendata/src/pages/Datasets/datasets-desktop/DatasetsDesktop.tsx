@@ -32,12 +32,14 @@ import { getOrganizations } from "@/services/organization.service"
 import { getTags } from "@/services/tag.service"
 import { getFormats } from "@/services/format.service"
 import { getLicences } from "@/services/licence.service"
+import { useAuthStore } from "@/stores/auth.store"
 
 function DatasetsDesktop() {
+    const { accessToken } = useAuthStore();
 
     const { data: datasetsResp } = useQuery({
         queryKey: ["datasets"],
-        queryFn: () => getDatasets(),
+        queryFn: () => getDatasets(accessToken),
     });
     const { data: categoriesResp } = useQuery({
         queryKey: ["categories"],
