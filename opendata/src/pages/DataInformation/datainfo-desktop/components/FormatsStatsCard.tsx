@@ -11,7 +11,7 @@ type Props = {
 }
 
 export function FormatsStatsCard({ dataset, primaryFormat }: Props) {
-    const formats = (dataset.formats && dataset.formats.length > 0 ? dataset.formats : [primaryFormat]) ?? []
+    const formats = (dataset?.formats && dataset?.formats.length > 0 ? dataset?.formats : [primaryFormat]) ?? []
 
     return (
         <Card>
@@ -41,14 +41,14 @@ export function FormatsStatsCard({ dataset, primaryFormat }: Props) {
                         <div className="text-xs uppercase tracking-wide text-muted-foreground">Görüntülenme</div>
                         <div className="mt-1 inline-flex items-center gap-2 text-base">
                             <Eye className="h-4 w-4 text-muted-foreground" />
-                            {dataset.viewsCount ?? 0}
+                            {dataset?.viewsCount ?? 0}
                         </div>
                     </div>
                     <div className="rounded-md border p-3">
                         <div className="text-xs uppercase tracking-wide text-muted-foreground">İndirme</div>
                         <div className="mt-1 inline-flex items-center gap-2 text-base">
                             <Download className="h-4 w-4 text-muted-foreground" />
-                            {dataset.downloadsCount ?? 0}
+                            {dataset?.downloadsCount ?? 0}
                         </div>
                     </div>
 

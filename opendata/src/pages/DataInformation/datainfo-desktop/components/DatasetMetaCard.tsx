@@ -21,18 +21,18 @@ export function DatasetMetaCard({ dataset, createdByName }: Props) {
                 <div className="flex items-center gap-2">
                     <ShieldCheck className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Lisans:</span>
-                    <span className="text-foreground">{dataset.license}</span>
+                    <span className="text-foreground">{dataset?.license}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                     <CalendarClock className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Oluşturulma:</span>
-                    <span className="text-foreground">{formatDate(dataset.createdAt)}</span>
+                    <span className="text-foreground">{formatDate(dataset?.createdAt)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <CalendarClock className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Güncellenme:</span>
-                    <span className="text-foreground">{formatDate(dataset.updatedAt)}</span>
+                    <span className="text-foreground">{formatDate(dataset?.updatedAt)}</span>
                 </div>
                 {createdByName ? (
                     <div className="flex items-center gap-2">

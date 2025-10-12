@@ -19,3 +19,11 @@ export const getDatasets = async (params?: any, accessToken?: any) => {
     }
 };
 
+export const getDataset = async (id: any) => {
+    try {
+        const { data } = await axiosInstance.get(`${Base}/get-dataset/${id}`);
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};
