@@ -25,7 +25,6 @@ import {
     FolderClosed,
     Tags,
     CircleHelp,
-
 } from "lucide-react"
 import DataDialog from "./DataDialog"
 
@@ -57,11 +56,11 @@ export interface Dataset {
 function getTypeMeta(datatypeRaw: string) {
     const t = (datatypeRaw || "").toUpperCase().trim()
 
-    // Varsayılan değerler
     let Icon = CircleHelp
     let color = "bg-gray-100 text-gray-700 ring-1 ring-gray-200"
     let accent = "text-gray-500"
-    let label = datatypeRaw || "Unknown"
+    // Hepsinde label'ı normalize edilmiş (t) kullan
+    let label = t || "UNKNOWN"
 
     switch (t) {
         case "XLSX":
@@ -69,51 +68,43 @@ function getTypeMeta(datatypeRaw: string) {
             Icon = FileSpreadsheet
             color = "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100"
             accent = "text-emerald-600"
-            label = t
             break
         case "PDF":
             Icon = FileText
             color = "bg-red-50 text-red-700 ring-1 ring-red-100"
             accent = "text-red-600"
-            label = t
             break
         case "TXT":
             Icon = FileText
             color = "bg-slate-50 text-slate-700 ring-1 ring-slate-200"
             accent = "text-slate-600"
-            label = t
             break
         case "XML":
         case "HTML":
             Icon = FileCode
             color = "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100"
             accent = "text-indigo-600"
-            label = t
             break
         case "GEOJSON":
         case "KML":
             Icon = Map
             color = "bg-teal-50 text-teal-700 ring-1 ring-teal-100"
             accent = "text-teal-600"
-            label = t
             break
         case "KMZ":
             Icon = FileArchive
             color = "bg-amber-50 text-amber-700 ring-1 ring-amber-100"
             accent = "text-amber-600"
-            label = t
             break
         case "API":
             Icon = Network
             color = "bg-sky-50 text-sky-700 ring-1 ring-sky-100"
             accent = "text-sky-600"
-            label = t
             break
         case "JSON":
             Icon = FileJson
             color = "bg-violet-50 text-violet-700 ring-1 ring-violet-100"
             accent = "text-violet-600"
-            label = t
             break
     }
 
@@ -125,10 +116,13 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
 
     return (
         <TooltipProvider delayDuration={200}>
-            <div className="cursor-pointer" onClick={(e) => {
-                e.stopPropagation();
-                window.location.href = `/datasets/${dataset.id}`;
-            }}>
+            <div
+                className="cursor-pointer"
+                onClick={(e) => {
+                    e.stopPropagation()
+                    window.location.href = `/datasets/${dataset.id}`
+                }}
+            >
                 <Card className="flex h-full flex-col overflow-hidden border border-border/60 shadow-sm transition-all hover:shadow-md relative">
                     <CardHeader className="space-y-3 pb-3">
                         <div className="flex items-center justify-between gap-3">
@@ -161,7 +155,9 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                                         {dataset.organization ? (
                                             <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
                                                 <Building2 className="h-3.5 w-3.5" />
-                                                <span className="truncate">{dataset.organization}</span>
+                                                <span className="truncate">
+                                                    {dataset.organization}
+                                                </span>
                                             </span>
                                         ) : null}
                                     </div>
@@ -201,7 +197,11 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                                             ? dataset.tags
                                             : ["etiket yok"]
                                         ).map((t, i) => (
-                                            <Badge key={`${t}-${i}`} variant="outline" className="px-2 py-0.5">
+                                            <Badge
+                                                key={`${t}-${i}`}
+                                                variant="outline"
+                                                className="px-2 py-0.5"
+                                            >
                                                 {t}
                                             </Badge>
                                         ))}
@@ -215,6 +215,6 @@ export default function DataCard({ dataset }: { dataset: Dataset }) {
                     </div>
                 </Card>
             </div>
-        </TooltipProvider >
+        </TooltipProvider>
     )
 }

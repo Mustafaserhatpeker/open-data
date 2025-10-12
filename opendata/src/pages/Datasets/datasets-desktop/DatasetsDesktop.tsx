@@ -25,8 +25,14 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
+import { useQuery } from "@tanstack/react-query"
+import { getDatasets } from "@/services/dataset.service"
 
 function DatasetsDesktop() {
+    const { data: datasetsResp } = useQuery({
+        queryKey: ["datasets"],
+        queryFn: () => getDatasets(),
+    });
     return (
         <div className="w-full flex flex-col items-center justify-between bg-accent  ">
             <div className="grid grid-cols-4 w-full gap-8 px-4 py-8 max-w-[80%] mx-auto ">
@@ -63,7 +69,7 @@ function DatasetsDesktop() {
                     </div>
 
                     <div className="mt-4 mb-6">
-                        <DatasetCards />
+                        <DatasetCards datasets={datasetsResp} />
                     </div>
                     <Pagination>
                         <PaginationContent>

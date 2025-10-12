@@ -1,58 +1,97 @@
 import DataCard, { type Dataset } from "./inner-components/DataCard"
-import {
-    datasets as dummyDatasets,
-    organizations,
-    categories as categoriesList,
-    tags as tagsList,
-} from "@/dummy/dummy.data"
-import type { Dataset as DummyDataset } from "@/lib/types"
 
-function resolveOrganizationName(d: DummyDataset): string | undefined {
-    return d.organization?.name ?? organizations.find((o) => o.id === d.organizationId)?.name
+type BackendDataset = {
+    _id: string
+    title: string
+    description?: string
+    createdAt?: string
+    updatedAt?: string
+    organization?: {
+        organizationName?: string
+        name?: string
+    } | null
+    categories?: Array<{
+        categoryName?: string
+        name?: string
+    }> | null
+    tags?: Array<{
+        tagName?: string
+        name?: string
+    }> | null
+    formats?: Array<{
+        formatName?: string
+        name?: string
+    }> | null
 }
 
-function resolveCategoryName(d: DummyDataset): string | undefined {
-    const firstCatId = d.categories?.[0]
-    if (!firstCatId) return undefined
-    return categoriesList.find((c) => c.id === firstCatId)?.name
-}
+type ApiResponseShape = {
+    status: number
+    message: string
+    data?: {
+        data?: BackendDataset[]
+        pagination?: {
+            total: number
+            page: number
+            limit: number
+            totalPage: number
+        }
+    }
+    error?: unknown
+    timestamp?: string
+} | BackendDataset[] | undefined | null
 
-function resolveTagNames(d: DummyDataset): string[] | undefined {
-    if (!d.tags || d.tags.length === 0) return undefined
-    const names = d.tags
-        .map((id) => tagsList.find((t) => t.id === id)?.name)
-        .filter((x): x is string => Boolean(x))
-    return names.length ? names : undefined
-}
+function toDataset(item: BackendDataset): Dataset {
+    const firstCategory = item.categories?.[0]
+    const firstFormat = item.formats?.[0]
 
-function resolveDatatype(d: DummyDataset): string {
-    // Öncelik: formats[0] -> resource[0].format -> "Unknown"
-    if (d.formats && d.formats.length > 0) return d.formats[0]
-    if (d.resources && d.resources.length > 0) return d.resources[0].format
-    return "Unknown"
-}
+    const datatypeRaw =
+        firstFormat?.formatName ||
+        firstFormat?.name ||
+        "" // bilinmiyorsa boş gir, component default'u gösterecek
 
-function toCardDataset(d: DummyDataset): Dataset {
     return {
-        id: d.id,
-        title: d.title,
-        description: d.description,
-        datatype: resolveDatatype(d),
-        organization: resolveOrganizationName(d),
-        category: resolveCategoryName(d),
-        tags: resolveTagNames(d),
-        createdDate: d.createdAt,
-        updatedDate: d.updatedAt,
+        id: item._id,
+        title: item.title,
+        description: item.description,
+        datatype: String(datatypeRaw).toUpperCase(), // CSV, JSON, PDF vb.
+        organization: item.organization?.name || item.organization?.organizationName || undefined,
+        category: firstCategory?.name || firstCategory?.categoryName || undefined,
+        tags: (item.tags || []).map(t => t.tagName || t.name || "").filter(Boolean),
+        createdDate: item.createdAt,
+        updatedDate: item.updatedAt,
     }
 }
 
-export default function DatasetCards() {
-    const data: Dataset[] = dummyDatasets.map(toCardDataset)
+function extractList(datasets: ApiResponseShape): BackendDataset[] {
+    if (!datasets) return []
+    // Eğer direkt dizi geldiyse
+    if (Array.isArray(datasets)) return datasets
+    // Eğer API response şeklindeyse
+    if (typeof datasets === "object" && "data" in datasets!) {
+        const inner = (datasets as any).data
+        if (inner && Array.isArray(inner.data)) {
+            return inner.data as BackendDataset[]
+        }
+    }
+    return []
+}
+
+export default function DatasetCards({ datasets }: { datasets?: ApiResponseShape }) {
+    const rawList = extractList(datasets)
+    const normalized: Dataset[] = rawList.map(toDataset)
+
+    if (!normalized.length) {
+        return (
+            <div className="mt-6 text-sm text-muted-foreground">
+                Gösterilecek veri bulunamadı.
+            </div>
+        )
+    }
 
     return (
         <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-2">
-            {data.map((dataset) => (
-                <DataCard key={dataset.id} dataset={dataset} />
+            {normalized.map((data) => (
+                <DataCard key={data.id} dataset={data} />
             ))}
         </div>
     )
