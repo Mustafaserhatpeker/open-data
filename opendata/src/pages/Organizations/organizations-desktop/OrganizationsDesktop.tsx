@@ -23,7 +23,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-import { Building2, FolderClosed, Globe, Mail } from "lucide-react"
+import { Building2, CalendarClock, FolderClosed, Globe, Mail } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { getOrganizations } from "@/services/organization.service"
 
@@ -71,7 +71,6 @@ export default function OrganizationsDesktop() {
             name: o.name ?? o.organizationName ?? "",
             description: o.description ?? "",
             logoUrl: o.logoUrl ?? "",
-            // UI 'website' bekliyor, API 'websiteUrl' veriyor
             website: o.websiteUrl ?? o.website ?? "",
             contactEmail: o.contactEmail ?? "",
             datasetsCount: o.datasetCount ?? o.datasetsCount ?? 0,
@@ -106,9 +105,11 @@ export default function OrganizationsDesktop() {
         return base
     }, [query, sortBy, organizations])
 
+    const toTime = (t?: string) => (t ? new Date(t).getTime() : 0)
+
     return (
         <div className="w-full bg-accent px-4 py-6 min-h-screen">
-            <div className="mx-auto w-full max-w-[80%] ">
+            <div className="mx-auto w-full max-w-[80%]">
                 {/* Header */}
                 <div className="mb-6">
                     <div className="flex items-center justify-between gap-4">
@@ -120,9 +121,7 @@ export default function OrganizationsDesktop() {
                         </div>
 
                         <div className="hidden sm:flex items-center gap-2">
-                            <Badge variant="secondary">
-                                Toplam: {organizations.length}
-                            </Badge>
+                            <Badge variant="secondary">Toplam: {organizations.length}</Badge>
                         </div>
                     </div>
 
@@ -168,89 +167,116 @@ export default function OrganizationsDesktop() {
 
                 {/* Grid */}
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    {filtered.map((org: Organization) => (
-                        <Card
-                            onClick={() => {
-                                window.location.href = `/organizations/${org.id}`
-                            }}
-                            key={org.id}
-                            className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer"
-                        >
-                            <CardHeader className="pb-3">
-                                <div className="flex items-start gap-3">
-                                    <Avatar className="h-12 w-12 rounded-lg">
-                                        <AvatarImage src={org.logoUrl} alt={org.name} />
-                                        <AvatarFallback className="rounded-lg">
-                                            {getInitials(org.name)}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                    <div className="min-w-0">
-                                        <CardTitle className="text-base">{org.name}</CardTitle>
-                                        <CardDescription className="mt-1 line-clamp-2">
-                                            {org.description}
-                                        </CardDescription>
-                                    </div>
-                                </div>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                                {/* Stats */}
-                                <div className="grid grid-cols-1 gap-3 text-sm">
-                                    <div className="rounded-md border p-3">
-                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                                            Veri Setleri
-                                        </div>
-                                        <div className="mt-1 inline-flex items-center gap-2">
-                                            <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">{org.datasetsCount ?? 0}</span>
+                    {filtered.map((org: Organization) => {
+                        const count = org.datasetsCount ?? 0
+                        const latest = Math.max(toTime(org.updatedAt), toTime(org.createdAt))
+                        const latestText = latest
+                            ? new Date(latest).toLocaleDateString("tr-TR")
+                            : "-"
+
+                        return (
+                            <Card
+                                onClick={() => {
+                                    window.location.href = `/organizations/${org.id}`
+                                }}
+                                key={org.id}
+                                className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer"
+                            >
+                                <CardHeader className="pb-3">
+                                    <div className="flex items-start gap-3">
+                                        <Avatar className="h-12 w-12 rounded-lg">
+                                            <AvatarImage src={org.logoUrl} alt={org.name} />
+                                            <AvatarFallback className="rounded-lg">
+                                                {getInitials(org.name)}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div className="min-w-0">
+                                            <CardTitle className="text-base">{org.name}</CardTitle>
+                                            <CardDescription className="mt-1 line-clamp-2">
+                                                {org.description}
+                                            </CardDescription>
                                         </div>
                                     </div>
-                                </div>
-
-                                {/* Actions */}
-                                <div className="flex items-center justify-between gap-2">
-                                    <div className="flex items-center gap-3 text-sm">
-                                        <a
-                                            href={org.website || "#"}
-                                            onClick={(e) => {
-                                                if (!org.website) e.preventDefault()
-                                            }}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className={`inline-flex items-center gap-1.5 ${org.website
-                                                    ? "text-foreground hover:underline"
-                                                    : "text-muted-foreground cursor-default"
-                                                }`}
-                                            title={org.website ? "Web sitesine git" : "Web sitesi yok"}
-                                        >
-                                            <Globe className="h-4 w-4" />
-                                            Web
-                                        </a>
-                                        <a
-                                            href={org.contactEmail ? `mailto:${org.contactEmail}` : "#"}
-                                            onClick={(e) => {
-                                                if (!org.contactEmail) e.preventDefault()
-                                            }}
-                                            className={`inline-flex items-center gap-1.5 ${org.contactEmail
-                                                    ? "text-foreground hover:underline"
-                                                    : "text-muted-foreground cursor-default"
-                                                }`}
-                                            title={org.contactEmail ? "E-posta gönder" : "E-posta yok"}
-                                        >
-                                            <Mail className="h-4 w-4" />
-                                            E-posta
-                                        </a>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    {/* Stats */}
+                                    <div className="grid grid-cols-2 gap-3 text-sm">
+                                        <div className="rounded-md border p-3">
+                                            <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                                Veri Setleri
+                                            </div>
+                                            <div className="mt-1 inline-flex items-center gap-2">
+                                                <FolderClosed className="h-4 w-4 text-muted-foreground" />
+                                                <span className="font-medium">{count}</span>
+                                            </div>
+                                        </div>
+                                        <div className="rounded-md border p-3">
+                                            <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                                En Son
+                                            </div>
+                                            <div className="mt-1 inline-flex items-center gap-2">
+                                                <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                                <span className="font-medium">{latestText}</span>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <Button variant="secondary" asChild>
-                                        <Link to={`/datasets?organizationId=${org.id}`}>
-                                            <Building2 className="h-4 w-4 mr-2" />
-                                            Veri setleri
-                                        </Link>
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ))}
+                                    {/* Actions */}
+                                    <div className="flex items-center justify-between gap-2">
+                                        <div className="flex items-center gap-3 text-sm">
+                                            <a
+                                                href={org.website || "#"}
+                                                onClick={(e) => {
+                                                    if (!org.website) e.preventDefault()
+                                                }}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className={`inline-flex items-center gap-1.5 ${org.website
+                                                        ? "text-foreground hover:underline"
+                                                        : "text-muted-foreground cursor-default"
+                                                    }`}
+                                                title={
+                                                    org.website ? "Web sitesine git" : "Web sitesi yok"
+                                                }
+                                            >
+                                                <Globe className="h-4 w-4" />
+                                                Web
+                                            </a>
+                                            <a
+                                                href={
+                                                    org.contactEmail
+                                                        ? `mailto:${org.contactEmail}`
+                                                        : "#"
+                                                }
+                                                onClick={(e) => {
+                                                    if (!org.contactEmail) e.preventDefault()
+                                                }}
+                                                className={`inline-flex items-center gap-1.5 ${org.contactEmail
+                                                        ? "text-foreground hover:underline"
+                                                        : "text-muted-foreground cursor-default"
+                                                    }`}
+                                                title={
+                                                    org.contactEmail
+                                                        ? "E-posta gönder"
+                                                        : "E-posta yok"
+                                                }
+                                            >
+                                                <Mail className="h-4 w-4" />
+                                                E-posta
+                                            </a>
+                                        </div>
+
+                                        <Button variant="secondary" asChild>
+                                            <Link to={`/datasets?organizationId=${org.id}`}>
+                                                <Building2 className="h-4 w-4 mr-2" />
+                                                Veri setleri
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        )
+                    })}
                 </div>
 
                 {/* Empty state */}
