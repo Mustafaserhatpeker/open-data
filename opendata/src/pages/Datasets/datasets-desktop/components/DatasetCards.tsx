@@ -89,7 +89,7 @@ export default function DatasetCards({ datasets }: { datasets?: ApiResponseShape
     }
 
     return (
-        <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-1">
             {normalized.map((data) => (
                 <DataCard key={data.id} dataset={data} />
             ))}

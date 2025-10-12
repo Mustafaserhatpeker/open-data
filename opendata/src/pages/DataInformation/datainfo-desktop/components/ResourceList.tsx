@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Download, Eye } from "lucide-react"
-import { getTypeMeta } from "./utils"
+import { getResourceTypeMeta } from "./utils"
 
 type Props = {
     resources?: any
@@ -19,7 +19,7 @@ export function ResourcesList({ resources }: Props) {
                 {resources && resources.length > 0 ? (
                     <div className="divide-y">
                         {resources.map((r: any) => {
-                            const meta = getTypeMeta(r.mimeType)
+                            const meta = getResourceTypeMeta(r.mimeType)
                             return (
                                 <div key={r._id} className="py-3 flex items-start justify-between gap-4">
                                     <div className="flex items-start gap-3 min-w-0">
