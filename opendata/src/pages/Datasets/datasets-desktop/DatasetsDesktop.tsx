@@ -28,9 +28,10 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { getDatasets } from "@/services/dataset.service"
 import { getCategories } from "@/services/category.service"
+import { getOrganizations } from "@/services/organization.service"
 
 function DatasetsDesktop() {
-    
+
     const { data: datasetsResp } = useQuery({
         queryKey: ["datasets"],
         queryFn: () => getDatasets(),
@@ -39,11 +40,19 @@ function DatasetsDesktop() {
         queryKey: ["categories"],
         queryFn: () => getCategories(),
     });
+    const { data: organizationsResp } = useQuery({
+        queryKey: ["organizations"],
+        queryFn: () => getOrganizations(),
+    });
+
     return (
         <div className="w-full flex flex-col items-center justify-between bg-accent  ">
             <div className="grid grid-cols-4 w-full gap-8 px-4 py-8 max-w-[80%] mx-auto ">
                 <div className="col-span-1   rounded-xl">
-                    <RightFilter categories={categoriesResp} />
+                    <RightFilter
+                        categories={categoriesResp}
+                        organizations={organizationsResp}
+                    />
                 </div>
                 <div className="col-span-3 bg-white p-2 rounded-xl">
                     <div className="grid grid-cols-5 w-full gap-6">
