@@ -1,15 +1,12 @@
-import { useEffect, useMemo, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { useState, useMemo } from "react"
+import { useQuery } from "@tanstack/react-query"
 
-import {
-    organizations as orgs,
-    datasets as allDatasets,
-    categories as categoriesList,
-    tags as tagsList,
-} from "@/dummy/dummy.data"
-import type { Dataset as DummyDataset, Organization } from "@/lib/types"
+import { getDatasets } from "@/services/dataset.service"
+import { useAuthStore } from "@/stores/auth.store"
 
-import DataCard, { type Dataset as CardDataset } from "@/pages/Datasets/datasets-desktop/components/inner-components/DataCard"
+import DataCard from "@/pages/Datasets/datasets-desktop/components/inner-components/DataCard"
+import BackButton from "@/components/back-button"
 
 import {
     Card,
@@ -19,13 +16,11 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import {
-    ArrowLeft,
     Building2,
     CalendarClock,
     FolderClosed,
@@ -33,181 +28,98 @@ import {
     Mail,
     Hash,
 } from "lucide-react"
-import BackButton from "@/components/back-button"
+
+// Yardımcı fonksiyonlar
+function formatDate(dateString?: string) {
+    if (!dateString) return "-"
+    return new Date(dateString).toLocaleDateString("tr-TR")
+}
 
 function getInitials(name?: string) {
-    if (!name) return "ORG"
-    const parts = name.split(" ").filter(Boolean)
-    const first = parts[0]?.[0] ?? ""
-    const last = parts.length > 1 ? parts[parts.length - 1]?.[0] ?? "" : ""
-    return (first + last).toUpperCase()
-}
-
-function formatDate(input?: string) {
-    if (!input) return undefined
-    const d = new Date(input)
-    if (isNaN(d.getTime())) return input
-    try {
-        return d.toLocaleString()
-    } catch {
-        return d.toISOString()
-    }
-}
-
-// Mapping helpers to adapt DummyDataset -> CardDataset (used by DataCard)
-function resolveOrganizationName(d: DummyDataset): string | undefined {
-    return d.organization?.name ?? orgs.find((o) => o.id === d.organizationId)?.name
-}
-function resolveCategoryName(d: DummyDataset): string | undefined {
-    const firstCatId = d.categories?.[0]
-    if (!firstCatId) return undefined
-    return categoriesList.find((c) => c.id === firstCatId)?.name
-}
-function resolveTagNames(d: DummyDataset): string[] | undefined {
-    if (!d.tags || d.tags.length === 0) return undefined
-    const names = d.tags
-        .map((id) => tagsList.find((t) => t.id === id)?.name)
-        .filter((x): x is string => Boolean(x))
-    return names.length ? names : undefined
-}
-function resolveDatatype(d: DummyDataset): string {
-    if (d.formats && d.formats.length > 0) return d.formats[0]
-    if (d.resources && d.resources.length > 0) return d.resources[0].format
-    return "Unknown"
-}
-function toCardDataset(d: DummyDataset): CardDataset {
-    return {
-        id: d.id,
-        title: d.title,
-        description: d.description,
-        datatype: resolveDatatype(d),
-        organization: resolveOrganizationName(d),
-        category: resolveCategoryName(d),
-        tags: resolveTagNames(d),
-        createdDate: d.createdAt,
-        updatedDate: d.updatedAt,
-    }
+    if (!name) return "?"
+    return name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
 }
 
 type SortKey = "recent" | "views" | "downloads" | "title"
 
 export default function OrganizationInfoDesktop() {
     const { id } = useParams<{ id: string }>()
-    const [loading, setLoading] = useState(true)
-    const [org, setOrg] = useState<Organization | null>(null)
+    const { accessToken } = useAuthStore()
 
-    // Right column controls
     const [query, setQuery] = useState("")
     const [sortBy, setSortBy] = useState<SortKey>("recent")
 
-    useEffect(() => {
-        setLoading(true)
-        const found = orgs.find((o) => o.id === id) ?? null
-        setOrg(found)
-        setLoading(false)
-        window.scrollTo({ top: 0, behavior: "smooth" })
-    }, [id])
+    const { data: datasetsResp, isLoading } = useQuery({
+        queryKey: ["datasets", id],
+        queryFn: () => getDatasets({ categoryId: id, accessToken }),
+    })
 
-    const orgDatasets = useMemo(() => {
-        if (!org) return []
-        return allDatasets.filter((d) => d.organizationId === org.id)
-    }, [org])
+    const datasets = datasetsResp?.data?.data || []
+    const org = datasets[0]?.organization
 
     const filteredAndSorted = useMemo(() => {
-        const q = query.trim().toLocaleLowerCase()
-        let list = q
-            ? orgDatasets.filter(
-                (d) =>
-                    d.title.toLocaleLowerCase().includes(q) ||
-                    d.description.toLocaleLowerCase().includes(q),
-            )
-            : orgDatasets.slice()
-
-        list.sort((a, b) => {
-            switch (sortBy) {
-                case "views":
-                    return (b.viewsCount ?? 0) - (a.viewsCount ?? 0)
-                case "downloads":
-                    return (b.downloadsCount ?? 0) - (a.downloadsCount ?? 0)
-                case "title":
-                    return a.title.localeCompare(b.title, "tr")
-                case "recent":
-                default:
-                    // Desc by updatedAt then createdAt
-                    return (
-                        new Date(b.updatedAt ?? b.createdAt).getTime() -
-                        new Date(a.updatedAt ?? a.createdAt).getTime()
-                    )
-            }
-        })
-
-        return list
-    }, [orgDatasets, query, sortBy])
-
-    if (loading) {
-        return (
-            <div className="w-full bg-accent px-4 py-8">
-                <div className="animate-pulse space-y-4">
-                    <div className="h-6 w-28 bg-muted rounded" />
-                    <div className="h-10 w-1/2 bg-muted rounded" />
-                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                        <div className="h-64 bg-muted rounded lg:col-span-4" />
-                        <div className="h-64 bg-muted rounded lg:col-span-8" />
-                    </div>
-                </div>
-            </div>
+        let results = datasets.filter((d: any) =>
+            d?.title.toLowerCase().includes(query.toLowerCase())
         )
-    }
 
-    if (!org) {
-        return (
-            <div className="w-full bg-accent px-4 py-12">
-                <div className="mx-auto max-w-xl text-center">
-                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-muted mb-3">
-                        <Building2 className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <h2 className="text-xl font-semibold">Organizasyon Bulunamadı</h2>
-                    <p className="text-muted-foreground mt-1">
-                        Aradığınız organizasyon kaldırılmış veya hiç var olmamış olabilir.
-                    </p>
-                    <div className="mt-4">
-                        <Button asChild variant="secondary">
-                            <Link to="/organizations">
-                                <ArrowLeft className="h-4 w-4 mr-2" />
-                                Organizasyonlara dön
-                            </Link>
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        )
+        switch (sortBy) {
+            case "views":
+                results.sort((a: any, b: any) => b.viewsCount - a.viewsCount)
+                break
+            case "downloads":
+                results.sort((a: any, b: any) => b.downloadsCount - a.downloadsCount)
+                break
+            case "title":
+                results.sort((a: any, b: any) => a.title.localeCompare(b.title))
+                break
+            default:
+                results.sort(
+                    (a: any, b: any) =>
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                )
+        }
+        return results
+    }, [datasets, query, sortBy])
+
+    if (isLoading) {
+        return <div className="p-6 text-center text-muted-foreground">Yükleniyor...</div>
     }
 
     return (
         <div className="w-full bg-accent px-4 py-6">
             <div className="mx-auto w-full max-w-[80%]">
-                {/* Header */}
+                {/* Üst Kısım */}
                 <div className="mb-6 flex items-center justify-between">
                     <BackButton />
-
-                    <Badge variant="secondary">Toplam veri seti: {orgDatasets.length}</Badge>
+                    <Badge variant="secondary">Toplam veri seti: {datasets.length}</Badge>
                 </div>
 
-                {/* Title */}
-                <div className="mb-6 flex items-start gap-3">
-                    <Avatar className="h-12 w-12 rounded-lg">
-                        <AvatarImage src={org.logoUrl} alt={org.name} />
-                        <AvatarFallback className="rounded-lg bg-purple-400">{getInitials(org.name)}</AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0">
-                        <h1 className="text-2xl font-semibold leading-tight">{org.name}</h1>
-                        <p className="mt-2 text-muted-foreground">{org.description}</p>
+                {/* Organizasyon Başlığı */}
+                {org ? (
+                    <div className="mb-6 flex items-start gap-3">
+                        <Avatar className="h-12 w-12 rounded-lg">
+                            <AvatarImage src={org.logoUrl} alt={org.organizationName} />
+                            <AvatarFallback className="rounded-lg bg-purple-400">
+                                {getInitials(org.organizationName)}
+                            </AvatarFallback>
+                        </Avatar>
+                        <div className="min-w-0">
+                            <h1 className="text-2xl font-semibold leading-tight">{org.organizationName}</h1>
+                            <p className="mt-2 text-muted-foreground">{org.description}</p>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <p className="text-sm text-muted-foreground">Organizasyon bilgisi bulunamadı.</p>
+                )}
 
-                {/* Two-column layout */}
+                {/* İki kolon düzeni */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-                    {/* Left: Organization info */}
+                    {/* Sol kolon: Organizasyon Bilgileri */}
                     <div className="lg:col-span-3 space-y-6">
                         <Card>
                             <CardHeader className="pb-3">
@@ -215,84 +127,97 @@ export default function OrganizationInfoDesktop() {
                                 <CardDescription>İletişim ve istatistikler</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-3">
-                                <div className="grid grid-cols-1 gap-3 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <Building2 className="h-4 w-4 text-muted-foreground" />
-                                        <span className="truncate">{org.name}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <Globe className="h-4 w-4 text-muted-foreground" />
-                                        {org.website ? (
-                                            <a href={org.website} target="_blank" rel="noreferrer" className="hover:underline">
-                                                Web sitesi
-                                            </a>
-                                        ) : (
-                                            <span className="text-muted-foreground">Web sitesi yok</span>
-                                        )}
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <Mail className="h-4 w-4 text-muted-foreground" />
-                                        {org.contactEmail ? (
-                                            <a href={`mailto:${org.contactEmail}`} className="hover:underline">
-                                                {org.contactEmail}
-                                            </a>
-                                        ) : (
-                                            <span className="text-muted-foreground">İletişim e-postası yok</span>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <Separator />
-
-                                <div className="grid grid-cols-1 gap-3 text-sm">
-                                    <div className="rounded-md border p-3">
-                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">Veri Setleri</div>
-                                        <div className="mt-1 inline-flex items-center gap-2">
-                                            <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">{orgDatasets.length}</span>
+                                {org ? (
+                                    <>
+                                        <div className="grid grid-cols-1 gap-3 text-sm">
+                                            <div className="flex items-center gap-2">
+                                                <Building2 className="h-4 w-4 text-muted-foreground" />
+                                                <span className="truncate">{org.organizationName}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Globe className="h-4 w-4 text-muted-foreground" />
+                                                {org.websiteUrl ? (
+                                                    <a
+                                                        href={org.websiteUrl}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="hover:underline"
+                                                    >
+                                                        Web sitesi
+                                                    </a>
+                                                ) : (
+                                                    <span className="text-muted-foreground">Web sitesi yok</span>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Mail className="h-4 w-4 text-muted-foreground" />
+                                                {org.contactEmail ? (
+                                                    <a href={`mailto:${org.contactEmail}`} className="hover:underline">
+                                                        {org.contactEmail}
+                                                    </a>
+                                                ) : (
+                                                    <span className="text-muted-foreground">İletişim e-postası yok</span>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </div>
+                                        <Separator />
 
-                                <Separator />
+                                        <div className="grid grid-cols-1 gap-3 text-sm">
+                                            <div className="rounded-md border p-3">
+                                                <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                                    Veri Setleri
+                                                </div>
+                                                <div className="mt-1 inline-flex items-center gap-2">
+                                                    <FolderClosed className="h-4 w-4 text-muted-foreground" />
+                                                    <span className="font-medium">{datasets.length}</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                <div className="grid grid-cols-1 gap-2 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-muted-foreground">Oluşturulma:</span>
-                                        <span className="text-foreground">{formatDate(org.createdAt) ?? "-"}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-muted-foreground">Güncelleme:</span>
-                                        <span className="text-foreground">{formatDate(org.updatedAt) ?? "-"}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <Hash className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-muted-foreground">ID:</span>
-                                        <span className="text-foreground">{org.id}</span>
-                                    </div>
-                                </div>
+                                        <Separator />
+
+                                        <div className="grid grid-cols-1 gap-2 text-sm">
+                                            <div className="flex items-center gap-2">
+                                                <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                                <span className="text-muted-foreground">Oluşturulma:</span>
+                                                <span className="text-foreground">{formatDate(org.createdAt)}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                                <span className="text-muted-foreground">Güncelleme:</span>
+                                                <span className="text-foreground">{formatDate(org.updatedAt)}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Hash className="h-4 w-4 text-muted-foreground" />
+                                                <span className="text-muted-foreground">ID:</span>
+                                                <span className="text-foreground">{org._id}</span>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">Organizasyon bilgisi yüklenemedi.</p>
+                                )}
                             </CardContent>
                         </Card>
                     </div>
 
-                    {/* Right: Organization datasets */}
+                    {/* Sağ kolon: Veri Setleri */}
                     <div className="lg:col-span-9 space-y-6">
                         <Card>
                             <CardHeader className="pb-3">
                                 <div className="flex items-center justify-between gap-3">
                                     <div>
                                         <CardTitle className="text-base">Veri Setleri</CardTitle>
-                                        <CardDescription>Bu organizasyon tarafından yayımlanan veri setleri</CardDescription>
+                                        <CardDescription>
+                                            Bu organizasyon tarafından yayımlanan veri setleri
+                                        </CardDescription>
                                     </div>
-
                                     <Badge variant="secondary">Toplam: {filteredAndSorted.length}</Badge>
                                 </div>
                             </CardHeader>
                             <CardContent className="space-y-4">
-                                {/* Controls */}
+                                {/* Arama & Sıralama */}
                                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                                     <div className="sm:col-span-2">
                                         <Input
@@ -303,7 +228,10 @@ export default function OrganizationInfoDesktop() {
                                     </div>
                                     <div className="sm:col-span-1">
                                         <div className="flex items-center gap-2">
-                                            <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
+                                            <label
+                                                htmlFor="sort"
+                                                className="text-sm text-muted-foreground whitespace-nowrap"
+                                            >
                                                 Sırala:
                                             </label>
                                             <select
@@ -323,14 +251,17 @@ export default function OrganizationInfoDesktop() {
 
                                 <Separator />
 
+                                {/* Veri Seti Kartları */}
                                 {filteredAndSorted.length > 0 ? (
                                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                        {filteredAndSorted.map((d) => (
-                                            <DataCard key={d.id} dataset={toCardDataset(d)} />
+                                        {filteredAndSorted.map((d: any) => (
+                                            <DataCard key={d._id} dataset={d} />
                                         ))}
                                     </div>
                                 ) : (
-                                    <p className="text-sm text-muted-foreground">Bu kriterlerle eşleşen veri seti bulunamadı.</p>
+                                    <p className="text-sm text-muted-foreground">
+                                        Bu kriterlerle eşleşen veri seti bulunamadı.
+                                    </p>
                                 )}
                             </CardContent>
                         </Card>
