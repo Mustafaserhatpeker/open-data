@@ -22,7 +22,7 @@ export default function RightFilter(
                     {organizations.data?.map((org: any) => (
                         <Button key={org._id} variant="outline" size="sm" className="justify-between">
                             {org.organizationName}
-                            <Badge>
+                            <Badge variant={"outline"}>
                                 {org.datasetCount}
                             </Badge>
                         </Button>
@@ -35,7 +35,7 @@ export default function RightFilter(
                     {categories.data?.map((cat: any) => (
                         <Button key={cat._id} variant="outline" size="sm" className="justify-between">
                             {cat.categoryName}
-                            <Badge>
+                            <Badge variant={"outline"}>
                                 {cat.datasetCount}
                             </Badge>
                         </Button>
