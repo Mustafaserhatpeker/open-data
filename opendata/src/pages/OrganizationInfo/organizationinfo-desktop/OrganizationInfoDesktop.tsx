@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getDatasets } from "@/services/dataset.service"
 import { useAuthStore } from "@/stores/auth.store"
 
-import DataCard from "@/pages/Datasets/datasets-desktop/components/inner-components/DataCard"
+import DataCard from "./components/DataCard"
 import BackButton from "@/components/back-button"
 
 import {
