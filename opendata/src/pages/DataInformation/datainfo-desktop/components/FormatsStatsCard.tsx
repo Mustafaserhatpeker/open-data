@@ -23,11 +23,11 @@ export function FormatsStatsCard({ dataset, primaryFormat }: Props) {
                 <div>
                     <div className="text-xs uppercase tracking-wide text-muted-foreground mb-2">Formatlar</div>
                     <div className="flex flex-wrap gap-1.5">
-                        {formats.map((f) => {
+                        {formats?.map((f) => {
                             const m = getTypeMeta(f)
                             return (
-                                <Badge key={f} variant="secondary" className={`border ${m.accent} bg-transparent`}>
-                                    {m.label}
+                                <Badge key={f} variant="secondary" className={`border ${m?.accent} bg-transparent`}>
+                                    {m?.label}
                                 </Badge>
                             )
                         })}

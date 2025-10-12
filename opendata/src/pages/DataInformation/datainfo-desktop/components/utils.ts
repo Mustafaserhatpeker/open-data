@@ -18,7 +18,7 @@ export type TypeMeta = {
 }
 
 export function getTypeMeta(raw: string): TypeMeta {
-    const t = (raw || "").toUpperCase().trim()
+    const t = (raw || "a")?.toUpperCase()?.trim()
     let Icon = CircleHelp
     let color = "bg-gray-100 text-gray-700 ring-1 ring-gray-200"
     let accent = "text-gray-500"

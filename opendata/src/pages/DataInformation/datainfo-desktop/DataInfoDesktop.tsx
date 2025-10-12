@@ -40,7 +40,7 @@ export default function DataInfoDesktop() {
 
                     <div className="lg:col-span-8 space-y-6">
                         <ResourcesList resources={datasetResp?.data?.resources} />
-                        <FormatsStatsCard dataset={datasetResp} primaryFormat={datasetResp?.data?.formats[0]?.formatName || "Bilinmiyor"} />
+                        <FormatsStatsCard dataset={datasetResp?.data} primaryFormat={datasetResp?.data?.formats[0]?.formatName || "Bilinmiyor"} />
                     </div>
                 </div>
             </div>
