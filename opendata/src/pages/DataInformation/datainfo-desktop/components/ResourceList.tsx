@@ -42,14 +42,14 @@ export function ResourcesList({ resources }: Props) {
                                                 </Badge>
                                             </div>
                                             <div className="mt-1 text-sm text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1">
-                                                <span>Oluşturulma: {new Date(r.createdAt).toLocaleDateString("tr-TR") || "-"} </span>
-                                                {r.updatedAt ? <span>Güncelleme:{new Date(r.updatedAt).toLocaleDateString("tr-TR") || "-"}</span> : null}
+                                                <span>Oluşturulma: {new Date(r?.createdAt).toLocaleDateString("tr-TR") || "-"} </span>
+                                                {r.updatedAt ? <span>Güncelleme:{new Date(r?.updatedAt).toLocaleDateString("tr-TR") || "-"}</span> : null}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="shrink-0 gap-2 flex flex-row sm:flex-row">
                                         <Button asChild>
-                                            <a href={r.url} target="_blank" rel="noreferrer">
+                                            <a href={r.fileUrl} target="_blank" rel="noreferrer">
                                                 <Download className="h-4 w-4 mr-2" />
                                                 İndir
                                             </a>
