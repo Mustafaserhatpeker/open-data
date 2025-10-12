@@ -46,7 +46,7 @@ function DatasetsDesktop() {
     });
 
     return (
-        <div className="w-full flex flex-col items-center justify-between bg-accent  ">
+        <div className="w-full flex flex-col items-center justify-between bg-accent min-h-screen  ">
             <div className="grid grid-cols-4 w-full gap-8 px-4 py-8 max-w-[80%] mx-auto ">
                 <div className="col-span-1   rounded-xl">
                     <RightFilter
