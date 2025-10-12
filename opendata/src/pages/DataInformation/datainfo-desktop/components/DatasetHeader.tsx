@@ -7,7 +7,6 @@ import {
     Eye,
     FolderClosed,
     Tags as TagsIcon,
-    UserRound,
 } from "lucide-react"
 import { getTypeMeta } from "./utils"
 import BackButton from "@/components/back-button"
@@ -22,7 +21,6 @@ type Props = {
 
 export function DatasetHeader({
     dataset,
-    createdByName,
     categoryNames,
     tagNames,
     primaryFormat,
@@ -45,15 +43,15 @@ export function DatasetHeader({
                     </Badge>
 
                     <Badge variant="outline" className="flex items-center gap-1.5 px-2.5 py-1">
-                        {dataset?.license}
+                        {dataset?.license?.licenceName || "Bilinmiyor"}
                     </Badge>
                     <span className="inline-flex items-center text-xs gap-1.5 bg-accent-foreground/10 px-2.5 py-1 rounded-md">
                         <Download className="h-4 w-4" />
-                        {dataset?.downloadsCount ?? 0}
+                        {dataset?.downloadsCount ?? 1}
                     </span>
                     <span className="inline-flex items-center text-xs gap-1.5 bg-accent-foreground/10 px-2.5 py-1 rounded-md">
                         <Eye className="h-4 w-4" />
-                        {dataset?.viewsCount ?? 0}
+                        {dataset?.viewsCount ?? 1}
                     </span>
 
                 </div>
@@ -69,14 +67,7 @@ export function DatasetHeader({
                 </div>
                 <div className="min-w-0">
                     <h1 className="text-2xl font-semibold leading-tight">{dataset?.title}</h1>
-                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-                        {createdByName ? (
-                            <span className="inline-flex items-center gap-1.5">
-                                <UserRound className="h-4 w-4" />
-                                {createdByName}
-                            </span>
-                        ) : null}
-                    </div>
+
                 </div>
             </div>
 

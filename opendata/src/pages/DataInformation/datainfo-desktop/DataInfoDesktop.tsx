@@ -27,21 +27,19 @@ export default function DataInfoDesktop() {
         <div className="w-full px-4 py-6 bg-accent min-h-[100vh]">
             <div className="max-w-[80%] mx-auto space-y-6">
                 <DatasetHeader
-                    dataset={datasetResp}
-                    createdByName={datasetResp?.data?.createdBy?.name || "İsimsiz"}
-                    categoryNames={datasetResp?.data?.categories?.map((cat: any) => cat.name) || []}
-                    tagNames={datasetResp?.data?.tags?.map((tag: any) => tag.name) || []}
-                    primaryFormat={datasetResp?.data?.formats[0]?.formatName || "Bilinmiyor"}
+                    dataset={datasetResp?.data}
+                    categoryNames={datasetResp?.data?.categories?.map((cat: any) => cat.categoryName) || []}
+                    tagNames={datasetResp?.data?.tags?.map((tag: any) => tag.tagName) || []}
+                    primaryFormat={datasetResp?.data?.formats[0]?.formatName || "Bilinmeyen Format"}
                 />
-
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                     <div className="lg:col-span-4 space-y-6">
                         <OrganizationCard organization={datasetResp?.data?.organization} />
-                        <DatasetMetaCard dataset={datasetResp} createdByName={datasetResp?.data?.createdBy?.name || "İsimsiz"} />
+                        <DatasetMetaCard dataset={datasetResp?.data} />
                     </div>
 
                     <div className="lg:col-span-8 space-y-6">
-                        <ResourcesList resources={datasetResp?.resources} />
+                        <ResourcesList resources={datasetResp?.data?.resources} />
                         <FormatsStatsCard dataset={datasetResp} primaryFormat={datasetResp?.data?.formats[0]?.formatName || "Bilinmiyor"} />
                     </div>
                 </div>

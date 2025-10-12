@@ -2,11 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Download, Eye } from "lucide-react"
-import type { Dataset as DummyDataset } from "@/lib/types"
-import { formatDate, getTypeMeta } from "./utils"
+import { getTypeMeta } from "./utils"
 
 type Props = {
-    resources?: NonNullable<DummyDataset["resources"]>
+    resources?: any
 }
 
 export function ResourcesList({ resources }: Props) {
@@ -19,10 +18,10 @@ export function ResourcesList({ resources }: Props) {
             <CardContent className="space-y-3">
                 {resources && resources.length > 0 ? (
                     <div className="divide-y">
-                        {resources.map((r) => {
-                            const meta = getTypeMeta(r.format)
+                        {resources.map((r: any) => {
+                            const meta = getTypeMeta(r.mimeType)
                             return (
-                                <div key={r.id} className="py-3 flex items-start justify-between gap-4">
+                                <div key={r._id} className="py-3 flex items-start justify-between gap-4">
                                     <div className="flex items-start gap-3 min-w-0">
                                         <div className={`mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-lg ${meta.color}`}>
                                             <meta.Icon className="h-4 w-4" />
@@ -34,17 +33,17 @@ export function ResourcesList({ resources }: Props) {
                                                     target="_blank"
                                                     rel="noreferrer"
                                                     className="font-medium hover:underline truncate"
-                                                    title={r.name}
+                                                    title={r.resourceName}
                                                 >
-                                                    {r.name}
+                                                    {r.resourceName}
                                                 </a>
                                                 <Badge variant="secondary" className={`border ${meta.accent} bg-transparent`}>
                                                     {meta.label}
                                                 </Badge>
                                             </div>
                                             <div className="mt-1 text-sm text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1">
-                                                <span>Oluşturulma: {formatDate(r.createdAt) ?? "-"}</span>
-                                                {r.updatedAt ? <span>Güncelleme: {formatDate(r.updatedAt)}</span> : null}
+                                                <span>Oluşturulma: {new Date(r.createdAt).toLocaleDateString("tr-TR") || "-"} </span>
+                                                {r.updatedAt ? <span>Güncelleme:{new Date(r.updatedAt).toLocaleDateString("tr-TR") || "-"}</span> : null}
                                             </div>
                                         </div>
                                     </div>
