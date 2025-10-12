@@ -25,7 +25,7 @@ export function OrganizationCard({ organization }: Props) {
                     <div className="min-w-0">
                         <div className="flex items-center gap-2">
                             <Building2 className="h-4 w-4 text-muted-foreground" />
-                            <p className="font-medium truncate">{organization?.name ?? "-"}</p>
+                            <p className="font-medium truncate">{organization?.organizationName ?? "-"}</p>
                         </div>
                         {organization?.description ? (
                             <p className="mt-1 text-sm text-muted-foreground">{organization.description}</p>
