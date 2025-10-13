@@ -26,7 +26,6 @@ import {
     FolderClosed,
     Globe,
     Mail,
-    Hash,
 } from "lucide-react"
 
 // Yardımcı fonksiyonlar
@@ -188,11 +187,7 @@ export default function OrganizationInfoDesktop() {
                                                 <span className="text-muted-foreground">Güncelleme:</span>
                                                 <span className="text-foreground">{formatDate(org.updatedAt)}</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <Hash className="h-4 w-4 text-muted-foreground" />
-                                                <span className="text-muted-foreground">ID:</span>
-                                                <span className="text-foreground">{org._id}</span>
-                                            </div>
+
                                         </div>
                                     </>
                                 ) : (
