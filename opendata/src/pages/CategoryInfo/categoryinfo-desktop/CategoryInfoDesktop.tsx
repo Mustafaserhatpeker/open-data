@@ -1,17 +1,8 @@
-import { useEffect, useMemo, useState } from "react"
-import { Link, useParams } from "react-router-dom"
-
-import {
-    categories as cats,
-    datasets as allDatasets,
-    tags as tagsList,
-    organizations as orgs,
-} from "@/dummy/dummy.data"
-import type { Category, Dataset as DummyDataset } from "@/lib/types"
-
+import { useParams } from "react-router-dom"
+import { useMemo, useState } from "react"
 import DataCard, {
-    type Dataset as CardDataset,
-} from "@/pages/Datasets/datasets-desktop/components/inner-components/DataCard"
+
+} from "./components/DataCard"
 
 import {
     Card,
@@ -21,197 +12,169 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 import {
-    ArrowLeft,
     CalendarClock,
     Download,
     Eye,
     FolderClosed,
-    Hash,
     Tags as TagsIcon,
 } from "lucide-react"
 import BackButton from "@/components/back-button"
-
-function getInitials(name?: string) {
-    if (!name) return "CT"
-    const parts = name.split(" ").filter(Boolean)
-    const first = parts[0]?.[0] ?? ""
-    const last = parts.length > 1 ? parts[parts.length - 1]?.[0] ?? "" : ""
-    return (first + last).toUpperCase()
-}
-
-function formatDate(input?: string) {
-    if (!input) return undefined
-    const d = new Date(input)
-    if (isNaN(d.getTime())) return input
-    try {
-        return d.toLocaleString()
-    } catch {
-        return d.toISOString()
-    }
-}
-
-// Helpers to adapt DummyDataset -> CardDataset (DataCard props)
-function resolveOrganizationName(d: DummyDataset): string | undefined {
-    return d.organization?.name ?? orgs.find((o) => o.id === d.organizationId)?.name
-}
-function resolveCategoryName(d: DummyDataset): string | undefined {
-    const firstCatId = d.categories?.[0]
-    if (!firstCatId) return undefined
-    const cat = cats.find((c) => c.id === firstCatId)
-    return cat?.name
-}
-function resolveTagNames(d: DummyDataset): string[] | undefined {
-    if (!d.tags || d.tags.length === 0) return undefined
-    const names = d.tags
-        .map((id) => tagsList.find((t) => t.id === id)?.name)
-        .filter((x): x is string => Boolean(x))
-    return names.length ? names : undefined
-}
-function resolveDatatype(d: DummyDataset): string {
-    if (d.formats && d.formats.length > 0) return d.formats[0]
-    if (d.resources && d.resources.length > 0) return d.resources[0].format
-    return "Unknown"
-}
-function toCardDataset(d: DummyDataset): CardDataset {
-    return {
-        id: d.id,
-        title: d.title,
-        description: d.description,
-        datatype: resolveDatatype(d),
-        organization: resolveOrganizationName(d),
-        category: resolveCategoryName(d),
-        tags: resolveTagNames(d),
-        createdDate: d.createdAt,
-        updatedDate: d.updatedAt,
-    }
-}
+import { useQuery } from "@tanstack/react-query"
+import { getDatasets } from "@/services/dataset.service"
+import { useAuthStore } from "@/stores/auth.store"
 
 type SortKey = "recent" | "views" | "downloads" | "title"
 
+type Maybe<T> = T | null | undefined
+
+type CategoryLike = {
+    id?: string
+    _id?: string
+    slug?: string
+    name?: string
+    description?: string
+    createdAt?: string
+    updatedAt?: string
+}
+
+function formatDate(dateString?: string) {
+    if (!dateString) return "-"
+    const d = new Date(dateString)
+    if (isNaN(d.getTime())) return "-"
+    return d.toLocaleDateString("tr-TR")
+}
+
+function getInitials(name?: string) {
+    if (!name) return "?"
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+}
+
 export default function CategoryInfo() {
     const { id } = useParams<{ id: string }>()
-    const [loading, setLoading] = useState(true)
-    const [category, setCategory] = useState<Category | null>(null)
+    const { accessToken } = useAuthStore()
 
-    // Right column controls
     const [query, setQuery] = useState("")
     const [sortBy, setSortBy] = useState<SortKey>("recent")
 
-    useEffect(() => {
-        setLoading(true)
-        const found = cats.find((c) => c.id === id) ?? null
-        setCategory(found)
-        setLoading(false)
-        window.scrollTo({ top: 0, behavior: "smooth" })
-    }, [id])
+    const { data: datasetsResp, isLoading } = useQuery({
+        queryKey: ["datasets", id],
+        queryFn: () => getDatasets({ categoryIDs: id, accessToken }),
+    })
 
-    const catDatasets = useMemo(() => {
-        if (!category) return []
-        return allDatasets.filter((d) => (d.categories ?? []).includes(category.id))
-    }, [category])
+    const datasets: any[] = datasetsResp?.data?.data || []
 
-    const latestDatasetTimestamp = useMemo(() => {
-        if (catDatasets.length === 0) return undefined
-        const ts = Math.max(
-            ...catDatasets.map((d) =>
-                new Date(d.updatedAt ?? d.createdAt).getTime(),
-            ),
-        )
-        return isNaN(ts) ? undefined : new Date(ts).toISOString()
-    }, [catDatasets])
+    // Kategori nesnesini dataset'lerden türet
+    const category: Maybe<CategoryLike> = useMemo(() => {
+        if (!datasets.length) return undefined
+        const matchesId = (c?: CategoryLike) => {
+            if (!c) return false
+            const candidates = [c.id, c._id, c.slug].filter(Boolean).map(String)
+            return id ? candidates.includes(String(id)) : false
+        }
 
-    const topTags = useMemo(() => {
-        // Count tag frequencies within this category's datasets
-        const map = new Map<string, number>()
-        for (const d of catDatasets) {
-            for (const tid of d.tags ?? []) {
-                map.set(tid, (map.get(tid) ?? 0) + 1)
+        for (const d of datasets) {
+            // Tekil kategori alanı
+            if (d?.category) {
+                if (matchesId(d.category)) return d.category
+            }
+            // Çoklu kategoriler
+            if (Array.isArray(d?.categories)) {
+                const found = d.categories.find((c: CategoryLike) => matchesId(c))
+                if (found) return found
             }
         }
-        const arr = Array.from(map.entries())
-            .map(([id, count]) => ({
-                id,
-                name: tagsList.find((t) => t.id === id)?.name ?? id,
-                count,
-            }))
-            .sort((a, b) => b.count - a.count)
-            .slice(0, 12)
-        return arr
-    }, [catDatasets])
 
+        // ID ile eşleşme yoksa ilk bulunan kategoriye düş
+        const firstWithCategory =
+            datasets.find((d) => d?.category)?.category ??
+            datasets.find((d) => Array.isArray(d?.categories))?.categories?.[0]
+
+        return firstWithCategory
+    }, [datasets, id])
+
+    // Arama + sıralama
     const filteredAndSorted = useMemo(() => {
-        const q = query.trim().toLocaleLowerCase()
-        let list = q
-            ? catDatasets.filter(
-                (d) =>
-                    d.title.toLocaleLowerCase().includes(q) ||
-                    d.description.toLocaleLowerCase().includes(q),
-            )
-            : catDatasets.slice()
+        const q = query.trim().toLowerCase()
+        let results = datasets.filter((d: any) =>
+            (d?.title ?? "").toLowerCase().includes(q)
+        )
 
-        list.sort((a, b) => {
-            switch (sortBy) {
-                case "views":
-                    return (b.viewsCount ?? 0) - (a.viewsCount ?? 0)
-                case "downloads":
-                    return (b.downloadsCount ?? 0) - (a.downloadsCount ?? 0)
-                case "title":
-                    return a.title.localeCompare(b.title, "tr")
-                case "recent":
-                default:
-                    return (
-                        new Date(b.updatedAt ?? b.createdAt).getTime() -
-                        new Date(a.updatedAt ?? a.createdAt).getTime()
-                    )
+        switch (sortBy) {
+            case "views":
+                results.sort(
+                    (a: any, b: any) => (b.viewsCount ?? 0) - (a.viewsCount ?? 0)
+                )
+                break
+            case "downloads":
+                results.sort(
+                    (a: any, b: any) => (b.downloadsCount ?? 0) - (a.downloadsCount ?? 0)
+                )
+                break
+            case "title":
+                results.sort((a: any, b: any) =>
+                    String(a.title ?? "").localeCompare(String(b.title ?? ""))
+                )
+                break
+            default:
+                results.sort(
+                    (a: any, b: any) =>
+                        new Date(b.updatedAt ?? b.createdAt ?? 0).getTime() -
+                        new Date(a.updatedAt ?? a.createdAt ?? 0).getTime()
+                )
+        }
+        return results
+    }, [datasets, query, sortBy])
+
+    // En son güncellenen/oluşturulan dataset tarihi
+    const latestDatasetTimestamp: Maybe<string> = useMemo(() => {
+        if (!datasets.length) return undefined
+        const times = datasets
+            .map((d) => d.updatedAt ?? d.createdAt)
+            .filter(Boolean)
+            .map((t: string) => new Date(t).getTime())
+            .filter((n: number) => !isNaN(n))
+        if (!times.length) return undefined
+        return new Date(Math.max(...times)).toISOString()
+    }, [datasets])
+
+    // Top etiketler
+    const topTags: { id: string; tagName: string; datasetCount: number }[] = useMemo(() => {
+        const counts = new Map<string, { tagName: string; datasetCount: number }>()
+        for (const d of datasets) {
+            const tags: any[] =
+                (Array.isArray(d?.tags) ? d.tags : []) ||
+                (Array.isArray(d?.keywords) ? d.keywords : [])
+            for (const t of tags) {
+                const key = String(t?.id ?? t?._id ?? t?.slug ?? t?.tagName ?? "").trim()
+                const tagName = String(t?.tagName ?? t?.slug ?? key).trim()
+                if (!key) continue
+                const prev = counts.get(key) ?? { tagName, datasetCount: 0 }
+                prev.datasetCount += 1
+                prev.tagName = tagName || prev.tagName
+                counts.set(key, prev)
             }
-        })
+        }
+        return Array.from(counts.entries())
+            .map(([key, v]) => ({ id: key, tagName: v.tagName, datasetCount: v.datasetCount }))
+            .sort((a, b) => b.datasetCount - a.datasetCount)
+            .slice(0, 20)
+    }, [datasets])
 
-        return list
-    }, [catDatasets, query, sortBy])
+    // DataCard için mapping (şema aynıysa direkt cast)
+    const toCardDataset = (d: any): any => d as unknown as any
 
-    if (loading) {
-        return (
-            <div className="w-full bg-accent px-4 py-8">
-                <div className="animate-pulse space-y-4">
-                    <div className="h-6 w-28 bg-muted rounded" />
-                    <div className="h-10 w-1/2 bg-muted rounded" />
-                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                        <div className="h-64 bg-muted rounded lg:col-span-4" />
-                        <div className="h-64 bg-muted rounded lg:col-span-8" />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    if (!category) {
-        return (
-            <div className="w-full bg-accent px-4 py-12">
-                <div className="mx-auto max-w-xl text-center">
-                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-muted mb-3">
-                        <FolderClosed className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <h2 className="text-xl font-semibold">Kategori Bulunamadı</h2>
-                    <p className="text-muted-foreground mt-1">
-                        Aradığınız kategori kaldırılmış veya hiç var olmamış olabilir.
-                    </p>
-                    <div className="mt-4">
-                        <Button asChild variant="secondary">
-                            <Link to="/categories">
-                                <ArrowLeft className="h-4 w-4 mr-2" />
-                                Kategorilere dön
-                            </Link>
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        )
+    if (isLoading) {
+        return <div className="p-6 text-center text-muted-foreground">Yükleniyor...</div>
     }
 
     return (
@@ -220,27 +183,31 @@ export default function CategoryInfo() {
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
                     <BackButton />
-                    <Badge variant="secondary">Toplam veri seti: {catDatasets.length}</Badge>
+                    <Badge variant="secondary">Toplam veri seti: {datasets.length}</Badge>
                 </div>
 
                 {/* Title */}
-                <div className="mb-6 flex items-start gap-3">
-                    <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">
-                        <AvatarFallback className="rounded-lg bg-purple-400">
-                            {getInitials(category.name)}
-                        </AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0">
-                        <h1 className="text-2xl font-semibold leading-tight">
-                            {category.name}
-                        </h1>
-                        {category.description ? (
-                            <p className="mt-2 text-muted-foreground">
-                                {category.description}
-                            </p>
-                        ) : null}
+                {category ? (
+                    <div className="mb-6 flex items-start gap-3">
+                        <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">
+                            <AvatarFallback className="rounded-lg bg-purple-400">
+                                {getInitials(category.name)}
+                            </AvatarFallback>
+                        </Avatar>
+                        <div className="min-w-0">
+                            <h1 className="text-2xl font-semibold leading-tight">
+                                {category.name}
+                            </h1>
+                            {category.description ? (
+                                <p className="mt-2 text-muted-foreground">
+                                    {category.description}
+                                </p>
+                            ) : null}
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <p className="text-sm text-muted-foreground">Kategori bilgisi bulunamadı.</p>
+                )}
 
                 {/* Two-column layout */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
@@ -252,63 +219,65 @@ export default function CategoryInfo() {
                                 <CardDescription>Kimlik ve istatistikler</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-3">
-                                <div className="grid grid-cols-1 gap-3 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                        <span className="truncate">{category.name}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <Hash className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-muted-foreground">ID:</span>
-                                        <span className="text-foreground">{category.id}</span>
-                                    </div>
-                                </div>
+                                {category ? (
+                                    <>
+                                        <div className="grid grid-cols-1 gap-3 text-sm">
+                                            <div className="flex items-center gap-2">
+                                                <FolderClosed className="h-4 w-4 text-muted-foreground" />
+                                                <span className="truncate">{category.name}</span>
+                                            </div>
 
-                                <Separator />
+                                        </div>
 
-                                <div className="grid grid-cols-2 gap-3 text-sm">
-                                    <div className="rounded-md border p-3">
-                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                                            Veri Setleri
-                                        </div>
-                                        <div className="mt-1 inline-flex items-center gap-2">
-                                            <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">{catDatasets.length}</span>
-                                        </div>
-                                    </div>
-                                    <div className="rounded-md border p-3">
-                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                                            En Son Güncelleme
-                                        </div>
-                                        <div className="mt-1 inline-flex items-center gap-2">
-                                            <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">
-                                                {latestDatasetTimestamp
-                                                    ? new Date(latestDatasetTimestamp).toLocaleDateString()
-                                                    : "-"}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                        <Separator />
 
-                                <Separator />
+                                        <div className="grid grid-cols-1 gap-3 text-sm">
+                                            <div className="rounded-md border p-3">
+                                                <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                                    Veri Setleri
+                                                </div>
+                                                <div className="mt-1 inline-flex items-center gap-2">
+                                                    <FolderClosed className="h-4 w-4 text-muted-foreground" />
+                                                    <span className="font-medium">{datasets.length}</span>
+                                                </div>
+                                            </div>
+                                            <div className="rounded-md border p-3">
+                                                <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                                    En Son Güncelleme
+                                                </div>
+                                                <div className="mt-1 inline-flex items-center gap-2">
+                                                    <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                                    <span className="font-medium">
+                                                        {latestDatasetTimestamp
+                                                            ? new Date(latestDatasetTimestamp).toLocaleDateString("tr-TR")
+                                                            : "-"}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                <div className="grid grid-cols-1 gap-2 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-muted-foreground">Oluşturulma:</span>
-                                        <span className="text-foreground">
-                                            {formatDate(category.createdAt) ?? "-"}
-                                        </span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-muted-foreground">Güncelleme:</span>
-                                        <span className="text-foreground">
-                                            {formatDate(category.updatedAt) ?? "-"}
-                                        </span>
-                                    </div>
-                                </div>
+                                        <Separator />
+
+                                        <div className="grid grid-cols-1 gap-2 text-sm">
+                                            <div className="flex items-center gap-2">
+                                                <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                                <span className="text-muted-foreground">Oluşturulma:</span>
+                                                <span className="text-foreground">
+                                                    {formatDate(category.createdAt)}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                                                <span className="text-muted-foreground">Güncelleme:</span>
+                                                <span className="text-foreground">
+                                                    {formatDate(category.updatedAt)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">Kategori bilgisi yüklenemedi.</p>
+                                )}
                             </CardContent>
                         </Card>
 
@@ -327,8 +296,8 @@ export default function CategoryInfo() {
                                             <Badge key={t.id} variant="outline" className="px-2 py-0.5">
                                                 <div className="inline-flex items-center gap-1">
                                                     <TagsIcon className="h-3.5 w-3.5 text-muted-foreground" />
-                                                    <span>{t.name}</span>
-                                                    <span className="text-muted-foreground">({t.count})</span>
+                                                    <span>{t.tagName}</span>
+                                                    <span className="text-muted-foreground">({t.datasetCount})</span>
                                                 </div>
                                             </Badge>
                                         ))}
@@ -392,9 +361,12 @@ export default function CategoryInfo() {
 
                                 {filteredAndSorted.length > 0 ? (
                                     <>
-                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                            {filteredAndSorted.map((d) => (
-                                                <DataCard key={d.id} dataset={toCardDataset(d)} />
+                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
+                                            {filteredAndSorted.map((d: any) => (
+                                                <DataCard
+                                                    key={d.id ?? d._id}
+                                                    dataset={toCardDataset(d)}
+                                                />
                                             ))}
                                         </div>
 
@@ -406,7 +378,10 @@ export default function CategoryInfo() {
                                                 </div>
                                                 <div className="mt-1 inline-flex items-center gap-2 text-base">
                                                     <Eye className="h-4 w-4 text-muted-foreground" />
-                                                    {filteredAndSorted.reduce((sum, d) => sum + (d.viewsCount ?? 0), 0)}
+                                                    {filteredAndSorted.reduce(
+                                                        (sum: number, d: any) => sum + (d.viewsCount ?? 0),
+                                                        0
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="rounded-md border p-3">
@@ -415,7 +390,10 @@ export default function CategoryInfo() {
                                                 </div>
                                                 <div className="mt-1 inline-flex items-center gap-2 text-base">
                                                     <Download className="h-4 w-4 text-muted-foreground" />
-                                                    {filteredAndSorted.reduce((sum, d) => sum + (d.downloadsCount ?? 0), 0)}
+                                                    {filteredAndSorted.reduce(
+                                                        (sum: number, d: any) => sum + (d.downloadsCount ?? 0),
+                                                        0
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="rounded-md border p-3">
