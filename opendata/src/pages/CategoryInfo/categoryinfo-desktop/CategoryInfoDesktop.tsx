@@ -32,15 +32,7 @@ type SortKey = "recent" | "views" | "downloads" | "title"
 
 type Maybe<T> = T | null | undefined
 
-type CategoryLike = {
-    id?: string
-    _id?: string
-    slug?: string
-    name?: string
-    description?: string
-    createdAt?: string
-    updatedAt?: string
-}
+
 
 function formatDate(dateString?: string) {
     if (!dateString) return "-"
@@ -74,9 +66,9 @@ export default function CategoryInfo() {
     const datasets: any[] = datasetsResp?.data?.data || []
 
     // Kategori nesnesini dataset'lerden türet
-    const category: Maybe<CategoryLike> = useMemo(() => {
+    const category: Maybe<any> = useMemo(() => {
         if (!datasets.length) return undefined
-        const matchesId = (c?: CategoryLike) => {
+        const matchesId = (c?: any) => {
             if (!c) return false
             const candidates = [c.id, c._id, c.slug].filter(Boolean).map(String)
             return id ? candidates.includes(String(id)) : false
@@ -89,7 +81,7 @@ export default function CategoryInfo() {
             }
             // Çoklu kategoriler
             if (Array.isArray(d?.categories)) {
-                const found = d.categories.find((c: CategoryLike) => matchesId(c))
+                const found = d.categories.find((c: any) => matchesId(c))
                 if (found) return found
             }
         }
@@ -191,7 +183,7 @@ export default function CategoryInfo() {
                     <div className="mb-6 flex items-start gap-3">
                         <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">
                             <AvatarFallback className="rounded-lg bg-purple-400">
-                                {getInitials(category.name)}
+                                {getInitials(category.categoryName || category.name)}
                             </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
