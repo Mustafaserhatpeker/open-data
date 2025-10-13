@@ -15,10 +15,9 @@ import {
 } from "@/components/ui/tooltip"
 import { Building2, FolderClosed, Tags } from "lucide-react"
 import DataDialog from "./DataDialog"
-import { getResourceTypeMeta } from "@/pages/DataInformation/datainfo-desktop/components/utils"
+import { getTypeMeta } from "@/pages/DataInformation/datainfo-desktop/components/utils"
 
 export default function DataCard({ dataset }: { dataset: any }) {
-    // Backend'den gelen veriye göre uyarlama:
     const id = dataset?._id
     const title = dataset?.title || "Başlıksız veri seti"
     const description = dataset?.description || "Açıklama bulunamadı."
@@ -29,8 +28,8 @@ export default function DataCard({ dataset }: { dataset: any }) {
         dataset?.tags?.map((t: any) => t.tagName) || []
     const format = dataset?.formats?.[0]?.formatName || "Bilinmiyor"
 
-    // Görsel ikon ve renk bilgisi (format üzerinden)
-    const { Icon, color, accent, label } = getResourceTypeMeta(format)
+
+    const { Icon, color, accent, label } = getTypeMeta(format)
 
     return (
         <TooltipProvider delayDuration={200}>
