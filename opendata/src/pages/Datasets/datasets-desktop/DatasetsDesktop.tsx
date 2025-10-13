@@ -26,21 +26,17 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import { useQuery } from "@tanstack/react-query"
-import { getDatasets } from "@/services/dataset.service"
 import { getCategories } from "@/services/category.service"
 import { getOrganizations } from "@/services/organization.service"
 import { getTags } from "@/services/tag.service"
 import { getFormats } from "@/services/format.service"
 import { getLicences } from "@/services/licence.service"
-import { useAuthStore } from "@/stores/auth.store"
+import { useDatasets } from "../hooks/use-datasets"
 
 function DatasetsDesktop() {
-    const { accessToken } = useAuthStore();
 
-    const { data: datasetsResp } = useQuery({
-        queryKey: ["datasets"],
-        queryFn: () => getDatasets(accessToken),
-    });
+    const { items } = useDatasets();
+
     const { data: categoriesResp } = useQuery({
         queryKey: ["categories"],
         queryFn: () => getCategories(),
@@ -105,7 +101,7 @@ function DatasetsDesktop() {
                     </div>
 
                     <div className="mt-4 mb-6">
-                        <DatasetCards datasets={datasetsResp} />
+                        <DatasetCards items={items} />
                     </div>
                     <Pagination>
                         <PaginationContent>
