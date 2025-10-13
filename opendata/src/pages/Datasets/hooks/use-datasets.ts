@@ -45,7 +45,7 @@ export function useDatasets() {
   const [formatIDs, setFormatIDs] = useState<string[]>([]);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(12);
+  const [limit, setLimit] = useState(10);
 
   // ---- search debounced
   const debouncedSearch = useDebouncedValue(search, 450);
