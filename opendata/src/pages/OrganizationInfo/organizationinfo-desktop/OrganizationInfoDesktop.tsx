@@ -52,7 +52,6 @@ export default function OrganizationInfoDesktop() {
 
     const [query, setQuery] = useState("")
     const [sortBy, setSortBy] = useState<SortKey>("recent")
-    // IMPORTANT: Hooks must be declared before any early returns.
     const [gridView, setGridView] = useState(false)
 
     const { data: datasetsResp, isLoading } = useQuery({
@@ -252,16 +251,15 @@ export default function OrganizationInfoDesktop() {
                                             </div>
 
                                             <div className="text-xs text-muted-foreground">
-                                                <Select defaultValue="list">
+                                                <Select value={gridView ? "grid" : "list"} onValueChange={(value) => setGridView(value === "grid")}>
                                                     <SelectTrigger className="w-full">
                                                         <SelectValue placeholder="Görünüm Seçin" />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
                                                             <SelectLabel>Görünümler</SelectLabel>
-                                                            <SelectItem onClick={() => setGridView(true)} value="grid">Izgara</SelectItem>
-                                                            <SelectItem onClick={() => setGridView(false)} value="list">Liste</SelectItem>
-
+                                                            <SelectItem value="grid">Izgara</SelectItem>
+                                                            <SelectItem value="list">Liste</SelectItem>
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
@@ -273,9 +271,9 @@ export default function OrganizationInfoDesktop() {
 
                                 <Separator />
 
-                                {/* Veri Seti Kartları */}
+
                                 {filteredAndSorted.length > 0 ? (
-                                    <div className={`grid ${gridView ? "sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"} gap-4`}>
+                                    <div className={`grid ${gridView ? "grid-cols-2" : "grid-cols-1"} gap-4`}>
                                         {filteredAndSorted.map((d: any) => (
                                             <DataCard key={d._id} dataset={d} />
                                         ))}

@@ -128,8 +128,8 @@ export default function DataCard({ dataset }: { dataset: DatasetItem }) {
       >
         <Card className="flex h-full flex-col overflow-hidden border border-border/60 shadow-sm transition-all hover:shadow-md relative">
           <CardHeader className="space-y-3 pb-3">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between gap-3 w-full">
+              <div className="flex items-center gap-3 w-full">
                 <div
                   className={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${color}`}
                   aria-hidden
@@ -137,7 +137,7 @@ export default function DataCard({ dataset }: { dataset: DatasetItem }) {
                   <Icon className="h-5 w-5" />
                 </div>
 
-                <div className="min-w-0">
+                <div className="min-w-0 w-full">
                   <CardTitle className="text-base md:text-lg truncate">
                     {dataset.title}
                   </CardTitle>
@@ -205,7 +205,7 @@ export default function DataCard({ dataset }: { dataset: DatasetItem }) {
                         >
                           {tag.tagName}
                         </Badge>
-                    ))}
+                      ))}
                   </div>
                 </div>
               </div>
