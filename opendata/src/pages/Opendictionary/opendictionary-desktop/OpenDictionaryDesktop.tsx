@@ -33,7 +33,54 @@ const dictionaryData = [
         term: "XML",
         definition: "XML, veriyi etiketlerle tanımlayan esnek bir işaretleme biçimidir. Yapının şemayla (XSD) doğrulanabilmesi ve insan/ makine tarafından okunabilir olması veri değişimi için tercih edilmesini sağlar; ancak hacim açısından JSON’a göre daha ağır olabilir."
     },
-    // Buraya kalan tüm terimleri aynı formatta ekleyebilirsiniz...
+    {
+        term: "HTML",
+        definition: "HTML, web sayfalarının iskeletini oluşturan işaretleme dilidir. Bazı veri yayınları doğrudan sayfa içinde sunulsa da, yeniden kullanım ve otomasyon için veri dosyası (CSV/JSON) ya da API erişimi tercih edilir."
+    },
+    {
+        term: "ETL",
+        definition: "ETL (Extract, Transform, Load), veriyi bir kaynaktan alıp (Extract), işleyip dönüştürerek (Transform) hedef sisteme yükleme (Load) sürecidir. Veri ambarları ve analiz platformları için kullanılır; veri kalitesini artırır ve farklı kaynaklardan gelen verilerin uyumlu hale gelmesini sağlar."
+    },
+    {
+        term: "Filtreleme",
+        definition: "Arama sonuçlarını belirli koşullara (tarih aralığı, kategori, etiket, organizasyon vb.) göre daraltma işlemidir. Filtreler, kullanıcıların ilgili veri setine hızlı ve isabetli şekilde ulaşmasını sağlar."
+    },
+    {
+        term: "Metaveri",
+        definition: "Metaveri; veriyi tanımlayan yapılandırılmış bilgidir: başlık, açıklama, üretici/organizasyon, lisans, zaman ve mekân kapsamı, güncelleme sıklığı, sürüm ve kalite notları gibi alanları içerir. İyi metaveri, arama, karşılaştırma ve doğru kullanım için kritik önemdedir."
+    },
+    {
+        term: "PostgreSQL",
+        definition: "PostgreSQL; açık kaynak, ACID uyumlu bir ilişkisel veritabanı yönetim sistemidir. Gelişmiş sorgu yetenekleri, genişletilebilirlik ve PostGIS eklentisiyle mekânsal veri desteği sunar; büyük ölçekli kurumsal uygulamalarda yaygın kullanılır."
+    },
+    {
+        term: "Shapefile (SHP)",
+        definition: "Shapefile; nokta, çizgi ve alan geometrilerini ve bunlara ait öznitelikleri saklayan, CBS’de çok kullanılan bir vektör veri biçim ailesidir. Birden fazla dosyadan (SHP, SHX, DBF vb.) oluşur; basit yapısı nedeniyle geniş destek görür, ancak modern alternatiflere göre bazı sınırlamaları vardır."
+    },
+    {
+        term: "Veri Otomasyonu",
+        definition: "Verinin toplanması, dönüştürülmesi, doğrulanması ve yayımlanmasını otomatikleştiren uçtan uca süreçtir. Zamanlanmış işler ve izleme (monitoring) mekanizmaları ile tutarlılık, hız ve tekrarlanabilirlik sağlanır."
+    },
+    {
+        term: "Mekânsal (Geospatial) Veri",
+        definition: "Koordinat, adres veya idari kod gibi konumsal referans içeren her türlü veridir. Vektör (nokta/çizgi/alan) ve raster (piksel tabanlı) olarak saklanabilir; haritalama ve mekânsal analizler için temel kaynaktır."
+    },
+    {
+        term: "GeoServer",
+        definition: "GeoServer; OGC standartlarını (WMS, WFS, WMTS vb.) uygulayan, mekânsal veriyi servis etmeye yarayan Java tabanlı bir sunucudur. Katman yayınlama, stil yönetimi ve farklı veri kaynaklarına bağlanma yetenekleriyle kurum içi/ dışı harita servislerini kolaylaştırır."
+    },
+    {
+        term: "JSON",
+        definition: "JSON; anahtar–değer çiftleriyle veriyi hafif ve anlaşılır biçimde temsil eden metin formatıdır. Web servislerinde (REST API) yaygındır; hız, okunabilirlik ve geniş dil desteği nedeniyle veri alışverişinde tercih edilir."
+    },
+    {
+        term: "PDF",
+        definition: "PDF (Portable Document Format); biçimi bozulmadan görüntülenebilen ve yazdırılabilen belge formatıdır. Rapor ve çıktı paylaşımında uygundur; ancak ham veri analizi için makinece okunabilir alternatifler (CSV/JSON) önerilir."
+    },
+    {
+        term: "GeoJSON",
+        definition: "GeoJSON; coğrafi nesneleri (Point, LineString, Polygon vb.) JSON yapısıyla tanımlar. Web tabanlı haritalarda hafif ve yaygın bir değişim biçimidir; özellik verileri (öznitelikler) aynı gövdede taşınır."
+    },
 ];
 
 function OpenDictionaryDesktop() {
