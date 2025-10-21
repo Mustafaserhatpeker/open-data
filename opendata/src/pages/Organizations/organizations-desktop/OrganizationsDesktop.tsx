@@ -116,7 +116,8 @@ export default function OrganizationsDesktop() {
                         <div>
                             <h1 className="text-2xl font-semibold">Organizasyonlar</h1>
                             <p className="text-muted-foreground mt-1">
-                                Veri setlerini sağlayan kurum ve kuruluşlar
+                                <strong> Organizasyon nedir? </strong><br />
+                                Kocaeli’de açık veri ekosistemini güçlendirmek amacıyla; belediye birimleri, iştirakler, ilçe belediyeleri ve diğer kurumlar burada listelenir.
                             </p>
                         </div>
 
@@ -232,8 +233,8 @@ export default function OrganizationsDesktop() {
                                                 target="_blank"
                                                 rel="noreferrer"
                                                 className={`inline-flex items-center gap-1.5 ${org.website
-                                                        ? "text-foreground hover:underline"
-                                                        : "text-muted-foreground cursor-default"
+                                                    ? "text-foreground hover:underline"
+                                                    : "text-muted-foreground cursor-default"
                                                     }`}
                                                 title={
                                                     org.website ? "Web sitesine git" : "Web sitesi yok"
@@ -252,8 +253,8 @@ export default function OrganizationsDesktop() {
                                                     if (!org.contactEmail) e.preventDefault()
                                                 }}
                                                 className={`inline-flex items-center gap-1.5 ${org.contactEmail
-                                                        ? "text-foreground hover:underline"
-                                                        : "text-muted-foreground cursor-default"
+                                                    ? "text-foreground hover:underline"
+                                                    : "text-muted-foreground cursor-default"
                                                     }`}
                                                 title={
                                                     org.contactEmail

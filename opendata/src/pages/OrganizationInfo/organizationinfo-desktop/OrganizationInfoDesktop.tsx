@@ -27,6 +27,7 @@ import {
     Globe,
     Mail,
 } from "lucide-react"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 // Yardımcı fonksiyonlar
 function formatDate(dateString?: string) {
@@ -51,6 +52,8 @@ export default function OrganizationInfoDesktop() {
 
     const [query, setQuery] = useState("")
     const [sortBy, setSortBy] = useState<SortKey>("recent")
+    // IMPORTANT: Hooks must be declared before any early returns.
+    const [gridView, setGridView] = useState(false)
 
     const { data: datasetsResp, isLoading } = useQuery({
         queryKey: ["datasets", id],
@@ -213,34 +216,58 @@ export default function OrganizationInfoDesktop() {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {/* Arama & Sıralama */}
-                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                                    <div className="sm:col-span-2">
+                                <div className="grid  gap-3 grid-cols-5 items-center justify-between">
+                                    <div className="col-span-3">
                                         <Input
                                             placeholder="Veri setlerinde ara..."
                                             value={query}
                                             onChange={(e) => setQuery(e.target.value)}
                                         />
                                     </div>
-                                    <div className="sm:col-span-1">
-                                        <div className="flex items-center gap-2">
-                                            <label
-                                                htmlFor="sort"
-                                                className="text-sm text-muted-foreground whitespace-nowrap"
-                                            >
-                                                Sırala:
-                                            </label>
-                                            <select
-                                                id="sort"
-                                                value={sortBy}
-                                                onChange={(e) => setSortBy(e.target.value as SortKey)}
-                                                className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-                                            >
-                                                <option value="recent">En yeni</option>
-                                                <option value="views">Görüntülenme (çoktan aza)</option>
-                                                <option value="downloads">İndirme (çoktan aza)</option>
-                                                <option value="title">Başlık (A-Z)</option>
-                                            </select>
+                                    <div className="col-span-2">
+                                        <div className="flex items-center gap-2 w-full justify-end">
+                                            <div className="flex  flex-row items-center gap-2 ml-4 justify-between">
+                                                <label
+                                                    htmlFor="sort"
+                                                    className="text-sm text-muted-foreground whitespace-nowrap"
+                                                >
+                                                    Sırala:
+                                                </label>
+                                                <Select
+                                                    value={sortBy}
+                                                    onValueChange={(value: SortKey) => setSortBy(value)}
+                                                >
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Sırala" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectItem value="recent">En yeni</SelectItem>
+                                                            <SelectItem value="views">Görüntülenme (çoktan aza)</SelectItem>
+                                                            <SelectItem value="downloads">İndirme (çoktan aza)</SelectItem>
+                                                            <SelectItem value="title">Başlık (A-Z)</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+
+                                            <div className="text-xs text-muted-foreground">
+                                                <Select defaultValue="list">
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Görünüm Seçin" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel>Görünümler</SelectLabel>
+                                                            <SelectItem onClick={() => setGridView(true)} value="grid">Izgara</SelectItem>
+                                                            <SelectItem onClick={() => setGridView(false)} value="list">Liste</SelectItem>
+
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -248,7 +275,7 @@ export default function OrganizationInfoDesktop() {
 
                                 {/* Veri Seti Kartları */}
                                 {filteredAndSorted.length > 0 ? (
-                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
+                                    <div className={`grid ${gridView ? "sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"} gap-4`}>
                                         {filteredAndSorted.map((d: any) => (
                                             <DataCard key={d._id} dataset={d} />
                                         ))}
