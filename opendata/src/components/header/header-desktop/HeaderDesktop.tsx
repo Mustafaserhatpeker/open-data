@@ -1,6 +1,6 @@
 
 import NavigationMenu from "../inner-components/NavigationMenu";
-import Logo from "@/assets/logo.png";
+import Logo from "@/assets/logoacik.png";
 // import Switch from "@/components/theme-switch/Switch";
 import { Button } from "@/components/ui/button";
 import { useThemeContext } from "@/contexts/ThemeContext";
