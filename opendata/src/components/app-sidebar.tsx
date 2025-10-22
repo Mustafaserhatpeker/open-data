@@ -19,15 +19,12 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { useQuery } from "@tanstack/react-query"
-import { getMyOrganizations } from "@/services/organization.service"
-
 
 function LogoIcon() {
   return <img src={LLogo} alt="Logo" width={16} height={16} />
 }
 
-const staticData = {
+const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
@@ -46,45 +43,79 @@ const staticData = {
       url: "#",
       icon: SquareTerminal,
       isActive: true,
+      items: [
+        {
+          title: "A Organizasyon",
+          url: "#",
+        },
+        {
+          title: "B Organizasyon",
+          url: "#",
+        },
+        {
+          title: "C Organizasyon",
+          url: "#",
+        },
+      ],
     },
     {
       title: "Tüm Kategoriler",
       url: "#",
       icon: Bot,
+      items: [
+        {
+          title: "A Kategori",
+          url: "#",
+        },
+        {
+          title: "B Kategori",
+          url: "#",
+        },
+        {
+          title: "C Kategori",
+          url: "#",
+        },
+      ],
+    },
+
+  ],
+  projects: [
+    {
+      name: "Ana Sayfa",
+      url: "/dashboard",
+      icon: Frame,
+    },
+    {
+      name: "Organizasyonlar",
+      url: "/dashboard/organizations",
+      icon: Frame,
+    },
+    {
+      name: "Kategoriler",
+      url: "/dashboard/categories",
+      icon: Frame,
+    },
+    {
+      name: "Veri İstekleri",
+      url: "/dashboard/datarequests",
+      icon: Frame,
     },
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: organizationsResp } = useQuery({
-    queryKey: ["organizations"],
-    queryFn: () => getMyOrganizations(),
-  })
-
-
-  const organizations =
-    organizationsResp?.data?.map((org: any) => ({
-      id: org._id,
-      name: org.organizationName,
-      url: `/organizations/${org._id}`,
-      icon: Frame,
-    })) ?? []
-
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={staticData.teams} />
+        <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
-
       <SidebarContent>
-        <NavMain items={staticData.navMain} />
-        <NavProjects projects={organizations} />
+        <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
       </SidebarContent>
-
       <SidebarFooter>
-        <NavUser user={staticData.user} />
+        <NavUser user={data.user} />
       </SidebarFooter>
-
       <SidebarRail />
     </Sidebar>
   )
