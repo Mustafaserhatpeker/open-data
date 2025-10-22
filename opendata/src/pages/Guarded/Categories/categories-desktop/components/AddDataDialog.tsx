@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label"
 import { Plus } from "lucide-react"
 
 export function AddDataDialog() {
+
     return (
         <Dialog>
             <form>
