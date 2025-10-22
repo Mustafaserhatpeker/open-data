@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Organizasyonlarım",
       url: "#",
       icon: SquareTerminal,
-      isActive: true,
+      isActive: false,
       items:
         isLoading && orgItems.length === 0
           ? [{ title: "Yükleniyor...", url: "#" }]
@@ -110,7 +110,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Tüm Kategoriler",
       url: "#",
       icon: Bot,
-      isActive: true,
+      isActive: false,
       items: isLoadingCategories && catItems.length === 0
         ? [{ title: "Yükleniyor...", url: "#" }]
         : catItems,
