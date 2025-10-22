@@ -11,3 +11,11 @@ export const getOrganizations = async () => {
     }
 };
 
+export const getOrganizationById = async (id: string) => {
+    try {
+        const { data } = await axiosInstance.get(`${Base}/get-organization/${id}`);
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};

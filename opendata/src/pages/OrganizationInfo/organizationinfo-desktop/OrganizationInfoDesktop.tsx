@@ -28,6 +28,7 @@ import {
     Mail,
 } from "lucide-react"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { getOrganizationById } from "@/services/organization.service"
 
 // Yardımcı fonksiyonlar
 function formatDate(dateString?: string) {
@@ -56,7 +57,12 @@ export default function OrganizationInfoDesktop() {
 
     const { data: datasetsResp, isLoading } = useQuery({
         queryKey: ["datasets", id],
-        queryFn: () => getDatasets({ categoryId: id, accessToken }),
+        queryFn: () => getDatasets({ organizationId: id, accessToken }),
+    })
+
+    const { data: organizationResp } = useQuery({
+        queryKey: ["organization", id],
+        queryFn: () => getOrganizationById(id!),
     })
 
     const datasets = datasetsResp?.data?.data || []
@@ -101,17 +107,17 @@ export default function OrganizationInfoDesktop() {
                 </div>
 
                 {/* Organizasyon Başlığı */}
-                {org ? (
+                {organizationResp.data ? (
                     <div className="mb-6 flex items-start gap-3">
                         <Avatar className="h-12 w-12 rounded-lg">
-                            <AvatarImage src={org.logoUrl} alt={org.organizationName} />
+                            <AvatarImage src={organizationResp.data.logoUrl} alt={organizationResp.data.organizationName} />
                             <AvatarFallback className="rounded-lg bg-purple-400">
-                                {getInitials(org.organizationName)}
+                                {getInitials(organizationResp.data.organizationName)}
                             </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
-                            <h1 className="text-2xl font-semibold leading-tight">{org.organizationName}</h1>
-                            <p className="mt-2 text-muted-foreground">{org.description}</p>
+                            <h1 className="text-2xl font-semibold leading-tight">{organizationResp.data.organizationName}</h1>
+                            <p className="mt-2 text-muted-foreground">{organizationResp.data.description}</p>
                         </div>
                     </div>
                 ) : (
@@ -128,18 +134,18 @@ export default function OrganizationInfoDesktop() {
                                 <CardDescription>İletişim ve istatistikler</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-3">
-                                {org ? (
+                                {organizationResp?.data ? (
                                     <>
                                         <div className="grid grid-cols-1 gap-3 text-sm">
                                             <div className="flex items-center gap-2">
                                                 <Building2 className="h-4 w-4 text-muted-foreground" />
-                                                <span className="truncate">{org.organizationName}</span>
+                                                <span className="truncate">{organizationResp?.data?.organizationName}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Globe className="h-4 w-4 text-muted-foreground" />
-                                                {org.websiteUrl ? (
+                                                {organizationResp?.data?.websiteUrl ? (
                                                     <a
-                                                        href={org.websiteUrl}
+                                                        href={organizationResp?.data?.websiteUrl}
                                                         target="_blank"
                                                         rel="noreferrer"
                                                         className="hover:underline"
@@ -152,9 +158,9 @@ export default function OrganizationInfoDesktop() {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Mail className="h-4 w-4 text-muted-foreground" />
-                                                {org.contactEmail ? (
-                                                    <a href={`mailto:${org.contactEmail}`} className="hover:underline">
-                                                        {org.contactEmail}
+                                                {organizationResp?.data?.contactEmail ? (
+                                                    <a href={`mailto:${organizationResp?.data?.contactEmail}`} className="hover:underline">
+                                                        {organizationResp?.data?.contactEmail}
                                                     </a>
                                                 ) : (
                                                     <span className="text-muted-foreground">İletişim e-postası yok</span>
@@ -171,7 +177,7 @@ export default function OrganizationInfoDesktop() {
                                                 </div>
                                                 <div className="mt-1 inline-flex items-center gap-2">
                                                     <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                                    <span className="font-medium">{datasets.length}</span>
+                                                    <span className="font-medium">{datasets?.length}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,12 +188,12 @@ export default function OrganizationInfoDesktop() {
                                             <div className="flex items-center gap-2">
                                                 <CalendarClock className="h-4 w-4 text-muted-foreground" />
                                                 <span className="text-muted-foreground">Oluşturulma:</span>
-                                                <span className="text-foreground">{formatDate(org.createdAt)}</span>
+                                                <span className="text-foreground">{formatDate(org?.createdAt)}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <CalendarClock className="h-4 w-4 text-muted-foreground" />
                                                 <span className="text-muted-foreground">Güncelleme:</span>
-                                                <span className="text-foreground">{formatDate(org.updatedAt)}</span>
+                                                <span className="text-foreground">{formatDate(org?.updatedAt)}</span>
                                             </div>
 
                                         </div>
