@@ -79,7 +79,7 @@ export default function CategoriesDesktop() {
     if (isError) return <div className="p-6 text-center text-red-500">Veriler alınamadı.</div>
 
     return (
-        <div className="w-full bg-accent px-4 py-6 min-h-screen">
+        <div className="w-full  px-4 py-6 min-h-screen">
             <div className="mx-auto w-full">
                 {/* Header */}
                 <div className="mb-6">
