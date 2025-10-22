@@ -1,70 +1,96 @@
-import { Building2, FolderTree, ListChecks } from "lucide-react"
+import { CategoryChart } from "./components/linecharts/CategoryChart";
+import { DatarequestChart } from "./components/linecharts/DatarequestChart";
+import { OrganizationChart } from "./components/linecharts/OrganizationChart";
+import { DataStaticCard } from "./components/inner-components/DataStaticCard"
+import { ResourceFormatChart } from "./components/piecharts/ResourceFormatChart";
+import { DatarequestStatusChart } from "./components/piecharts/DatarequestStatusChart";
+import { CategoryDistributionChart } from "./components/piecharts/CategoryDistributionChart";
+import { useQuery } from "@tanstack/react-query";
+import { getStatistics } from "@/services/statistics.service";
 
-import { organizations, categories, datasets, users, dataRequests } from "@/dummy/dummy.data"
-
-
-import StatCard from "./components/DashboardHeader"
-import Statics from "./components/Statics"
-
-
-function DashboardDesktop() {
-    // Not: Uygulama kimliği bağlanana kadar örnek kullanıcı olarak 'usr2' (data.editor) kullanıyoruz
-    const currentUser = users.find((u) => u.id === "usr2") ?? users[0] // fallback: admin
-
-    // 1) Organizasyon istatistikleri
-    const totalOrganizations = organizations.length
-    const userOrganizationsCount = currentUser.organizationId ? 1 : 0
-
-    // 2) Kategori istatistikleri
-    const totalCategories = categories.length
-    const userDatasets = datasets.filter((d) => d.createdBy === currentUser.id)
-    const userCategoryIds = new Set<string>(userDatasets.flatMap((d) => d.categories))
-    const userCategoriesCount = userCategoryIds.size
-
-    // 3) Veri talebi (request) istatistikleri
-    const totalDataRequests = dataRequests.length
-    const dataRequestsToUser =
-        currentUser.organizationId
-            ? dataRequests.filter((dr) => dr.organizationId === currentUser.organizationId).length
-            : 0
-
-    return (
-        <div className="flex flex-1 flex-col gap-4">
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                <StatCard
-                    title="Organizasyonlar"
-                    icon={Building2}
-                    items={[
-                        { label: "Toplam", value: totalOrganizations },
-                        { label: "Size Ait", value: userOrganizationsCount },
-                    ]}
-                    url={"/dashboard/organizations"}
-                />
-                <StatCard
-                    title="Kategoriler"
-                    icon={FolderTree}
-                    items={[
-                        { label: "Toplam", value: totalCategories },
-                        { label: "Size Ait", value: userCategoriesCount },
-                    ]}
-                    url={"/dashboard/categories"}
-
-                />
-                <StatCard
-                    title="Veri Talepleri"
-                    icon={ListChecks}
-                    items={[
-                        { label: "Toplam", value: totalDataRequests },
-                        { label: "Size Yapılan", value: dataRequestsToUser },
-                    ]}
-                    url={"/dashboard/datarequests"}
-                />
-            </div>
-            <Statics />
-
-
-        </div>
-    )
+function formatNumber(n?: number) {
+    if (typeof n !== "number") return "-";
+    return Intl.NumberFormat("tr-TR").format(n);
 }
 
-export default DashboardDesktop
+export default function DashboardDesktop() {
+    const {
+        data: statisticsResp,
+        isLoading,
+        isError,
+        error
+    } = useQuery({
+        queryKey: ["statistics"],
+        queryFn: () => getStatistics(),
+    });
+
+
+    const generalStats = [
+        { label: "Veri Seti Sayısı", value: statisticsResp?.data?.datasetCount },
+        { label: "Kategori Sayısı", value: statisticsResp?.data?.categoryCount },
+        { label: "Organizasyon Sayısı", value: statisticsResp?.data?.organizationCount },
+        { label: "Kullanıcı Sayısı", value: statisticsResp?.data?.userCount },
+        { label: "Etiket (Tag) Sayısı", value: statisticsResp?.data?.tagCount },
+        { label: "T.İndirme", value: statisticsResp?.data?.totalDownloads },
+        { label: "T.Görüntülenme", value: statisticsResp?.data?.totalViews },
+    ].filter(Boolean);
+    return (
+        <div className="w-full ">
+            <section className="w-full pb-12  mx-auto ">
+                <div className="mb-4 mt-8 flex items-center justify-between">
+                    <h2 className="text-lg font-semibold">Genel İstatistikler</h2>
+                </div>
+
+
+                {isLoading && (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <div key={i} className="w-full animate-pulse rounded-xl bg-muted h-24" />
+                        ))}
+                    </div>
+                )}
+
+                {isError && (
+                    <div className="text-red-600 text-sm">
+                        İstatistikler yüklenemedi. {(error as any)?.message ?? ""}
+                    </div>
+                )}
+
+                {!isLoading && !isError && (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
+                        {generalStats.map((s, idx) => (
+                            <div key={idx} className="w-full">
+                                <DataStaticCard items={[{ label: s.label, value: formatNumber(s.value) }]} />
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+
+                <div className="grid grid-cols-3 gap-2 pt-8">
+                    <div className="grid-cols-1">
+                        <OrganizationChart data={statisticsResp?.data.datasetsByOrganization || []} />
+                    </div>
+                    <div className="grid-cols-1">
+                        <CategoryChart data={statisticsResp?.data.datasetsByCategory || []} />
+                    </div>
+                    <div className="grid-cols-1">
+                        <DatarequestChart />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 pt-8">
+                    <div className="grid-cols-1">
+                        <ResourceFormatChart data={statisticsResp?.data.datasetsByFormat || []} />
+                    </div>
+                    <div className="grid-cols-1">
+                        <DatarequestStatusChart />
+                    </div>
+                    <div className="grid-cols-1">
+                        <CategoryDistributionChart data={statisticsResp?.data.datasetsByCategory || []} />
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+}
