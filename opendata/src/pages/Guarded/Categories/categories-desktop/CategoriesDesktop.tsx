@@ -16,8 +16,9 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 
-import { FolderClosed, CalendarClock, Plus } from "lucide-react"
+import { FolderClosed, CalendarClock } from "lucide-react"
 import { getCategories } from "@/services/category.service"
+import { AddDataDialog } from "./components/AddDataDialog"
 
 function getInitials(name?: string) {
     if (!name) return "CT"
@@ -140,9 +141,6 @@ export default function CategoriesDesktop() {
                         return (
                             <Card
                                 key={cat._id}
-                                onClick={() => {
-                                    window.location.href = `/dashboard/categories/${cat._id}`
-                                }}
                                 className="h-full overflow-hidden border border-border/60 cursor-pointer"
                             >
                                 <CardHeader className="pb-3 flex items-center justify-between w-full">
@@ -196,15 +194,7 @@ export default function CategoriesDesktop() {
                                             </Link>
 
                                         </Button>
-                                        <Button
-                                            onClick={(e) => {
-                                                e.preventDefault()
-                                                e.stopPropagation()
-                                            }}
-                                            variant={"outline"}
-                                        >
-                                            <Plus /> Veri Seti Ekle
-                                        </Button>
+                                        <AddDataDialog />
                                     </div>
                                 </CardContent>
                             </Card>
