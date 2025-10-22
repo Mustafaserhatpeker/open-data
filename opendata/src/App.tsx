@@ -31,6 +31,7 @@ import CategoryInfoGuarded from "./pages/Guarded/CategoryInfo/CategoryInfo";
 import DatarequestsGuarded from "./pages/Guarded/Datarequests/Datarequests";
 import RequestInfoGuarded from "./pages/Guarded/RequestInfo/ReguestInfo";
 import DataInfoGuarded from "./pages/Guarded/DataInformation/DataInfo";
+import DatasetsGuarded from "./pages/Guarded/Datasets/Datasets";
 import PreviewGuarded from "./pages/Guarded/Preview/Preview";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
@@ -114,6 +115,7 @@ function App() {
               <Route path="datarequests/:id" element={<RequestInfoGuarded />} />
               <Route path="datasets/:id" element={<DataInfoGuarded />} />
               <Route path="preview/:id" element={<PreviewGuarded />} />
+              <Route path="datasets" element={<DatasetsGuarded />} />
             </Route>
           </Routes>
         </RouteTrackerProvider>

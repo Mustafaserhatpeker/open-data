@@ -47,7 +47,7 @@ export function useDatasets() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  const [showMyDatasets, setShowMyDatasets] = useState(false);
+  const [showMyDatasets, setShowMyDatasets] = useState(true);
 
   // ---- search debounced
   const debouncedSearch = useDebouncedValue(search, 450);

@@ -58,6 +58,11 @@ const baseData = {
       icon: Frame,
     },
     {
+      name: "Veri Setleri",
+      url: "/dashboard/datasets",
+      icon: Frame,
+    },
+    {
       name: "Veri İstekleri",
       url: "/dashboard/datarequests",
       icon: Frame,

@@ -1,5 +1,5 @@
 import RightFilter from "./components/RightFilter";
-import { SearchIcon, UserIcon, GlobeIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import {
   InputGroup,
   InputGroupAddon,
@@ -27,12 +27,13 @@ import {
 } from "@/components/ui/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/services/category.service";
-import { getOrganizations } from "@/services/organization.service";
+import { getMyOrganizations } from "@/services/organization.service";
 import { getTags } from "@/services/tag.service";
 import { getFormats } from "@/services/format.service";
 import { getLicences } from "@/services/licence.service";
 import { useDatasets } from "../hooks/use-datasets";
 import { useState } from "react";
+import { AddDataDialog } from "./components/AddDataDialog";
 
 function DatasetsDesktop() {
   const {
@@ -40,8 +41,6 @@ function DatasetsDesktop() {
     setSort,
     search,
     setSearch,
-    showMyDatasets,
-    setShowMyDatasets,
     nextPage,
     prevPage,
     page,
@@ -54,7 +53,7 @@ function DatasetsDesktop() {
   });
   const { data: organizationsResp } = useQuery({
     queryKey: ["organizations"],
-    queryFn: () => getOrganizations(),
+    queryFn: () => getMyOrganizations(),
   });
   const { data: tagsResp } = useQuery({
     queryKey: ["tags"],
@@ -72,8 +71,8 @@ function DatasetsDesktop() {
   const [gridView, setGridView] = useState(false);
 
   return (
-    <div className="w-full flex flex-col items-center justify-between bg-accent min-h-screen">
-      <div className="grid grid-cols-4 w-full gap-8 px-4 py-8 max-w-[80%] mx-auto">
+    <div className="w-full flex flex-col items-center justify-between  min-h-screen">
+      <div className="grid grid-cols-4 w-full gap-8 px-4 py-8  mx-auto">
         {/* SOL FİLTRE */}
         <div className="col-span-1 rounded-xl">
           <RightFilter
@@ -145,31 +144,7 @@ function DatasetsDesktop() {
 
             {/* Dataset Türü Seçimi (Tüm / Benim) */}
             <div className="col-span-1">
-              <Select
-                value={showMyDatasets ? "mine" : "all"}
-                onValueChange={(val) => setShowMyDatasets(val === "mine")}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Kapsam" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Veri Kaynağı</SelectLabel>
-                    <SelectItem value="all">
-                      <div className="flex items-center gap-2">
-                        <GlobeIcon className="h-4 w-4" />
-                        Tüm Datasetler
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="mine">
-                      <div className="flex items-center gap-2">
-                        <UserIcon className="h-4 w-4" />
-                        Benim Datasetlerim
-                      </div>
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <AddDataDialog />
             </div>
           </div>
 
