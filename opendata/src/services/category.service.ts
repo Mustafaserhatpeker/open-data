@@ -10,3 +10,14 @@ export const getCategories = async () => {
     throw error;
   }
 };
+
+export const getCategoryById = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(
+      `${Base}/get-category/${id}`
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

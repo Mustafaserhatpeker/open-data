@@ -66,7 +66,8 @@ export default function OrganizationInfoDesktop() {
     })
 
     const datasets = datasetsResp?.data?.data || []
-    const org = datasets[0]?.organization
+    const org = organizationResp?.data || []
+
 
     const filteredAndSorted = useMemo(() => {
         let results = datasets.filter((d: any) =>
@@ -107,17 +108,17 @@ export default function OrganizationInfoDesktop() {
                 </div>
 
                 {/* Organizasyon Başlığı */}
-                {organizationResp.data ? (
+                {org ? (
                     <div className="mb-6 flex items-start gap-3">
                         <Avatar className="h-12 w-12 rounded-lg">
-                            <AvatarImage src={organizationResp.data.logoUrl} alt={organizationResp.data.organizationName} />
+                            <AvatarImage src={org.logoUrl} alt={org.organizationName} />
                             <AvatarFallback className="rounded-lg bg-purple-400">
-                                {getInitials(organizationResp.data.organizationName)}
+                                {getInitials(org.organizationName)}
                             </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
-                            <h1 className="text-2xl font-semibold leading-tight">{organizationResp.data.organizationName}</h1>
-                            <p className="mt-2 text-muted-foreground">{organizationResp.data.description}</p>
+                            <h1 className="text-2xl font-semibold leading-tight">{org.organizationName}</h1>
+                            <p className="mt-2 text-muted-foreground">{org.description}</p>
                         </div>
                     </div>
                 ) : (
@@ -134,18 +135,18 @@ export default function OrganizationInfoDesktop() {
                                 <CardDescription>İletişim ve istatistikler</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-3">
-                                {organizationResp?.data ? (
+                                {org ? (
                                     <>
                                         <div className="grid grid-cols-1 gap-3 text-sm">
                                             <div className="flex items-center gap-2">
                                                 <Building2 className="h-4 w-4 text-muted-foreground" />
-                                                <span className="truncate">{organizationResp?.data?.organizationName}</span>
+                                                <span className="truncate">{org?.organizationName}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Globe className="h-4 w-4 text-muted-foreground" />
-                                                {organizationResp?.data?.websiteUrl ? (
+                                                {org?.websiteUrl ? (
                                                     <a
-                                                        href={organizationResp?.data?.websiteUrl}
+                                                        href={org?.websiteUrl}
                                                         target="_blank"
                                                         rel="noreferrer"
                                                         className="hover:underline"
@@ -158,9 +159,9 @@ export default function OrganizationInfoDesktop() {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Mail className="h-4 w-4 text-muted-foreground" />
-                                                {organizationResp?.data?.contactEmail ? (
-                                                    <a href={`mailto:${organizationResp?.data?.contactEmail}`} className="hover:underline">
-                                                        {organizationResp?.data?.contactEmail}
+                                                {org?.contactEmail ? (
+                                                    <a href={`mailto:${org?.contactEmail}`} className="hover:underline">
+                                                        {org?.contactEmail}
                                                     </a>
                                                 ) : (
                                                     <span className="text-muted-foreground">İletişim e-postası yok</span>

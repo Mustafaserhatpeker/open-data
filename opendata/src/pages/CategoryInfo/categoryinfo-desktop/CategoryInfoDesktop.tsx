@@ -27,6 +27,7 @@ import BackButton from "@/components/back-button"
 import { useQuery } from "@tanstack/react-query"
 import { getDatasets } from "@/services/dataset.service"
 import { useAuthStore } from "@/stores/auth.store"
+import { getCategoryById } from "@/services/category.service"
 
 type SortKey = "recent" | "views" | "downloads" | "title"
 
@@ -63,36 +64,15 @@ export default function CategoryInfo() {
         queryFn: () => getDatasets({ categoryIDs: id, accessToken }),
     })
 
+    const { data: categoryResp } = useQuery({
+        queryKey: ["category", id],
+        queryFn: () => getCategoryById(id!),
+    })
+
     const datasets: any[] = datasetsResp?.data?.data || []
+    const category: any = categoryResp?.data || null
 
-    // Kategori nesnesini dataset'lerden türet
-    const category: Maybe<any> = useMemo(() => {
-        if (!datasets.length) return undefined
-        const matchesId = (c?: any) => {
-            if (!c) return false
-            const candidates = [c.id, c._id, c.slug].filter(Boolean).map(String)
-            return id ? candidates.includes(String(id)) : false
-        }
 
-        for (const d of datasets) {
-            // Tekil kategori alanı
-            if (d?.category) {
-                if (matchesId(d.category)) return d.category
-            }
-            // Çoklu kategoriler
-            if (Array.isArray(d?.categories)) {
-                const found = d.categories.find((c: any) => matchesId(c))
-                if (found) return found
-            }
-        }
-
-        // ID ile eşleşme yoksa ilk bulunan kategoriye düş
-        const firstWithCategory =
-            datasets.find((d) => d?.category)?.category ??
-            datasets.find((d) => Array.isArray(d?.categories))?.categories?.[0]
-
-        return firstWithCategory
-    }, [datasets, id])
 
     // Arama + sıralama
     const filteredAndSorted = useMemo(() => {
@@ -162,8 +142,6 @@ export default function CategoryInfo() {
             .slice(0, 20)
     }, [datasets])
 
-    // DataCard için mapping (şema aynıysa direkt cast)
-    const toCardDataset = (d: any): any => d as unknown as any
 
     if (isLoading) {
         return <div className="p-6 text-center text-muted-foreground">Yükleniyor...</div>
@@ -183,12 +161,12 @@ export default function CategoryInfo() {
                     <div className="mb-6 flex items-start gap-3">
                         <Avatar className="h-12 w-12 rounded-lg bg-primary/10 text-primary">
                             <AvatarFallback className="rounded-lg bg-purple-400">
-                                {getInitials(category.categoryName || category.name)}
+                                {getInitials(category.categoryName)}
                             </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
                             <h1 className="text-2xl font-semibold leading-tight">
-                                {category.name}
+                                {category.categoryName}
                             </h1>
                             {category.description ? (
                                 <p className="mt-2 text-muted-foreground">
@@ -216,7 +194,7 @@ export default function CategoryInfo() {
                                         <div className="grid grid-cols-1 gap-3 text-sm">
                                             <div className="flex items-center gap-2">
                                                 <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                                <span className="truncate">{category.name}</span>
+                                                <span className="truncate">{category.categoryName}</span>
                                             </div>
 
                                         </div>
@@ -357,7 +335,7 @@ export default function CategoryInfo() {
                                             {filteredAndSorted.map((d: any) => (
                                                 <DataCard
                                                     key={d.id ?? d._id}
-                                                    dataset={toCardDataset(d)}
+                                                    dataset={(d)}
                                                 />
                                             ))}
                                         </div>
