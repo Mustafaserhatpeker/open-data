@@ -12,7 +12,7 @@ export function DataStaticCard({
                 {items.map((it) => (
                     <div
                         key={it.label}
-                        className="flex flex-col items-center justify-center flex-1 gap-1 rounded-md bg-muted/50 p-3 text-center"
+                        className="flex flex-col items-center justify-center flex-1 gap-1 rounded-md  p-3 text-center"
                     >
                         <div className="text-lg font-semibold">
                             {it.value ?? "-"}

@@ -24,17 +24,16 @@ export default function StaticsDesktop() {
         queryFn: () => getStatistics(),
     });
 
-    // API'den gelen genel sayıları kartlara map’leyelim
-    const generalStats = [
-        { label: "Veri Seti Sayısı", value: statisticsResp?.data.datasetCount },
-        { label: "Kategori Sayısı", value: statisticsResp?.data.categoryCount },
-        { label: "Organizasyon Sayısı", value: statisticsResp?.data.organizationCount },
-        { label: "Kullanıcı Sayısı", value: statisticsResp?.data.userCount },
-        { label: "Etiket (Tag) Sayısı", value: statisticsResp?.data.tagCount },
-        { label: "Lisans Sayısı", value: statisticsResp?.data.licenceCount },
-        { label: "Format Sayısı", value: statisticsResp?.data.formatCount },
-    ].filter(Boolean); // undefined/null olanları ele (opsiyonel)
 
+    const generalStats = [
+        { label: "Veri Seti Sayısı", value: statisticsResp?.data?.datasetCount },
+        { label: "Kategori Sayısı", value: statisticsResp?.data?.categoryCount },
+        { label: "Organizasyon Sayısı", value: statisticsResp?.data?.organizationCount },
+        { label: "Kullanıcı Sayısı", value: statisticsResp?.data?.userCount },
+        { label: "Etiket (Tag) Sayısı", value: statisticsResp?.data?.tagCount },
+        { label: "T.İndirme", value: statisticsResp?.data?.totalDownloads },
+        { label: "T.Görüntülenme", value: statisticsResp?.data?.totalViews },
+    ].filter(Boolean);
     return (
         <div className="w-full bg-accent px-4 py-6">
             <section className="w-full pb-12 max-w-[80%] mx-auto ">
@@ -42,9 +41,9 @@ export default function StaticsDesktop() {
                     <h2 className="text-lg font-semibold">Genel İstatistikler</h2>
                 </div>
 
-                {/* Yükleniyor/Hata durumları */}
+
                 {isLoading && (
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
                         {Array.from({ length: 5 }).map((_, i) => (
                             <div key={i} className="w-full animate-pulse rounded-xl bg-muted h-24" />
                         ))}
@@ -58,7 +57,7 @@ export default function StaticsDesktop() {
                 )}
 
                 {!isLoading && !isError && (
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
                         {generalStats.map((s, idx) => (
                             <div key={idx} className="w-full">
                                 <DataStaticCard items={[{ label: s.label, value: formatNumber(s.value) }]} />
@@ -67,7 +66,7 @@ export default function StaticsDesktop() {
                     </div>
                 )}
 
-                {/* Aşağıdaki grafik bölümünde şimdilik sahte veriler kalabilir */}
+
                 <div className="grid grid-cols-3 gap-2 pt-8">
                     <div className="grid-cols-1">
                         <OrganizationChart data={statisticsResp?.data.datasetsByOrganization || []} />
