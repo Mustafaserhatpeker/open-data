@@ -19,12 +19,14 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useQuery } from "@tanstack/react-query"
+import { getMyOrganizations } from "@/services/organization.service"
 
 function LogoIcon() {
   return <img src={LLogo} alt="Logo" width={16} height={16} />
 }
 
-const data = {
+const baseData = {
   user: {
     name: "shadcn",
     email: "m@example.com",
@@ -35,49 +37,7 @@ const data = {
       name: "Trtek Yazılım",
       logo: LogoIcon,
       plan: "Admin Paneli",
-    }
-  ],
-  navMain: [
-    {
-      title: "Organizasyonlarım",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "A Organizasyon",
-          url: "#",
-        },
-        {
-          title: "B Organizasyon",
-          url: "#",
-        },
-        {
-          title: "C Organizasyon",
-          url: "#",
-        },
-      ],
     },
-    {
-      title: "Tüm Kategoriler",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "A Kategori",
-          url: "#",
-        },
-        {
-          title: "B Kategori",
-          url: "#",
-        },
-        {
-          title: "C Kategori",
-          url: "#",
-        },
-      ],
-    },
-
   ],
   projects: [
     {
@@ -104,18 +64,66 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // Organizasyonları al
+  const { data: organizationsResp, isLoading } = useQuery({
+    queryKey: ["organizations"],
+    queryFn: () => getMyOrganizations(),
+  })
+
+  const orgItems =
+    organizationsResp?.data?.map((org: any) => ({
+      title: org.organizationName,
+      url: `/dashboard/organizations/${org._id}`,
+    })) ?? []
+
+  // Ana menü
+  const navMain = [
+    {
+      title: "Organizasyonlarım",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items:
+        isLoading && orgItems.length === 0
+          ? [{ title: "Yükleniyor...", url: "#" }]
+          : orgItems,
+    },
+    {
+      title: "Tüm Kategoriler",
+      url: "#",
+      icon: Bot,
+      items: [
+        {
+          title: "A Kategori",
+          url: "#",
+        },
+        {
+          title: "B Kategori",
+          url: "#",
+        },
+        {
+          title: "C Kategori",
+          url: "#",
+        },
+      ],
+    },
+  ]
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={baseData.teams} />
       </SidebarHeader>
+
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={navMain} />
+        <NavProjects projects={baseData.projects} />
       </SidebarContent>
+
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={baseData.user} />
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   )
