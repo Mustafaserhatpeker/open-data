@@ -1,63 +1,40 @@
-"use client"
+"use client";
 
-import { Pie, PieChart } from "recharts"
-
+import { Pie, PieChart } from "recharts";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
     type ChartConfig,
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-export const description = "A pie chart with a label"
+export function ResourceFormatChart({
+    data,
+}: {
+    data: Array<{ formatName: string; datasetCount: number }>;
+}) {
+    const chartData = (data || []).map((fmt, idx) => ({
+        name: fmt.formatName || `Format ${idx + 1}`,
+        value: fmt.datasetCount || 0,
+        fill: `var(--chart-${(idx % 5) + 1})`,
+    }));
 
-const chartData = [
-    { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-    { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-    { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    { browser: "other", visitors: 90, fill: "var(--color-other)" },
-]
+    const chartConfig = {
+        value: { label: "Veri Seti Sayısı" },
+    } satisfies ChartConfig;
 
-const chartConfig = {
-    visitors: {
-        label: "Visitors",
-    },
-    chrome: {
-        label: "Chrome",
-        color: "var(--chart-1)",
-    },
-    safari: {
-        label: "Safari",
-        color: "var(--chart-2)",
-    },
-    firefox: {
-        label: "Firefox",
-        color: "var(--chart-3)",
-    },
-    edge: {
-        label: "Edge",
-        color: "var(--chart-4)",
-    },
-    other: {
-        label: "Other",
-        color: "var(--chart-5)",
-    },
-} satisfies ChartConfig
-
-export function ResourceFormatChart() {
     return (
         <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
                 <CardTitle>Kaynak Format Dağılımı</CardTitle>
-                <CardDescription>Format Dağılımı</CardDescription>
+                <CardDescription>Veri Seti Formatları</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
                 <ChartContainer
@@ -66,10 +43,17 @@ export function ResourceFormatChart() {
                 >
                     <PieChart>
                         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-                        <Pie data={chartData} dataKey="visitors" label nameKey="browser" />
+                        <Pie
+                            data={chartData}
+                            dataKey="value"
+                            nameKey="name"
+                            label
+                            innerRadius={40}
+                            outerRadius={80}
+                        />
                     </PieChart>
                 </ChartContainer>
             </CardContent>
         </Card>
-    )
+    );
 }

@@ -5,31 +5,35 @@ import { DataStaticCard } from "./components/inner-components/DataStaticCard"
 import { ResourceFormatChart } from "./components/piecharts/ResourceFormatChart";
 import { DatarequestStatusChart } from "./components/piecharts/DatarequestStatusChart";
 import { CategoryDistributionChart } from "./components/piecharts/CategoryDistributionChart";
+import { useQuery } from "@tanstack/react-query";
+import { getStatistics } from "@/services/statistics.service";
+
+function formatNumber(n?: number) {
+    if (typeof n !== "number") return "-";
+    return Intl.NumberFormat("tr-TR").format(n);
+}
 
 export default function StaticsDesktop() {
-    const stats = [
-        {
-            label: "Veri Seti Sayısı",
-            value: 120,
-        },
-        {
-            label: "Veri Kaynağı Sayısı",
-            value: 450,
-        },
-        {
-            label: "Kullanıcı Sayısı",
-            value: 103,
-        },
-        {
-            label: "Toplam İndirme",
-            value: 1.565,
-        },
-        {
-            label: "Toplam Görüntülenme",
-            value: 15.453,
-        }
+    const {
+        data: statisticsResp,
+        isLoading,
+        isError,
+        error
+    } = useQuery({
+        queryKey: ["statistics"],
+        queryFn: () => getStatistics(),
+    });
 
-    ];
+    // API'den gelen genel sayıları kartlara map’leyelim
+    const generalStats = [
+        { label: "Veri Seti Sayısı", value: statisticsResp?.data.datasetCount },
+        { label: "Kategori Sayısı", value: statisticsResp?.data.categoryCount },
+        { label: "Organizasyon Sayısı", value: statisticsResp?.data.organizationCount },
+        { label: "Kullanıcı Sayısı", value: statisticsResp?.data.userCount },
+        { label: "Etiket (Tag) Sayısı", value: statisticsResp?.data.tagCount },
+        { label: "Lisans Sayısı", value: statisticsResp?.data.licenceCount },
+        { label: "Format Sayısı", value: statisticsResp?.data.formatCount },
+    ].filter(Boolean); // undefined/null olanları ele (opsiyonel)
 
     return (
         <div className="w-full bg-accent px-4 py-6">
@@ -37,38 +41,56 @@ export default function StaticsDesktop() {
                 <div className="mb-4 mt-8 flex items-center justify-between">
                     <h2 className="text-lg font-semibold">Genel İstatistikler</h2>
                 </div>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                    {stats.map((s, idx) => (
-                        <div key={idx} className="w-full">
-                            <DataStaticCard
-                                items={[{ label: s.label, value: s.value }]}
-                            />
-                        </div>
-                    ))}
-                </div>
+
+                {/* Yükleniyor/Hata durumları */}
+                {isLoading && (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <div key={i} className="w-full animate-pulse rounded-xl bg-muted h-24" />
+                        ))}
+                    </div>
+                )}
+
+                {isError && (
+                    <div className="text-red-600 text-sm">
+                        İstatistikler yüklenemedi. {(error as any)?.message ?? ""}
+                    </div>
+                )}
+
+                {!isLoading && !isError && (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                        {generalStats.map((s, idx) => (
+                            <div key={idx} className="w-full">
+                                <DataStaticCard items={[{ label: s.label, value: formatNumber(s.value) }]} />
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Aşağıdaki grafik bölümünde şimdilik sahte veriler kalabilir */}
                 <div className="grid grid-cols-3 gap-2 pt-8">
                     <div className="grid-cols-1">
-                        <OrganizationChart />
+                        <OrganizationChart data={statisticsResp?.data.datasetsByOrganization || []} />
                     </div>
                     <div className="grid-cols-1">
-                        <CategoryChart />
+                        <CategoryChart data={statisticsResp?.data.datasetsByCategory || []} />
                     </div>
                     <div className="grid-cols-1">
                         <DatarequestChart />
                     </div>
                 </div>
+
                 <div className="grid grid-cols-3 gap-2 pt-8">
                     <div className="grid-cols-1">
-                        <ResourceFormatChart />
+                        <ResourceFormatChart data={statisticsResp?.data.datasetsByFormat || []} />
                     </div>
                     <div className="grid-cols-1">
                         <DatarequestStatusChart />
                     </div>
                     <div className="grid-cols-1">
-                        <CategoryDistributionChart />
+                        <CategoryDistributionChart data={statisticsResp?.data.datasetsByCategory || []} />
                     </div>
                 </div>
-
             </section>
         </div>
     );

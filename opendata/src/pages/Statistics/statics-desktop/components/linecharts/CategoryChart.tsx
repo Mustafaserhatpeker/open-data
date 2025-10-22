@@ -1,7 +1,6 @@
 "use client"
 
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
-
 import {
     Card,
     CardContent,
@@ -16,32 +15,26 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "A bar chart with a custom label"
+export function CategoryChart({
+    data,
+}: {
+    data: Array<{ categoryName: string; datasetCount: number }>;
+}) {
+    const chartData = data.map((cat) => ({
+        name: cat.categoryName || "Bilinmiyor",
+        count: cat.datasetCount || 0,
+    }));
 
-const chartData = [
-    { month: "A Kategori", desktop: 186, mobile: 80 },
-    { month: "B Kategori", desktop: 305, mobile: 200 },
-    { month: "C Kategori", desktop: 237, mobile: 120 },
-    { month: "D Kategori", desktop: 73, mobile: 190 },
-    { month: "E Kategori", desktop: 209, mobile: 130 },
-    { month: "F Kategori", desktop: 214, mobile: 140 },
-]
+    const chartConfig = {
+        count: {
+            label: "Veri Seti Sayısı",
+            color: "var(--chart-3)",
+        },
+        label: {
+            color: "var(--background)",
+        },
+    } satisfies ChartConfig;
 
-const chartConfig = {
-    desktop: {
-        label: "Desktop",
-        color: "var(--chart-2)",
-    },
-    mobile: {
-        label: "Mobile",
-        color: "var(--chart-2)",
-    },
-    label: {
-        color: "var(--background)",
-    },
-} satisfies ChartConfig
-
-export function CategoryChart() {
     return (
         <Card>
             <CardHeader>
@@ -51,43 +44,39 @@ export function CategoryChart() {
             <CardContent>
                 <ChartContainer config={chartConfig}>
                     <BarChart
-                        accessibilityLayer
                         data={chartData}
                         layout="vertical"
-                        margin={{
-                            right: 16,
-                        }}
+                        margin={{ right: 16 }}
                     >
                         <CartesianGrid horizontal={false} />
                         <YAxis
-                            dataKey="month"
+                            dataKey="name"
                             type="category"
                             tickLine={false}
                             tickMargin={10}
                             axisLine={false}
-                            tickFormatter={(value) => value.slice(0, 3)}
-                            hide
+                            width={120}
                         />
-                        <XAxis dataKey="desktop" type="number" hide />
+                        <XAxis dataKey="count" type="number" hide />
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent indicator="line" />}
                         />
                         <Bar
-                            dataKey="desktop"
+                            dataKey="count"
                             layout="vertical"
-                            fill="var(--color-desktop)"
+                            fill="var(--color-count)"
                             radius={4}
                         >
                             <LabelList
-                                dataKey="month"
+                                dataKey="name"
                                 position="insideLeft"
                                 offset={8}
                                 className="fill-(--color-label)"
                                 fontSize={12}
                             />
                             <LabelList
-                                dataKey="desktop"
+                                dataKey="count"
                                 position="right"
                                 offset={8}
                                 className="fill-foreground"
@@ -97,7 +86,6 @@ export function CategoryChart() {
                     </BarChart>
                 </ChartContainer>
             </CardContent>
-           
         </Card>
-    )
+    );
 }
