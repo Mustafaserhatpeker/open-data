@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/sidebar"
 import { useQuery } from "@tanstack/react-query"
 import { getMyOrganizations } from "@/services/organization.service"
+import { getCategories } from "@/services/category.service"
+
 
 function LogoIcon() {
   return <img src={LLogo} alt="Logo" width={16} height={16} />
@@ -64,16 +66,27 @@ const baseData = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  // Organizasyonları al
+
   const { data: organizationsResp, isLoading } = useQuery({
     queryKey: ["organizations"],
     queryFn: () => getMyOrganizations(),
+  })
+
+  const { data: categoriesResp, isLoading: isLoadingCategories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(),
   })
 
   const orgItems =
     organizationsResp?.data?.map((org: any) => ({
       title: org.organizationName,
       url: `/dashboard/organizations/${org._id}`,
+    })) ?? []
+
+  const catItems =
+    categoriesResp?.data?.map((cat: any) => ({
+      title: cat.categoryName,
+      url: `/dashboard/categories/${cat._id}`,
     })) ?? []
 
   // Ana menü
@@ -92,20 +105,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Tüm Kategoriler",
       url: "#",
       icon: Bot,
-      items: [
-        {
-          title: "A Kategori",
-          url: "#",
-        },
-        {
-          title: "B Kategori",
-          url: "#",
-        },
-        {
-          title: "C Kategori",
-          url: "#",
-        },
-      ],
+      isActive: true,
+      items: isLoadingCategories && catItems.length === 0
+        ? [{ title: "Yükleniyor...", url: "#" }]
+        : catItems,
     },
   ]
 
