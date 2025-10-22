@@ -19,3 +19,17 @@ export const getOrganizationById = async (id: string) => {
         throw error;
     }
 };
+
+export const getMyOrganizations = async () => {
+    const accesToken = localStorage.getItem("accessToken");
+    try {
+        const { data } = await axiosInstance.get(`${Base}/get-my-organizations`, {
+            headers: {
+                Authorization: `Bearer ${accesToken}`,
+            },
+        });
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};

@@ -25,7 +25,7 @@ import {
 
 import { Building2, FolderClosed, Globe, Mail } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
-import { getOrganizations } from "@/services/organization.service"
+import { getMyOrganizations } from "@/services/organization.service"
 
 function getInitials(name?: string) {
     if (!name) return "ORG"
@@ -60,7 +60,7 @@ export default function OrganizationsDesktop() {
 
     const { data: organizationsResp } = useQuery({
         queryKey: ["organizations"],
-        queryFn: () => getOrganizations(),
+        queryFn: () => getMyOrganizations(),
     })
 
     // API -> Organization tipine map
@@ -112,10 +112,8 @@ export default function OrganizationsDesktop() {
                 <div className="mb-6">
                     <div className="flex items-center justify-between gap-4">
                         <div>
-                            <h1 className="text-2xl font-semibold">Organizasyonlar</h1>
-                            <p className="text-muted-foreground mt-1">
-                                Veri setlerini sağlayan kurum ve kuruluşlar
-                            </p>
+                            <h1 className="text-2xl font-semibold">Organizasyonlarım</h1>
+
                         </div>
 
                         <div className="hidden sm:flex items-center gap-2">
