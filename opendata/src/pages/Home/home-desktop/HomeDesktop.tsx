@@ -5,16 +5,33 @@ import photo1 from '@/assets/photo1.png';
 import photo2 from '@/assets/photo2.png';
 import photo3 from '@/assets/photo3.png';
 import LabelGrid from "./components/LabelGrid";
+import { useQuery } from "@tanstack/react-query";
+import { getOrganizations } from "@/services/organization.service";
 function HomeDesktop() {
+
+  const { data: organizationsResp } = useQuery({
+    queryKey: ["organizations"],
+    queryFn: () => getOrganizations(),
+  })
+
   return (
     <div className="flex flex-col items-center justify-start ">
       <Welcome />
-      <IntroductionArea />
+      <IntroductionArea organizations={organizationsResp?.data} />
 
       <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex flex-row  items-center justify-around pb-32 bg-[#6A60F2] ">
-        <h1 className="text-6xl font-bold text-white  absolute top-1/2 left-1/3 transform -translate-x-1/2 ">
-          Aradığınız Veri Setini Bulun.<br /> Bulamadınız mı? İsteyin!
-        </h1>
+        <div className="absolute top-1/4 left-1/3 transform -translate-x-1/2 ">
+          <h1 className="text-6xl font-bold text-white">
+            Aradığınız Veri Setini Bulun.<br /> Bulamadınız mı? İsteyin!
+          </h1>
+          <p className="mt-6 text-lg text-white max-w-2xl ">
+            Kocaeli Büyükşehir Belediyesi sizlere şehire dair farklı alanlarda toplanan veri setlerini sunar. Bu veri setleri ile analizler yapabilir, görselleştirmeler oluşturabilir ve projeler geliştirebilirsiniz. <br /> <br />
+            Size sağladığımız veri setlerinde arama yapabilir, kategorilere göre filtreleyebilir ve en güncel verilere kolayca erişebilirsiniz.
+            <br /><br />Aradığınız veri setini bulamazsanız, bizimle iletişime geçerek talepte bulunabilirsiniz. Veri talepleriniz doğrultusunda yeni veri setleri ekleyerek, Kocaeli'nin dijital dönüşümüne katkıda bulunmanızı sağlıyoruz.
+          </p>
+
+        </div>
+
         <CardSwap
           cardDistance={60}
           verticalDistance={70}
@@ -40,10 +57,22 @@ function HomeDesktop() {
               <img className="h-90" src={photo3} alt="" />
             </div>
           </Card>
-        </CardSwap>
-      </div>
+          <Card>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold">Bulamadığınız Veri Setini Talep Edin</h3>
+              <img className="h-90" src={photo3} alt="" />
+            </div>
+          </Card>
+          <Card>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold">Bulamadığınız Veri Setini Talep Edin</h3>
+              <img className="h-90" src={photo3} alt="" />
+            </div>
+          </Card>
+        </CardSwap >
+      </div >
       <LabelGrid />
-    </div>
+    </div >
   );
 }
 

@@ -57,7 +57,7 @@ function DatasetsDesktop() {
     queryKey: ["licences"],
     queryFn: () => getLicences(),
   });
-  const [gridView, setGridView] = useState(true);
+  const [gridView, setGridView] = useState(false);
 
   return (
     <div className="w-full flex flex-col items-center justify-between bg-accent min-h-screen  ">
