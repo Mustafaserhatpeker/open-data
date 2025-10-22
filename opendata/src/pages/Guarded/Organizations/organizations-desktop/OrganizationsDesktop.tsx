@@ -107,7 +107,7 @@ export default function OrganizationsDesktop() {
     }, [query, sortBy, organizations])
 
     return (
-        <div className="w-full bg-accent px-4 py-6 min-h-screen">
+        <div className="w-full  px-4 py-6 min-h-screen">
             <div className="mx-auto w-full ">
                 <div className="mb-6">
                     <div className="flex items-center justify-between gap-4">
