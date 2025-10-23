@@ -28,6 +28,8 @@ import { useQuery } from "@tanstack/react-query"
 import { getDatasets } from "@/services/dataset.service"
 import { useAuthStore } from "@/stores/auth.store"
 import { getCategoryById } from "@/services/category.service"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { AddDataCatDialog } from "./components/AddDataCatDialog"
 
 type SortKey = "recent" | "views" | "downloads" | "title"
 
@@ -304,23 +306,21 @@ export default function CategoryInfo() {
                                     </div>
                                     <div className="sm:col-span-1">
                                         <div className="flex items-center gap-2">
-                                            <label
-                                                htmlFor="sort"
-                                                className="text-sm text-muted-foreground whitespace-nowrap"
-                                            >
-                                                Sırala:
-                                            </label>
-                                            <select
-                                                id="sort"
-                                                value={sortBy}
-                                                onChange={(e) => setSortBy(e.target.value as SortKey)}
-                                                className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-                                            >
-                                                <option value="recent">En yeni</option>
-                                                <option value="views">Görüntülenme (çoktan aza)</option>
-                                                <option value="downloads">İndirme (çoktan aza)</option>
-                                                <option value="title">Başlık (A-Z)</option>
-                                            </select>
+                                            <Select value={sortBy}
+                                                onValueChange={(value: SortKey) => setSortBy(value)}>
+                                                <SelectTrigger className="w-full">
+                                                    <SelectValue
+                                                        placeholder="Sırala"
+                                                    />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="recent">En Yeni</SelectItem>
+                                                    <SelectItem value="views">En Çok Görüntülenen</SelectItem>
+                                                    <SelectItem value="downloads">En Çok İndirilen</SelectItem>
+                                                    <SelectItem value="title">A-Z</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                            <AddDataCatDialog categoryName={category?.categoryName} categoryId={id!} />
                                         </div>
                                     </div>
                                 </div>
