@@ -165,7 +165,7 @@ export function AddDataCatDialog({ categoryId, categoryName }: AddDataCatDialogP
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-[640px]">
+            <DialogContent className="sm:max-w-[640px] max-h-[90vh] overflow-y-auto">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <DialogHeader>
                         <DialogTitle>{categoryName} – Veri Seti Ekle</DialogTitle>
