@@ -29,6 +29,7 @@ import {
 } from "lucide-react"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { getOrganizationById } from "@/services/organization.service"
+import { AddDataOrgDialog } from "./components/AddDataOrgDialog"
 
 // Yardımcı fonksiyonlar
 function formatDate(dateString?: string) {
@@ -271,6 +272,7 @@ export default function OrganizationInfoDesktop() {
                                                     </SelectContent>
                                                 </Select>
                                             </div>
+                                            <AddDataOrgDialog organizationName={org?.organizationName} organizationId={id!} />
                                         </div>
 
                                     </div>
