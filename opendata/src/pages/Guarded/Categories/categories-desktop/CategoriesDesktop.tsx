@@ -18,7 +18,7 @@ import { Separator } from "@/components/ui/separator"
 
 import { FolderClosed, CalendarClock } from "lucide-react"
 import { getCategories } from "@/services/category.service"
-import { AddDataDialog } from "./components/AddDataDialog"
+import { AddDataCatDialog } from "./components/AddDataCatDialog"
 
 function getInitials(name?: string) {
     if (!name) return "CT"
@@ -194,7 +194,10 @@ export default function CategoriesDesktop() {
                                             </Link>
 
                                         </Button>
-                                        <AddDataDialog />
+                                        <AddDataCatDialog
+                                            categoryId={cat._id}
+                                            categoryName={cat.categoryName}
+                                        />
                                     </div>
                                 </CardContent>
                             </Card>
