@@ -26,6 +26,7 @@ import {
 import { Building2, FolderClosed, Globe, Mail } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { getMyOrganizations } from "@/services/organization.service"
+import { AddDataOrgDialog } from "./components/AddDataOrgDialog"
 
 function getInitials(name?: string) {
     if (!name) return "ORG"
@@ -166,9 +167,7 @@ export default function OrganizationsDesktop() {
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {filtered.map((org: Organization) => (
                         <Card
-                            onClick={() => {
-                                window.location.href = `/organizations/${org.id}`
-                            }}
+
                             key={org.id}
                             className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer"
                         >
@@ -200,15 +199,10 @@ export default function OrganizationsDesktop() {
                                             <span className="font-medium">{org.datasetsCount ?? 0}</span>
                                         </div>
                                     </div>
-                                    <div className="rounded-md border p-3">
-                                        <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                                            Veri Setleri
-                                        </div>
-                                        <div className="mt-1 inline-flex items-center gap-2">
-                                            <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">{org.datasetsCount ?? 0}</span>
-                                        </div>
-                                    </div>
+                                    <AddDataOrgDialog
+                                        organizationId={org.id}
+                                        organizationName={org.name}
+                                    />
                                 </div>
 
                                 {/* Actions */}
@@ -246,7 +240,9 @@ export default function OrganizationsDesktop() {
                                         </a>
                                     </div>
 
-                                    <Button variant="secondary" asChild>
+                                    <Button onClick={() => {
+                                        window.location.href = `/organizations/${org.id}`
+                                    }} variant="secondary" asChild>
                                         <Link to={`/datasets?organizationId=${org.id}`}>
                                             <Building2 className="h-4 w-4 mr-2" />
                                             Veri setleri
