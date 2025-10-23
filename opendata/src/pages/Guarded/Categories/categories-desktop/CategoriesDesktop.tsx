@@ -188,7 +188,7 @@ export default function CategoriesDesktop() {
                                     </div>
                                     <div className="flex items-center justify-between mt-4">
                                         <Button variant="secondary" asChild>
-                                            <Link to={`/datasets?categoryId=${cat._id}`}>
+                                            <Link to={`/dashboard/categories/${cat._id}`}>
                                                 <FolderClosed className="h-4 w-4 mr-2" />
                                                 Veri setleri
                                             </Link>
