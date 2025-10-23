@@ -27,6 +27,7 @@ import { Building2, FolderClosed, Globe, Mail } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { getMyOrganizations } from "@/services/organization.service"
 import { AddDataOrgDialog } from "./components/AddDataOrgDialog"
+import { AddOrganizationDialog } from "./components/AddOrganizationDialog"
 
 function getInitials(name?: string) {
     if (!name) return "ORG"
@@ -156,6 +157,7 @@ export default function OrganizationsDesktop() {
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
+                                <AddOrganizationDialog />
                             </div>
                         </div>
                     </div>
