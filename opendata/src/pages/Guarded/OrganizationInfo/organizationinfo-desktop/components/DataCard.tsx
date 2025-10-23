@@ -18,7 +18,7 @@ import DataDialog from "./DataDialog"
 import { getTypeMeta } from "@/pages/DataInformation/datainfo-desktop/components/utils"
 
 export default function DataCard({ dataset }: { dataset: any }) {
-    const id = dataset?._id
+   
     const title = dataset?.title || "Başlıksız veri seti"
     const description = dataset?.description || "Açıklama bulunamadı."
     const organization = dataset?.organization?.organizationName || "-"
@@ -36,8 +36,8 @@ export default function DataCard({ dataset }: { dataset: any }) {
             <div
                 className="cursor-pointer"
                 onClick={(e) => {
-                    e.stopPropagation()
-                    window.location.href = `/datasets/${id}`
+                    e.stopPropagation();
+                    window.location.href = `/dashboard/datasets/${dataset._id}`;
                 }}
             >
                 <Card className="flex h-full flex-col overflow-hidden border border-border/60 shadow-sm transition-all hover:shadow-md relative">

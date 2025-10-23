@@ -123,7 +123,7 @@ export default function DataCard({ dataset }: { dataset: DatasetItem }) {
         className="cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
-          window.location.href = `/datasets/${dataset._id}`;
+          window.location.href = `/dashboard/datasets/${dataset._id}`;
         }}
       >
         <Card className="flex h-full flex-col overflow-hidden border border-border/60 shadow-sm transition-all hover:shadow-md relative">

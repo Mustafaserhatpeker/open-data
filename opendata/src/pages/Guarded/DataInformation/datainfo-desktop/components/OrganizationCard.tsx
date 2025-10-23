@@ -2,10 +2,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Building2, FolderClosed, Globe, Mail } from "lucide-react"
-import type { Organization } from "@/lib/types"
 
 type Props = {
-    organization?: Organization
+    organization?: any
 }
 
 export function OrganizationCard({ organization }: Props) {
@@ -18,15 +17,15 @@ export function OrganizationCard({ organization }: Props) {
             <CardContent className="space-y-3">
                 <div className="flex items-start gap-3">
                     <Avatar className="h-12 w-12 rounded-lg">
-                        <AvatarImage src={organization?.logoUrl} alt={organization?.name} />
+                        <AvatarImage src={organization?.logoUrl} alt={organization?.organizationName} />
                         <AvatarFallback className="rounded-lg">
-                            {(organization?.name ?? "ORG").slice(0, 2).toUpperCase()}
+                            {(organization?.organizationName ?? "ORG").slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0">
                         <div className="flex items-center gap-2">
                             <Building2 className="h-4 w-4 text-muted-foreground" />
-                            <p className="font-medium truncate">{organization?.name ?? "-"}</p>
+                            <p className="font-medium truncate">{organization?.organizationName ?? "-"}</p>
                         </div>
                         {organization?.description ? (
                             <p className="mt-1 text-sm text-muted-foreground">{organization.description}</p>
@@ -39,9 +38,9 @@ export function OrganizationCard({ organization }: Props) {
                 <div className="grid grid-cols-1 gap-3 text-sm">
                     <div className="flex items-center gap-2">
                         <Globe className="h-4 w-4 text-muted-foreground" />
-                        {organization?.website ? (
+                        {organization?.websiteUrl ? (
                             <a
-                                href={organization.website}
+                                href={organization.websiteUrl}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="text-foreground hover:underline truncate"
@@ -65,7 +64,7 @@ export function OrganizationCard({ organization }: Props) {
                     <div className="flex items-center gap-2">
                         <FolderClosed className="h-4 w-4 text-muted-foreground" />
                         <span className="text-muted-foreground">
-                            Veri seti sayısı: <span className="text-foreground">{organization?.datasetsCount ?? 0}</span>
+                            Veri seti sayısı: <span className="text-foreground">{organization?.datasetCount ?? 0}</span>
                         </span>
                     </div>
 

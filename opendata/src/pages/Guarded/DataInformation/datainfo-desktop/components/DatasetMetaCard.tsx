@@ -1,15 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { CalendarClock, ShieldCheck, UserRound } from "lucide-react"
-import type { Dataset as DummyDataset } from "@/lib/types"
-import { formatDate } from "./utils"
+import { CalendarClock, ShieldCheck } from "lucide-react"
+
 
 type Props = {
-    dataset: DummyDataset
+    dataset: any
     createdByName?: string
 }
 
-export function DatasetMetaCard({ dataset, createdByName }: Props) {
+export function DatasetMetaCard({ dataset }: Props) {
     return (
         <Card>
             <CardHeader className="pb-3">
@@ -21,26 +20,22 @@ export function DatasetMetaCard({ dataset, createdByName }: Props) {
                 <div className="flex items-center gap-2">
                     <ShieldCheck className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Lisans:</span>
-                    <span className="text-foreground">{dataset.license}</span>
+                    <span className="text-foreground">{dataset?.license?.licenceName}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                     <CalendarClock className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Oluşturulma:</span>
-                    <span className="text-foreground">{formatDate(dataset.createdAt)}</span>
+                    <span className="text-foreground">{
+                        new Date(dataset?.createdAt).toLocaleDateString("tr-TR")
+                    }</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <CalendarClock className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Güncellenme:</span>
-                    <span className="text-foreground">{formatDate(dataset.updatedAt)}</span>
+                    <span className="text-foreground">{
+                        new Date(dataset?.updatedAt).toLocaleDateString("tr-TR")}</span>
                 </div>
-                {createdByName ? (
-                    <div className="flex items-center gap-2">
-                        <UserRound className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">Oluşturan:</span>
-                        <span className="text-foreground">{createdByName}</span>
-                    </div>
-                ) : null}
             </CardContent>
         </Card>
     )
