@@ -241,9 +241,9 @@ export default function OrganizationsDesktop() {
                                     </div>
 
                                     <Button onClick={() => {
-                                        window.location.href = `/organizations/${org.id}`
+                                        window.location.href = `/dashboard/organizations/${org.id}`
                                     }} variant="secondary" asChild>
-                                        <Link to={`/datasets?organizationId=${org.id}`}>
+                                        <Link to={`/dashboard/organizations/${org.id}`}>
                                             <Building2 className="h-4 w-4 mr-2" />
                                             Veri setleri
                                         </Link>
