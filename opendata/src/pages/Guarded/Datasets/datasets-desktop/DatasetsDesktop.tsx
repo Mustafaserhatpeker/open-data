@@ -141,14 +141,12 @@ function DatasetsDesktop() {
                 </SelectContent>
               </Select>
             </div>
-
-            {/* Dataset Türü Seçimi (Tüm / Benim) */}
             <div className="col-span-1">
               <AddDataDialog />
             </div>
           </div>
 
-          {/* Dataset Listesi */}
+
           <div className="mt-4 mb-6">
             <DatasetCards items={items} gridView={gridView} />
           </div>
