@@ -4,16 +4,19 @@ import { Button } from "@/components/ui/button"
 import { Download, Eye } from "lucide-react"
 import { getResourceTypeMeta } from "./utils"
 import { DOWNLOAD_URL, PREVIEW_URL } from "@/lib/urls"
+import AddResource from "@/components/add-resource"
 type Props = {
     resources?: any
+    datasetId?: any
 }
 
-export function ResourcesList({ resources }: Props) {
+export function ResourcesList({ resources, datasetId }: Props) {
     return (
         <Card>
             <CardHeader className="pb-3">
                 <CardTitle className="text-base">Kaynaklar</CardTitle>
                 <CardDescription>Dosyalar ve bağlantılar</CardDescription>
+                <AddResource datasetId={datasetId} />
             </CardHeader>
             <CardContent className="space-y-3">
                 {resources && resources.length > 0 ? (
