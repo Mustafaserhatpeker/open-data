@@ -20,6 +20,20 @@ export const getOrganizationById = async (id: string) => {
     }
 };
 
+export const createOrganization = async (formData: FormData) => {
+    const accesToken = localStorage.getItem("accessToken");
+    try {
+        const { data } = await axiosInstance.post(`${Base}/create-organization`, formData, {
+            headers: {
+                Authorization: `Bearer ${accesToken}`,
+            },
+        });
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const getMyOrganizations = async () => {
     const accesToken = localStorage.getItem("accessToken");
     try {
