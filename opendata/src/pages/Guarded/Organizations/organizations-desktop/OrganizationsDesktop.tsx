@@ -74,11 +74,9 @@ export default function OrganizationsDesktop() {
             name: o.name ?? o.organizationName ?? "",
             description: o.description ?? "",
             logoUrl: o.logoUrl ?? "",
-            // UI 'website' bekliyor, API 'websiteUrl' veriyor
             website: o.websiteUrl ?? o.website ?? "",
             contactEmail: o.contactEmail ?? "",
-            datasetsCount: o.datasetCount ?? o.datasetsCount ?? 0,
-            followersCount: o.followersCount ?? 0,
+            datasetCount: o.datasetCount ?? o.datasetsCount ?? 0,
             createdAt: o.createdAt,
             updatedAt: o.updatedAt,
         })) as any[]
