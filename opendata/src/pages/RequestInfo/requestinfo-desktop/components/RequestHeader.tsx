@@ -1,4 +1,3 @@
-
 import { Building2, User } from "lucide-react"
 import type { DataRequest } from "@/lib/types"
 import BackButton from "@/components/back-button"
@@ -7,8 +6,6 @@ function statusBadgeClasses(status: string): string {
     switch (status) {
         case "approved":
             return "bg-green-100 text-green-800 ring-green-600/20"
-        case "in_review":
-            return "bg-amber-100 text-amber-800 ring-amber-600/20"
         case "rejected":
             return "bg-red-100 text-red-800 ring-red-600/20"
         case "pending":
@@ -28,6 +25,7 @@ export function RequestHeader({
 }) {
     return (
         <div className="space-y-4">
+            {/* Üst kısım: geri butonu + durum etiketi */}
             <div className="flex items-center justify-between">
                 <BackButton />
 
@@ -37,30 +35,39 @@ export function RequestHeader({
                     )}`}
                     title={`Durum: ${request.status}`}
                 >
-                    {request.status}
+                    {request.status === "approved"
+                        ? "Onaylandı"
+                        : request.status === "rejected"
+                            ? "Reddedildi"
+                            : "Beklemede"}
                 </span>
             </div>
 
+            {/* Başlık ve açıklama */}
             <div>
-                <h1 className="text-2xl font-semibold tracking-tight text-foreground">{request.title}</h1>
-                {request.description ? (
+                <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+                    {request.title}
+                </h1>
+                {request.description && (
                     <p className="mt-2 text-muted-foreground">{request.description}</p>
-                ) : null}
+                )}
             </div>
 
+            {/* Kurum ve talep eden kullanıcı bilgisi */}
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                {organizationName ? (
+                {organizationName && (
                     <span className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-1">
                         <Building2 className="h-3.5 w-3.5" />
                         {organizationName}
                     </span>
-                ) : null}
-                {requestedByName ? (
+                )}
+
+                {requestedByName && (
                     <span className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-1">
                         <User className="h-3.5 w-3.5" />
                         {requestedByName}
                     </span>
-                ) : null}
+                )}
             </div>
         </div>
     )

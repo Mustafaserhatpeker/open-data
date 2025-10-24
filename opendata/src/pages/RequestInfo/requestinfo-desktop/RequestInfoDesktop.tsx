@@ -122,7 +122,7 @@ export default function RequestInfoDesktop() {
                     </div>
 
                     <div className="lg:col-span-8 space-y-6">
-                        <CommentsList comments={uiComments} />
+                        <CommentsList comments={uiComments} requestId={request._id} />
                     </div>
                 </div>
             </div>
