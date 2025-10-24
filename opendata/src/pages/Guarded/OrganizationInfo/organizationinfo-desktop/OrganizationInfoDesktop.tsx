@@ -30,6 +30,7 @@ import {
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { getOrganizationById } from "@/services/organization.service"
 import { AddDataOrgDialog } from "./components/AddDataOrgDialog"
+import { UpdateOrgDialog } from "../../Organizations/organizations-desktop/components/UpdateOrgDialog"
 
 // Yardımcı fonksiyonlar
 function formatDate(dateString?: string) {
@@ -130,7 +131,7 @@ export default function OrganizationInfoDesktop() {
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                     {/* Sol kolon: Organizasyon Bilgileri */}
                     <div className="lg:col-span-3 space-y-6">
-                        <Card>
+                        <Card className="relative">
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-base">Organizasyon Bilgileri</CardTitle>
                                 <CardDescription>İletişim ve istatistikler</CardDescription>
@@ -204,6 +205,7 @@ export default function OrganizationInfoDesktop() {
                                     <p className="text-sm text-muted-foreground">Organizasyon bilgisi yüklenemedi.</p>
                                 )}
                             </CardContent>
+                            <UpdateOrgDialog organizationId={org?._id} organization={org} />
                         </Card>
                     </div>
 

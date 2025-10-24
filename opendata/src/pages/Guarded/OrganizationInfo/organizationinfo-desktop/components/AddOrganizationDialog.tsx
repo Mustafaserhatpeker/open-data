@@ -1,11 +1,10 @@
 "use client"
 
-import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
-import { updateOrganization } from "@/services/organization.service"
+import { createOrganization } from "@/services/organization.service"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -20,8 +19,8 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Pen } from "lucide-react"
 
+// ✅ Zod doğrulama şeması
 const organizationSchema = z.object({
     organizationName: z.string().min(2, "Kuruluş adı en az 2 karakter olmalı"),
     description: z.string().min(10, "Açıklama en az 10 karakter olmalı"),
@@ -32,43 +31,22 @@ const organizationSchema = z.object({
 
 type OrganizationForm = z.infer<typeof organizationSchema>
 
-export function UpdateOrgDialog({
-    organizationId,
-    organization,
-}: {
-    organizationId: string
-    organization: any
-}) {
+export function AddOrganizationDialog() {
+    // ✅ React Hook Form + Zod entegrasyonu
     const form = useForm<OrganizationForm>({
         resolver: zodResolver(organizationSchema),
         defaultValues: {
-            organizationName: organization?.organizationName ?? "",
-            description: organization?.description ?? "",
-            logoUrl: organization?.logoUrl ?? "",
-            websiteUrl: organization?.websiteUrl ?? "",
-            contactEmail: organization?.contactEmail ?? "",
+            organizationName: "",
+            description: "",
+            logoUrl: "",
+            websiteUrl: "",
+            contactEmail: "",
         },
     })
 
-    // Organizasyon değiştiğinde formu güncelle
-    useEffect(() => {
-        if (organization) {
-            form.reset({
-                organizationName: organization?.organizationName ?? "",
-                description: organization?.description ?? "",
-                logoUrl: organization?.logoUrl ?? "",
-                websiteUrl: organization?.websiteUrl ?? "",
-                contactEmail: organization?.contactEmail ?? "",
-            })
-        }
-    }, [organization, form])
-
+    // ✅ React Query mutation (JSON body ile)
     const { mutate, isPending, isSuccess, error, reset } = useMutation({
-        mutationFn: (data: OrganizationForm) =>
-            updateOrganization(organizationId, data),
-        onSuccess: () => {
-            form.reset()
-        },
+        mutationFn: (data: OrganizationForm) => createOrganization(data),
     })
 
     const onSubmit = (data: OrganizationForm) => {
@@ -76,31 +54,20 @@ export function UpdateOrgDialog({
     }
 
     return (
-        <Dialog
-            onOpenChange={(open) => {
-                // Kapatıldığında form ve hata durumlarını sıfırla
-                if (!open) {
-                    form.reset()
-                    reset()
-                }
-            }}
-        >
+        <Dialog>
             <DialogTrigger asChild>
-                <Button className="absolute top-2 right-2" variant="outline">
-                    <Pen />
-                </Button>
+                <Button variant="outline">Kuruluş Ekle</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                    <DialogTitle>Kuruluşu Güncelle</DialogTitle>
+                    <DialogTitle>Yeni Kuruluş Ekle</DialogTitle>
                     <DialogDescription>
-                        Mevcut kuruluş bilgilerini güncellemek için aşağıdaki alanları doldurun.
+                        Yeni bir kuruluş oluşturmak için aşağıdaki alanları doldurun.
                     </DialogDescription>
                 </DialogHeader>
 
                 <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
-                    {/* Kuruluş Adı */}
                     <div className="grid gap-2">
                         <Label htmlFor="organizationName">Kuruluş Adı</Label>
                         <Input
@@ -115,7 +82,6 @@ export function UpdateOrgDialog({
                         )}
                     </div>
 
-                    {/* Açıklama */}
                     <div className="grid gap-2">
                         <Label htmlFor="description">Açıklama</Label>
                         <Input
@@ -130,7 +96,6 @@ export function UpdateOrgDialog({
                         )}
                     </div>
 
-                    {/* Logo URL */}
                     <div className="grid gap-2">
                         <Label htmlFor="logoUrl">Logo URL</Label>
                         <Input
@@ -145,7 +110,6 @@ export function UpdateOrgDialog({
                         )}
                     </div>
 
-                    {/* Web Sitesi URL */}
                     <div className="grid gap-2">
                         <Label htmlFor="websiteUrl">Web Sitesi URL</Label>
                         <Input
@@ -160,7 +124,6 @@ export function UpdateOrgDialog({
                         )}
                     </div>
 
-                    {/* E-posta */}
                     <div className="grid gap-2">
                         <Label htmlFor="contactEmail">İletişim E-postası</Label>
                         <Input
@@ -175,7 +138,6 @@ export function UpdateOrgDialog({
                         )}
                     </div>
 
-                    {/* Footer */}
                     <DialogFooter className="pt-4">
                         <DialogClose asChild>
                             <Button variant="outline" type="button">
@@ -187,9 +149,8 @@ export function UpdateOrgDialog({
                         </Button>
                     </DialogFooter>
 
-                    {/* Durum mesajları */}
                     {isSuccess && (
-                        <p className="text-green-600 mt-3">Kuruluş başarıyla güncellendi!</p>
+                        <p className="text-green-600 mt-3">Kuruluş başarıyla eklendi!</p>
                     )}
                     {error && (
                         <p className="text-red-600 mt-3">
