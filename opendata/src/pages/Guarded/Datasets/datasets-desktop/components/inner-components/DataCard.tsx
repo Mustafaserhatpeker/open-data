@@ -185,7 +185,7 @@ export default function DataCard({ dataset }: { dataset: DatasetItem }) {
                     Kategori
                   </div>
                   <div className="truncate text-foreground">
-                    {dataset.categories[0].categoryName || "-"}
+                    {dataset.categories.map((cat) => cat.categoryName).join(", ") || "Kategori yok"}
                   </div>
                 </div>
               </div>
