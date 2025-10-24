@@ -28,6 +28,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getMyOrganizations } from "@/services/organization.service"
 import { AddDataOrgDialog } from "./components/AddDataOrgDialog"
 import { AddOrganizationDialog } from "./components/AddOrganizationDialog"
+import { UpdateOrgDialog } from "./components/UpdateOrgDialog"
 
 function getInitials(name?: string) {
     if (!name) return "ORG"
@@ -205,6 +206,7 @@ export default function OrganizationsDesktop() {
                                         organizationId={org.id}
                                         organizationName={org.name}
                                     />
+                                    <UpdateOrgDialog organizationId={org.id} organization={org} />
                                 </div>
 
                                 {/* Actions */}
@@ -245,7 +247,7 @@ export default function OrganizationsDesktop() {
                                     <Button variant="secondary" asChild>
                                         <Link to={`/dashboard/organizations/${org.id}`}>
                                             <Building2 className="h-4 w-4 mr-2" />
-                                            Veri setleri
+                                            Ayrıntılar
                                         </Link>
                                     </Button>
                                 </div>

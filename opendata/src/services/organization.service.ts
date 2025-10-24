@@ -48,7 +48,6 @@ export const createOrganization = async (payload: {
     }
 }
 
-// 🔹 Kuruluş güncelle
 export const updateOrganization = async (
     id: string,
     payload: {
