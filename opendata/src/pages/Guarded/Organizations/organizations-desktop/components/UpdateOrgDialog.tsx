@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Pen } from "lucide-react"
 
 const organizationSchema = z.object({
     organizationName: z.string().min(2, "Kuruluş adı en az 2 karakter olmalı"),
@@ -85,7 +86,9 @@ export function UpdateOrgDialog({
             }}
         >
             <DialogTrigger asChild>
-                <Button variant="outline">Güncelle</Button>
+                <Button className="absolute top-2 right-2" variant="outline">
+                    <Pen />
+                </Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[500px]">

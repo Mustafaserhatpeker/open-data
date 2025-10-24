@@ -172,7 +172,7 @@ export default function OrganizationsDesktop() {
                         <Card
 
                             key={org.id}
-                            className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer"
+                            className="h-full overflow-hidden border border-border/60 flex flex-col justify-between cursor-pointer relative"
                         >
                             <CardHeader className="pb-3">
                                 <div className="flex items-start gap-3">
