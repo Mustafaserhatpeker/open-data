@@ -61,3 +61,21 @@ export const createDataset = async (datasetData: any, accessToken: any) => {
         throw error;
     }
 };
+
+export const updateDataset = async (datasetData: any, accessToken: any) => {
+    try {
+        const { data } = await axiosInstance.patch(
+            `${Base}/update-dataset`,
+            datasetData,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};
+
