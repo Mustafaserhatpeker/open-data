@@ -18,7 +18,7 @@ export interface Organization {
     logoUrl?: string
     website?: string
     contactEmail?: string
-    datasetsCount: number
+    datasetCount: number
     followersCount?: number
     createdAt: string
     updatedAt?: string

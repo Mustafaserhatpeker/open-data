@@ -115,3 +115,19 @@ export const toggleDataRequestLike = async (id: string, accessToken: string) => 
         throw error;
     }
 };
+
+export const getDataRequestById = async (id: string) => {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+        const { data } = await axiosInstance.get(`${Base}/${id}`, {
+            headers: accessToken
+                ? {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+                : {},
+        });
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};
