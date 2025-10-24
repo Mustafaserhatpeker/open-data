@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Download, Eye, FolderClosed, Tags as TagsIcon } from "lucide-react";
 import { getTypeMeta } from "./utils";
 import BackButton from "@/components/back-button";
+import { UpdateDatasetDialog } from "./inner-components/UpdateDatasetDialog";
 
 type Props = {
   dataset: any;
@@ -68,6 +69,7 @@ export function DatasetHeader({
           <h1 className="text-2xl font-semibold leading-tight">
             {dataset?.title}
           </h1>
+          <UpdateDatasetDialog dataset={dataset} />
         </div>
       </div>
 
