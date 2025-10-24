@@ -1,3 +1,5 @@
+import { useAuthStore } from "@/stores/auth.store";
+
 export type DataRequestCardModel = {
     id: string;
     title: string;
@@ -19,7 +21,7 @@ function statusColor(status: string): string {
             return "bg-red-100 text-red-800 ring-red-600/20";
         case "pending":
         default:
-            return "bg-gray-100 text-gray-800 ring-gray-600/20";
+            return "bg-gray-100 text-yellow-800 ring-yellow-600/20";
     }
 }
 
@@ -41,14 +43,17 @@ export default function DataRequestCard({
 }: {
     request: DataRequestCardModel;
 }) {
+    const { isAuthenticated } = useAuthStore();
+
     return (
         <div
             onClick={() => {
-                window.location.href = `/datarequests/${request.id}`;
+                if (isAuthenticated) {
+                    window.location.href = `/datarequests/${request.id}`;
+                }
             }}
             className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm cursor-pointer transition hover:shadow-md"
         >
-            {/* Üst kısım: Başlık + durum etiketi */}
             <div className="flex items-start justify-between gap-3">
                 <h3 className="text-base font-semibold text-gray-900 line-clamp-2">
                     {request.title}

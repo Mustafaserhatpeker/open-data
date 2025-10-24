@@ -26,8 +26,9 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useAuthStore } from "@/stores/auth.store";
+import { Button } from "@/components/ui/button";
 
-// ✅ Tip tanımları
 type DataRequestResponse = {
     status: number;
     message: string;
@@ -41,13 +42,13 @@ type DataRequestResponse = {
         };
     };
 };
-
 function DatarequestsDesktop() {
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
     const [sort, setSort] = useState("newest");
     const [search, setSearch] = useState("");
     const [status, setStatus] = useState<string | null>(null);
+    const { isAuthenticated } = useAuthStore();
 
     // 🔹 React Query (tipli)
     const { data: datareqResp, isLoading, isError } = useQuery<DataRequestResponse>({
@@ -142,6 +143,24 @@ function DatarequestsDesktop() {
                                 </SelectContent>
                             </Select>
                         </div>
+                        {isAuthenticated ? (
+                            <div className="col-span-5 text-right">
+                                <Button variant="outline"
+
+                                >
+                                    Yeni Veri İsteği Oluştur
+                                </Button>
+                            </div>
+                        ) : (
+                            <div className="col-span-5 text-right">
+                                <p className="text-sm text-gray-500">
+                                    Veri isteği oluşturmak ve detayları görüntülemek için lütfen {" "}
+                                    <a className="text-accent-foreground" href="/login">
+                                        giriş yapın.
+                                    </a>
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     {/* CARD LİSTESİ */}
