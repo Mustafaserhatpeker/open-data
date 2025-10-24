@@ -80,7 +80,7 @@ export default function OrganizationsDesktop() {
             followersCount: o.followersCount ?? 0,
             createdAt: o.createdAt,
             updatedAt: o.updatedAt,
-        })) as Organization[]
+        })) as any[]
     }, [organizationsResp])
 
     const filtered = useMemo(() => {
@@ -96,7 +96,7 @@ export default function OrganizationsDesktop() {
         base.sort((a, b) => {
             switch (sortBy) {
                 case "datasets":
-                    return (b.datasetsCount ?? 0) - (a.datasetsCount ?? 0)
+                    return (b.datasetCount ?? 0) - (a.datasetCount ?? 0)
                 case "followers":
                     return (b.followersCount ?? 0) - (a.followersCount ?? 0)
                 case "name":
@@ -198,7 +198,7 @@ export default function OrganizationsDesktop() {
                                         </div>
                                         <div className="mt-1 inline-flex items-center gap-2">
                                             <FolderClosed className="h-4 w-4 text-muted-foreground" />
-                                            <span className="font-medium">{org.datasetsCount ?? 0}</span>
+                                            <span className="font-medium">{org.datasetCount ?? 0}</span>
                                         </div>
                                     </div>
                                     <AddDataOrgDialog

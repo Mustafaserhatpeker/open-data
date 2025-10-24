@@ -77,7 +77,7 @@ export default function OrganizationsDesktop() {
             followersCount: o.followersCount ?? 0,
             createdAt: o.createdAt,
             updatedAt: o.updatedAt,
-        })) as Organization[]
+        })) as any[]
     }, [organizationsResp])
 
     const filtered = useMemo(() => {
@@ -93,7 +93,7 @@ export default function OrganizationsDesktop() {
         base.sort((a, b) => {
             switch (sortBy) {
                 case "datasets":
-                    return (b.datasetsCount ?? 0) - (a.datasetsCount ?? 0)
+                    return (b.datasetCount ?? 0) - (a.datasetCount ?? 0)
                 case "followers":
                     return (b.followersCount ?? 0) - (a.followersCount ?? 0)
                 case "name":
@@ -169,7 +169,7 @@ export default function OrganizationsDesktop() {
                 {/* Grid */}
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {filtered.map((org: Organization) => {
-                        const count = org.datasetsCount ?? 0
+                        const count = org.datasetCount ?? 0
                         const latest = Math.max(toTime(org.updatedAt), toTime(org.createdAt))
                         const latestText = latest
                             ? new Date(latest).toLocaleDateString("tr-TR")

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { PreviewKind, type PreviewData, type PreviewState, type SupportedExtension } from "../types";
+import { PreviewKind, type PreviewData, type PreviewState } from "../types";
 
 import { readAsArrayBuffer, readAsText } from "../utils/fileReaders";
 import { getExtensionFromName, mapExtToKind } from "../utils/detectFileType";

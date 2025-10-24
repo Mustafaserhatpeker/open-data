@@ -1,13 +1,9 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
 
-import {
-    dataRequests as dataRequestsList,
-    organizations as orgs,
-    users as usersList,
-    comments as commentsList,
-} from "@/dummy/dummy.data"
-import type { DataRequest, Organization, Comment } from "@/lib/types"
+import { getDataRequestById } from "@/services/datarequest.service"
+import { getOrganizationById } from "@/services/organization.service"
 
 import { Button } from "@/components/ui/button"
 import { Hash, ArrowLeft } from "lucide-react"
@@ -17,52 +13,44 @@ import { RequestHeader } from "./components/RequestHeader"
 import { RequestMetaCard } from "./components/RequestMetaCard"
 import { CommentsList } from "./components/CommentsList"
 
-type UIComment = {
-    id: string
-    authorName: string
-    content: string
-    createdAt: string
-}
 
-function resolveOrganization(orgId?: string): Organization | undefined {
-    if (!orgId) return undefined
-    return orgs.find((o) => o.id === orgId)
-}
-
-function resolveUserNameById(userId?: string): string | undefined {
-    if (!userId) return undefined
-    const u = usersList.find((x) => x.id === userId)
-    return u?.fullName || u?.username
-}
-
-function resolveCommentsForRequest(dr: DataRequest): UIComment[] {
-    const list: Comment[] = dr.comments ?? commentsList.filter((c) => c.dataRequestId === dr.id)
-    return list.map((c) => ({
-        id: c.id,
-        authorName: resolveUserNameById(c.authorId) ?? "Bilinmiyor",
-        content: c.content,
-        createdAt: c.createdAt,
-    }))
-}
 
 export default function RequestInfoDesktop() {
     const { id: requestId } = useParams<{ id: string }>()
-    const [loading, setLoading] = useState(true)
-    const [request, setRequest] = useState<DataRequest | null>(null)
+
+    // 🔹 Veri talebi sorgusu
+    const {
+        data: dataReqResp,
+        isLoading: isDataReqLoading,
+        isError: isDataReqError,
+    } = useQuery({
+        queryKey: ["data-request", requestId],
+        queryFn: () => getDataRequestById(requestId || ""),
+        enabled: !!requestId,
+    })
+
+    const request = dataReqResp?.data
+
+    // 🔹 Organizasyon sorgusu (request yüklendikten sonra organizationId ile)
+    const {
+        data: organizationResp,
+        isLoading: isOrgLoading,
+    } = useQuery({
+        queryKey: ["organization", request?.organizationId],
+        queryFn: () => getOrganizationById(request!.organizationId),
+        enabled: !!request?.organizationId,
+    })
+
+    const organization = organizationResp?.data
+    const organizationName = organization?.organizationName
+
+
 
     useEffect(() => {
-        setLoading(true)
-        const found = dataRequestsList.find((r) => r.id === requestId)
-        setRequest(found ?? null)
-        setLoading(false)
         window.scrollTo({ top: 0, behavior: "smooth" })
     }, [requestId])
 
-    const organization = useMemo(() => (request ? resolveOrganization(request.organizationId) : undefined), [request])
-    const requestedByName = useMemo(() => (request ? resolveUserNameById(request.requestedBy) : undefined), [request])
-    const uiComments = useMemo(() => (request ? resolveCommentsForRequest(request) : []), [request])
-
-    if (loading) {
+    if (isDataReqLoading || isOrgLoading) {
         return (
             <div className="w-full px-4 py-8">
                 <div className="animate-pulse space-y-4">
@@ -78,7 +66,7 @@ export default function RequestInfoDesktop() {
         )
     }
 
-    if (!request) {
+    if (isDataReqError || !request) {
         return (
             <div className="w-full px-4 py-12 bg-accent">
                 <div className="mx-auto max-w-xl text-center">
@@ -86,7 +74,9 @@ export default function RequestInfoDesktop() {
                         <Hash className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <h2 className="text-xl font-semibold">Veri Talebi Bulunamadı</h2>
-                    <p className="text-muted-foreground mt-1">Aradığınız veri talebi kaldırılmış veya hiç var olmamış olabilir.</p>
+                    <p className="text-muted-foreground mt-1">
+                        Aradığınız veri talebi kaldırılmış veya hiç var olmamış olabilir.
+                    </p>
                     <div className="mt-4">
                         <Button asChild variant="secondary">
                             <Link to="/data-requests">
@@ -102,21 +92,24 @@ export default function RequestInfoDesktop() {
 
     return (
         <div className="w-full px-4 py-6 bg-accent min-h-[100vh]">
-            <div className=" mx-auto space-y-6">
+            <div className="max-w-[80%] mx-auto space-y-6">
                 <RequestHeader
                     request={request}
-                    requestedByName={requestedByName}
-                    organizationName={organization?.name}
+                    requestedByName={request.requesterUserId}
+                    organizationName={organizationName}
                 />
 
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                     <div className="lg:col-span-4 space-y-6">
-                        <OrganizationCard organization={organization} />
-                        <RequestMetaCard request={request} requestedByName={requestedByName} />
+                        {organization && <OrganizationCard organization={organization} />}
+                        <RequestMetaCard
+                            request={request}
+                            requestedByName={request.requesterUserId}
+                        />
                     </div>
 
                     <div className="lg:col-span-8 space-y-6">
-                        <CommentsList comments={uiComments} />
+                        <CommentsList comments={request.comments} requestId={request._id} />
                     </div>
                 </div>
             </div>
