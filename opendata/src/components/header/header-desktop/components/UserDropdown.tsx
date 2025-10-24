@@ -42,7 +42,12 @@ export default function UserDropdown() {
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={logout}>
+                <DropdownMenuItem onClick={
+                    () => {
+                        logout();
+                        window.location.href = "/";
+                    }
+                }>
                     Çıkış Yap
                 </DropdownMenuItem>
             </DropdownMenuContent>

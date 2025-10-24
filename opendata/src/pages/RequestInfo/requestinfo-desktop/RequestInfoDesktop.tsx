@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react"
+import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 
@@ -13,12 +13,7 @@ import { RequestHeader } from "./components/RequestHeader"
 import { RequestMetaCard } from "./components/RequestMetaCard"
 import { CommentsList } from "./components/CommentsList"
 
-type UIComment = {
-    id: string
-    authorName: string
-    content: string
-    createdAt: string
-}
+
 
 export default function RequestInfoDesktop() {
     const { id: requestId } = useParams<{ id: string }>()
@@ -49,15 +44,7 @@ export default function RequestInfoDesktop() {
     const organization = organizationResp?.data
     const organizationName = organization?.organizationName
 
-    const uiComments: UIComment[] = useMemo(() => {
-        if (!request?.comments) return []
-        return request.comments.map((c: any, index: number) => ({
-            id: index.toString(),
-            authorName: c.userId || "Bilinmiyor",
-            content: c.body,
-            createdAt: c.createdAt,
-        }))
-    }, [request])
+
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" })
@@ -122,7 +109,7 @@ export default function RequestInfoDesktop() {
                     </div>
 
                     <div className="lg:col-span-8 space-y-6">
-                        <CommentsList comments={uiComments} requestId={request._id} />
+                        <CommentsList comments={request.comments} requestId={request._id} />
                     </div>
                 </div>
             </div>

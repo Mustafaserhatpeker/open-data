@@ -6,15 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 
-type UIComment = {
-    id: string
-    authorName: string
-    content: string
-    createdAt: string
-}
+
 
 type Props = {
-    comments: UIComment[]
+    comments: any[]
     requestId: string
 }
 
@@ -23,7 +18,6 @@ export function CommentsList({ comments, requestId }: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const queryClient = useQueryClient()
 
-    // 🧩 React Query mutation
     const mutation = useMutation({
         mutationFn: async (commentText: string) => {
             const token = localStorage.getItem("accessToken")
@@ -70,7 +64,9 @@ export function CommentsList({ comments, requestId }: Props) {
                             <div className="flex items-center justify-between text-xs text-muted-foreground">
                                 <div className="inline-flex items-center gap-1">
                                     <User className="h-3.5 w-3.5" />
-                                    <span className="font-medium text-foreground">{c.authorName}</span>
+                                    <span className="font-medium text-foreground">
+                                        {c.role === "USER" ? "Vatandaş" : "Yetkili"}
+                                    </span>
                                 </div>
                                 <span>
                                     {new Date(c.createdAt).toLocaleString("tr-TR", {
@@ -79,7 +75,7 @@ export function CommentsList({ comments, requestId }: Props) {
                                     })}
                                 </span>
                             </div>
-                            <p className="mt-2 text-sm text-foreground">{c.content}</p>
+                            <p className="mt-2 text-sm text-foreground">{c.body}</p>
                         </li>
                     ))}
                 </ul>
