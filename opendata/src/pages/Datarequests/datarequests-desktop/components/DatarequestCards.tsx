@@ -1,44 +1,42 @@
-import DataRequestCard, { type DataRequestCardModel } from "./inner-components/DataCard"
-import {
-    dataRequests as dataRequestsList,
-    organizations,
-    users,
-} from "@/dummy/dummy.data"
-import type { DataRequest } from "@/lib/types"
+import DataRequestCard from "./inner-components/DataCard";
+import type { DataRequest } from "@/lib/types";
 
-function resolveOrganizationNameById(orgId?: string): string | undefined {
-    if (!orgId) return undefined
-    return organizations.find((o) => o.id === orgId)?.name
-}
+type Props = {
+    data: DataRequest[];
+};
 
-function resolveUserNameById(userId?: string): string | undefined {
-    if (!userId) return undefined
-    const u = users.find((x) => x.id === userId)
-    return u?.fullName || u?.username
-}
-
-function toCardDataRequest(dr: DataRequest): DataRequestCardModel {
+// Backend’den gelen verileri DataRequestCardModel tipine dönüştürür
+function toCardDataRequest(dr: any): any {
     return {
-        id: dr.id,
+        id: dr._id, // backend UUID kullanıyor
         title: dr.title,
         description: dr.description,
         status: dr.status,
-        organization: resolveOrganizationNameById(dr.organizationId),
-        requestedBy: resolveUserNameById(dr.requestedBy),
+        organization: dr.organizationName || "Bilinmeyen Organizasyon",
+        requestedBy: dr.requesterEmail || "Anonim Kullanıcı",
         createdDate: dr.createdAt,
         updatedDate: dr.updatedAt,
-        commentsCount: dr.commentsCount ?? dr.comments?.length,
-    }
+        commentsCount: dr.commentCount ?? dr.comments?.length ?? 0,
+        likesCount: dr.likeCount ?? dr.likes?.length ?? 0,
+    };
 }
 
-export default function DatarequestCards() {
-    const data: DataRequestCardModel[] = dataRequestsList.map(toCardDataRequest)
+export default function DatarequestCards({ data }: Props) {
+    if (!data || data.length === 0) {
+        return (
+            <div className="text-center text-gray-500 py-8">
+                Henüz veri isteği bulunamadı.
+            </div>
+        );
+    }
+
+    const cardData: any[] = data.map(toCardDataRequest);
 
     return (
         <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-2">
-            {data.map((request) => (
+            {cardData.map((request) => (
                 <DataRequestCard key={request.id} request={request} />
             ))}
         </div>
-    )
+    );
 }
