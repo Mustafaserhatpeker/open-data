@@ -21,7 +21,7 @@ function statusColor(status: string): string {
             return "bg-red-100 text-red-800 ring-red-600/20";
         case "pending":
         default:
-            return "bg-gray-100 text-yellow-800 ring-yellow-600/20";
+            return "bg-yellow-100 text-yellow-800 ring-yellow-600/20";
     }
 }
 
