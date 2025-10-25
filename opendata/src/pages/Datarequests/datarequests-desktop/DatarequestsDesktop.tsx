@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getPublicDataRequests } from "@/services/datarequest.service";
+import { getPublicDataRequestCounts, getPublicDataRequests } from "@/services/datarequest.service";
 import { SearchIcon } from "lucide-react";
 import {
     InputGroup,
@@ -63,6 +63,11 @@ function DatarequestsDesktop() {
 
     });
 
+    const { data: countsResp } = useQuery({
+        queryKey: ["public-datarequests-counts"],
+        queryFn: getPublicDataRequestCounts,
+    });
+
     // 🔹 Güvenli veri erişimi
     const dataRequests = Array.isArray(datareqResp?.data?.data)
         ? datareqResp!.data.data
@@ -77,16 +82,13 @@ function DatarequestsDesktop() {
     const totalPages = Number(pagination.totalPage ?? 1);
 
     // 🔹 Durum sayacı
-    const counts = dataRequests.reduce(
-        (acc: any, item: any) => {
-            const st = item.status;
-            if (st === "approved") acc.approved++;
-            else if (st === "rejected") acc.rejected++;
-            else acc.pending++;
-            return acc;
-        },
-        { approved: 0, pending: 0, rejected: 0 }
-    );
+    const counts = countsResp?.data ?? {
+        approved: 0,
+        pending: 0,
+        rejected: 0,
+        total: 0,
+    };
+
 
     return (
         <div className="w-full flex flex-col items-center justify-between bg-accent min-h-screen">
@@ -145,7 +147,7 @@ function DatarequestsDesktop() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="all">
-                                        Tümü ({dataRequests.length})
+                                        Tümü ({counts.total})
                                     </SelectItem>
                                     <SelectItem value="approved">
                                         Onaylandı ({counts.approved})

@@ -131,3 +131,8 @@ export const getDataRequestById = async (id: string) => {
         throw error;
     }
 };
+
+export const getPublicDataRequestCounts = async () => {
+    const { data } = await axiosInstance.get("/data-request/public/counts");
+    return data;
+};
