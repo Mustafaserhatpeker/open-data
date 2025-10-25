@@ -25,8 +25,6 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useAuthStore } from "@/stores/auth.store";
-import { AddDataReqDialog } from "./components/AddDataReqDialog";
 
 type DataRequestResponse = {
     status: number;
@@ -47,7 +45,6 @@ function DatarequestsDesktop() {
     const [sort, setSort] = useState("newest");
     const [search, setSearch] = useState("");
     const [status, setStatus] = useState<string>("all");
-    const { isAuthenticated } = useAuthStore();
 
     // 🔹 React Query (tipli)
     const { data: datareqResp, isLoading, isError } = useQuery<DataRequestResponse>({
@@ -91,13 +88,13 @@ function DatarequestsDesktop() {
 
 
     return (
-        <div className="w-full flex flex-col items-center justify-between bg-accent min-h-screen">
-            <div className="flex flex-col w-full gap-8 px-4 py-8 max-w-[80%] mx-auto">
+        <div className="w-full flex flex-col items-center justify-between  min-h-screen">
+            <div className="flex flex-col w-full gap-8 ">
 
 
 
 
-                <div className="flex flex-col w-full bg-white p-4 rounded-xl shadow-sm">
+                <div className="flex flex-col w-full bg-white p-4 ">
 
                     <div className="flex flex-row items-center justify-between w-full gap-6">
                         <div className="min-w-1/2">
@@ -160,20 +157,7 @@ function DatarequestsDesktop() {
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
-                            {isAuthenticated ? (
-                                <div className=" text-right">
-                                    <AddDataReqDialog />
-                                </div>
-                            ) : (
-                                <div className=" text-left">
-                                    <p className="text-sm text-gray-500">
-                                        Veri isteği oluşturmak ve detayları görüntülemek için lütfen {" "}
-                                        <a className="text-accent-foreground" href="/login">
-                                            giriş yapın.
-                                        </a>
-                                    </p>
-                                </div>
-                            )}
+
 
                         </div>
 
