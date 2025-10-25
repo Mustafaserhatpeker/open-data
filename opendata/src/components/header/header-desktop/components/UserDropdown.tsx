@@ -11,7 +11,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuthStore } from "@/stores/auth.store";
 
 
-export default function UserDropdown() {
+export default function UserDropdown(
+    { role }: { role: any }
+) {
     const { logout } = useAuthStore();
     const email = localStorage.getItem("email") || "";
     return (
@@ -33,13 +35,25 @@ export default function UserDropdown() {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={
-                        () => {
-                            window.location.href = "/dashboard";
-                        }
-                    }>
-                        Kullanıcı Panelim
-                    </DropdownMenuItem>
+                    {role === "organization" ? (
+                        <DropdownMenuItem onClick={
+                            () => {
+                                window.location.href = "/dashboard";
+                            }
+                        }>
+                            Kullanıcı Panelim
+                        </DropdownMenuItem>
+                    ) : (
+
+                        <DropdownMenuItem onClick={
+                            () => {
+                                window.location.href = "/datarequests";
+                            }
+                        }>
+                            Veri İsteklerim
+                        </DropdownMenuItem>
+                    )
+                    }
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={

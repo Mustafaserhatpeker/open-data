@@ -9,7 +9,7 @@ import UserDropdown from "./components/UserDropdown";
 
 function Header() {
   const { theme } = useThemeContext();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, role } = useAuthStore();
   return (
     <div className="w-full flex flex-row justify-between cursor-pointer py-4  px-8 ">
       <div onClick={
@@ -26,7 +26,7 @@ function Header() {
         <div className="flex flex-row items-center gap-2 pr-4  border-gray-800">
 
           {isAuthenticated ? (
-            <UserDropdown />
+            <UserDropdown role={role} />
           ) : (
             <>
               <Button className="bg-[#221A4C] hover:bg-[#221A4C]">
