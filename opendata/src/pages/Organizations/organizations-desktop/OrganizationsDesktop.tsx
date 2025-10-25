@@ -73,7 +73,7 @@ export default function OrganizationsDesktop() {
             logoUrl: o.logoUrl ?? "",
             website: o.websiteUrl ?? o.website ?? "",
             contactEmail: o.contactEmail ?? "",
-            datasetsCount: o.datasetCount ?? o.datasetsCount ?? 0,
+            datasetCount: o.datasetCount ?? o.datasetsCount ?? 0,
             followersCount: o.followersCount ?? 0,
             createdAt: o.createdAt,
             updatedAt: o.updatedAt,
