@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Download, Eye } from "lucide-react"
 import { getResourceTypeMeta } from "./utils"
 import { DOWNLOAD_URL } from "@/lib/urls"
+import { useMutation } from "@tanstack/react-query"
+import { incrementDatasetViewOrDownloadCount } from "@/services/dataset.service"
 type Props = {
     resources?: any
     datasetId?: any
@@ -11,6 +13,10 @@ type Props = {
 
 export function ResourcesList({ resources, datasetId }: Props) {
 
+    const mutation = useMutation({
+        mutationFn: async () =>
+            await incrementDatasetViewOrDownloadCount(datasetId!, "downloadsCount"),
+    });
 
     return (
         <Card>
@@ -51,7 +57,9 @@ export function ResourcesList({ resources, datasetId }: Props) {
                                         </div>
                                     </div>
                                     <div className="shrink-0 gap-2 flex flex-row sm:flex-row">
-                                        <Button asChild>
+                                        <Button onClick={() => {
+                                            mutation.mutate();
+                                        }} asChild>
                                             <a href={`${DOWNLOAD_URL}/${r.fileUrl}`} target="_blank" >
                                                 <Download className="h-4 w-4 mr-2" />
                                                 İndir
