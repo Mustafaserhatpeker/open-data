@@ -65,7 +65,7 @@ export function DatasetHeader({
         >
           <primaryFormatMeta.Icon className="h-8 w-8" />
         </div>
-        <div className="min-w-0">
+        <div className="min-w-0 flex flex-row items-center gap-4">
           <h1 className="text-2xl font-semibold leading-tight">
             {dataset?.title}
           </h1>

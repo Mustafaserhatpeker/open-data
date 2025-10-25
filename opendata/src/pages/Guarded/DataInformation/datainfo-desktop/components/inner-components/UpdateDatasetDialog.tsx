@@ -207,7 +207,7 @@ export function UpdateDatasetDialog({ dataset }: { dataset: any }) {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="outline" size="sm">
-                    <Pen className="mr-2 h-4 w-4" /> Güncelle
+                    <Pen />
                 </Button>
             </DialogTrigger>
 
