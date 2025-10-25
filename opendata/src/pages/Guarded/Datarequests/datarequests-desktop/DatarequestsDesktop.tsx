@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getOrganizationDataRequests, getPublicDataRequestCounts } from "@/services/datarequest.service";
+import { getOrganizationDataRequests } from "@/services/datarequest.service";
 import { SearchIcon } from "lucide-react";
 import {
     InputGroup,
@@ -44,7 +44,7 @@ function DatarequestsDesktop() {
     const [limit] = useState(10);
     const [sort, setSort] = useState("newest");
     const [search, setSearch] = useState("");
-    const [status, setStatus] = useState<string>("all");
+    const [status] = useState<string>("all");
 
     // 🔹 React Query (tipli)
     const { data: datareqResp, isLoading, isError } = useQuery<DataRequestResponse>({
@@ -60,10 +60,7 @@ function DatarequestsDesktop() {
 
     });
 
-    const { data: countsResp } = useQuery({
-        queryKey: ["public-datarequests-counts"],
-        queryFn: getPublicDataRequestCounts,
-    });
+
 
     // 🔹 Güvenli veri erişimi
     const dataRequests = Array.isArray(datareqResp?.data?.data)
@@ -78,13 +75,6 @@ function DatarequestsDesktop() {
     } = datareqResp?.data?.pagination ?? { total: 0, page: 1, limit, totalPage: 1 };
     const totalPages = Number(pagination.totalPage ?? 1);
 
-    // 🔹 Durum sayacı
-    const counts = countsResp?.data ?? {
-        approved: 0,
-        pending: 0,
-        rejected: 0,
-        total: 0,
-    };
 
 
     return (
@@ -132,31 +122,7 @@ function DatarequestsDesktop() {
                                     <SelectItem value="z-a">Z-A</SelectItem>
                                 </SelectContent>
                             </Select>
-                            <Select
-                                value={status}
-                                onValueChange={(val) => {
-                                    setStatus(val);
-                                    setPage(1);
-                                }}
-                            >
-                                <SelectTrigger >
-                                    <SelectValue placeholder="Durum" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">
-                                        Tümü ({counts.total})
-                                    </SelectItem>
-                                    <SelectItem value="approved">
-                                        Onaylandı ({counts.approved})
-                                    </SelectItem>
-                                    <SelectItem value="pending">
-                                        Beklemede ({counts.pending})
-                                    </SelectItem>
-                                    <SelectItem value="rejected">
-                                        Reddedildi ({counts.rejected})
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
+
 
 
                         </div>
