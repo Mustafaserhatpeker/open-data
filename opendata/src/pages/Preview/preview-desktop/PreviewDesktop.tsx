@@ -22,8 +22,6 @@ function PreviewDesktop() {
                     Dosya Önizleme
                 </div>
                 <BackButton />
-
-                {/* ✅ Token yoksa FilePicker göster */}
                 {!token && !state.file && (
                     <FilePicker onSelect={onFileSelect} />
                 )}
