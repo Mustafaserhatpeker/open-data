@@ -1,89 +1,71 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-
-import { cn } from "@/lib/utils"
+import { ChevronsUpDown } from "lucide-react"
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+} from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import {
     Command,
-    CommandEmpty,
     CommandGroup,
-    CommandInput,
-    CommandItem,
     CommandList,
+    CommandItem,
 } from "@/components/ui/command"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
+import { useMutation } from "@tanstack/react-query"
+import { updateDataRequestStatus } from "@/services/datarequest.service"
 
-const frameworks = [
-    {
-        value: "next.js",
-        label: "Next.js",
-    },
-    {
-        value: "sveltekit",
-        label: "SvelteKit",
-    },
-    {
-        value: "nuxt.js",
-        label: "Nuxt.js",
-    },
-    {
-        value: "remix",
-        label: "Remix",
-    },
-    {
-        value: "astro",
-        label: "Astro",
-    },
+const statusOptions = [
+    { value: "pending", label: "Beklemede ⏳" },
+    { value: "approved", label: "Onayla ✅" },
+    { value: "rejected", label: "Reddet ❌" },
 ]
 
-export function StatusChange() {
+export function StatusChange({ request }: { request: any }) {
     const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState("")
-    
+    const [selected, setSelected] = React.useState<string>(request.status)
+
+
+    const mutation = useMutation({
+        mutationFn: (newStatus: string) =>
+            updateDataRequestStatus(request._id, newStatus,),
+        onSuccess: (_, newStatus) => {
+            setSelected(newStatus)
+
+
+        },
+    })
+
+    const handleSelectStatus = (newStatus: string) => {
+        mutation.mutate(newStatus)
+        setOpen(false)
+    }
+
+    const selectedLabel =
+        statusOptions.find((s) => s.value === selected)?.label || selected
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-[200px] justify-between"
-                >
-                    {value
-                        ? frameworks.find((framework) => framework.value === value)?.label
-                        : "Select framework..."}
-                    <ChevronsUpDown className="opacity-50" />
+                <Button variant="outline" className="h-7 px-2 text-xs">
+                    {mutation.isPending ? "Güncelleniyor..." : selectedLabel}
+                    <ChevronsUpDown className="ml-1 h-3 w-3 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+
+            <PopoverContent className="w-[180px] p-0">
                 <Command>
-                    <CommandInput placeholder="Search framework..." className="h-9" />
                     <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
                         <CommandGroup>
-                            {frameworks.map((framework) => (
+                            {statusOptions.map((option) => (
                                 <CommandItem
-                                    key={framework.value}
-                                    value={framework.value}
-                                    onSelect={(currentValue) => {
-                                        setValue(currentValue === value ? "" : currentValue)
-                                        setOpen(false)
-                                    }}
+                                    key={option.value}
+                                    onSelect={() => handleSelectStatus(option.value)}
+                                    className={option.value === selected ? "bg-accent" : ""}
                                 >
-                                    {framework.label}
-                                    <Check
-                                        className={cn(
-                                            "ml-auto",
-                                            value === framework.value ? "opacity-100" : "opacity-0"
-                                        )}
-                                    />
+                                    {option.label}
                                 </CommandItem>
                             ))}
                         </CommandGroup>

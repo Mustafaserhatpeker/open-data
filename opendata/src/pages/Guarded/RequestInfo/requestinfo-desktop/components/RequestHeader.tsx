@@ -26,7 +26,7 @@ export function RequestHeader({
 }) {
     return (
         <div className="space-y-4">
-            {/* Üst kısım: geri butonu + durum etiketi */}
+            {/* Üst: Geri + durum etiketi */}
             <div className="flex items-center justify-between">
                 <BackButton />
 
@@ -44,7 +44,7 @@ export function RequestHeader({
                 </span>
             </div>
 
-            {/* Başlık ve açıklama */}
+            {/* Başlık + açıklama */}
             <div>
                 <h1 className="text-2xl font-semibold tracking-tight text-foreground">
                     {request.title}
@@ -54,7 +54,7 @@ export function RequestHeader({
                 )}
             </div>
 
-            {/* Kurum ve talep eden kullanıcı bilgisi */}
+            {/* Kurum + Kullanıcı + Statü Değiştirme */}
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 {organizationName && (
                     <span className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-1">
@@ -69,8 +69,8 @@ export function RequestHeader({
                         {requestedByName}
                     </span>
                 )}
-                <StatusChange />
 
+                <StatusChange request={request} />
             </div>
         </div>
     )
