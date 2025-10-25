@@ -82,7 +82,7 @@ function App() {
               <Route path="/statistics" element={<StaticsDesktop />} />
               <Route path="/opendictionary" element={<OpenDictionary />} />
 
-              <Route path="/preview/:token" element={<Preview />} />
+              <Route path="/preview/:id/:token" element={<Preview />} />
               <Route
                 path="/login"
                 element={

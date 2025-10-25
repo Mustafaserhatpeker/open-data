@@ -4,15 +4,28 @@ import { PreviewToolbar } from "./components/inner-components/PreviewToolbar";
 import { useFilePreview } from "../hooks/useFilePreview";
 import BackButton from "@/components/back-button";
 import { useParams } from "react-router-dom";
-
+import { useMutation } from "@tanstack/react-query";
+import { incrementDatasetViewOrDownloadCount } from "@/services/dataset.service";
 function PreviewDesktop() {
     const { state, reset, downloadUrl, loadFileFromToken } = useFilePreview();
-    const { token } = useParams();
+    const { token, id } = useParams();
     useEffect(() => {
         if (token) {
             loadFileFromToken(token);
         }
     }, [token]);
+
+    const mutation = useMutation({
+        mutationFn: async () =>
+            await incrementDatasetViewOrDownloadCount(id!, "viewsCount"),
+    });
+
+    useEffect(() => {
+        if (state.status === "ready" && token) {
+            mutation.mutate();
+        }
+    }, [state.status, token]);
+
     if (!token && !state.file) {
         return (
             <div className="w-full bg-accent">

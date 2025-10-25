@@ -81,12 +81,11 @@ export const updateDataset = async (datasetData: any, accessToken: any) => {
 
 export const incrementDatasetViewOrDownloadCount = async (
     datasetId: string,
-    type: "viewCount" | "downloadCount"
+    type: "viewsCount" | "downloadsCount"
 ) => {
     try {
-        const { data } = await axiosInstance.post(
+        const { data } = await axiosInstance.get(
             `${Base}/increment`,
-            null,
             {
                 params: { datasetId, type },
             }

@@ -4,18 +4,13 @@ import { Button } from "@/components/ui/button"
 import { Download, Eye } from "lucide-react"
 import { getResourceTypeMeta } from "./utils"
 import { DOWNLOAD_URL } from "@/lib/urls"
-import { useMutation } from "@tanstack/react-query"
-import { incrementDatasetViewOrDownloadCount } from "@/services/dataset.service"
 type Props = {
     resources?: any
+    datasetId?: any
 }
 
-export function ResourcesList({ resources }: Props) {
-    const mutation = useMutation({
-        mutationFn: async ({ datasetId, type }: { datasetId: string; type: "viewCount" | "downloadCount" }) => {
-            return await incrementDatasetViewOrDownloadCount(datasetId, type);
-        },
-    });
+export function ResourcesList({ resources, datasetId }: Props) {
+
 
     return (
         <Card>
@@ -63,7 +58,7 @@ export function ResourcesList({ resources }: Props) {
                                             </a>
                                         </Button>
                                         <Button asChild>
-                                            <a href={`/preview/${r.fileUrl}`} rel="noreferrer">
+                                            <a href={`/preview/${datasetId}/${r.fileUrl}`} rel="noreferrer">
                                                 <Eye className="h-4 w-4 mr-2" />
                                                 Önizleme
                                             </a>
