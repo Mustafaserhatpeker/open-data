@@ -77,7 +77,6 @@ export function UpdateOrgDialog({
     return (
         <Dialog
             onOpenChange={(open) => {
-                // Kapatıldığında form ve hata durumlarını sıfırla
                 if (!open) {
                     form.reset()
                     reset()
