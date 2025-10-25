@@ -20,7 +20,8 @@ export const createDataRequest = async (dataRequestData: any, accessToken: strin
     }
 };
 
-export const getUserDataRequests = async (params?: any, accessToken?: string) => {
+export const getUserDataRequests = async (params?: any) => {
+    const accessToken = localStorage.getItem("accessToken") || "";
     try {
         const { data } = await axiosInstance.get(`${Base}/user`, {
             params,

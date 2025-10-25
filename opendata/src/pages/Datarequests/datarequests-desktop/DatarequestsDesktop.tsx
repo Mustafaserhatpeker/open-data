@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getPublicDataRequestCounts, getPublicDataRequests } from "@/services/datarequest.service";
+import { getPublicDataRequestCounts, getPublicDataRequests, getUserDataRequests } from "@/services/datarequest.service";
 import { SearchIcon } from "lucide-react";
 import {
     InputGroup,
@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/pagination";
 import { useAuthStore } from "@/stores/auth.store";
 import { AddDataReqDialog } from "./components/AddDataReqDialog";
+import MyCheck from "./components/MyCheck";
 
 type DataRequestResponse = {
     status: number;
@@ -48,38 +49,49 @@ function DatarequestsDesktop() {
     const [search, setSearch] = useState("");
     const [status, setStatus] = useState<string>("all");
     const { isAuthenticated } = useAuthStore();
+    const [myRequestsOnly, setMyRequestsOnly] = useState(false);
 
-    // 🔹 React Query (tipli)
-    const { data: datareqResp, isLoading, isError } = useQuery<DataRequestResponse>({
-        queryKey: ["public-datarequests", page, sort, search, status],
-        queryFn: () =>
-            getPublicDataRequests({
-                page,
-                limit,
-                status: status === "all" ? null : status,
-                sort,
-                search,
-            }),
-
+    const { data: requestsResp, isLoading, isError } = useQuery<DataRequestResponse>({
+        queryKey: ["datarequests", page, sort, search, status, myRequestsOnly],
+        queryFn: myRequestsOnly
+            ? () =>
+                getUserDataRequests({
+                    page,
+                    limit,
+                    status: status === "all" ? null : status,
+                    sort,
+                    search,
+                })
+            : () =>
+                getPublicDataRequests({
+                    page,
+                    limit,
+                    status: status === "all" ? null : status,
+                    sort,
+                    search,
+                }),
     });
+
+
+
 
     const { data: countsResp } = useQuery({
         queryKey: ["public-datarequests-counts"],
         queryFn: getPublicDataRequestCounts,
     });
 
-    // 🔹 Güvenli veri erişimi
-    const dataRequests = Array.isArray(datareqResp?.data?.data)
-        ? datareqResp!.data.data
+    const dataRequests = Array.isArray(requestsResp?.data?.data)
+        ? requestsResp.data.data
         : [];
 
-    const pagination: {
-        total?: number;
-        page?: number;
-        limit?: number;
-        totalPage?: number;
-    } = datareqResp?.data?.pagination ?? { total: 0, page: 1, limit, totalPage: 1 };
+    const pagination = requestsResp?.data?.pagination ?? {
+        total: 0,
+        page: 1,
+        limit,
+        totalPage: 1,
+    };
     const totalPages = Number(pagination.totalPage ?? 1);
+
 
     // 🔹 Durum sayacı
     const counts = countsResp?.data ?? {
@@ -99,8 +111,8 @@ function DatarequestsDesktop() {
 
                 <div className="flex flex-col w-full bg-white p-4 rounded-xl shadow-sm">
 
-                    <div className="flex flex-row items-center justify-between w-full gap-6">
-                        <div className="min-w-1/2">
+                    <div className="flex flex-row items-center justify-start w-full gap-6">
+                        <div className="min-w-2/5">
                             <InputGroup>
                                 <InputGroupInput
                                     placeholder="Ara..."
@@ -117,7 +129,7 @@ function DatarequestsDesktop() {
                                 </InputGroupAddon>
                             </InputGroup>
                         </div>
-                        <div className="min-w-1/2 flex flex-row items-center gap-4">
+                        <div className="min-w-1/3 flex flex-row items-center gap-4">
                             <Select
                                 value={sort}
                                 onValueChange={(val) => {
@@ -160,6 +172,12 @@ function DatarequestsDesktop() {
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
+
+                            <div className="flex flex-row items-center gap-3 border p-1.5 px-2 rounded-md">
+                                <span className="text-sm font-medium">Sadece Bana Ait</span>
+                                <MyCheck checked={myRequestsOnly} onChange={setMyRequestsOnly} />
+
+                            </div>
                             {isAuthenticated ? (
                                 <div className=" text-right">
                                     <AddDataReqDialog />
