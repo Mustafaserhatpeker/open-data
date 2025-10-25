@@ -95,7 +95,7 @@ export default function RequestInfoDesktop() {
             <div className="max-w-[80%] mx-auto space-y-6">
                 <RequestHeader
                     request={request}
-                    requestedByName={request.requesterUserId}
+                    requestedByName={request.requesterEmail}
                     organizationName={organizationName}
                 />
 
@@ -104,7 +104,7 @@ export default function RequestInfoDesktop() {
                         {organization && <OrganizationCard organization={organization} />}
                         <RequestMetaCard
                             request={request}
-                            requestedByName={request.requesterUserId}
+                            requestedByName={request.requesterEmail}
                         />
                     </div>
 
