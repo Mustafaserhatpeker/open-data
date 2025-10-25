@@ -209,11 +209,11 @@ export default function OrganizationInfoDesktop() {
                         </Card>
                     </div>
 
-                    {/* Sağ kolon: Veri Setleri */}
+
                     <div className="lg:col-span-9 space-y-6">
                         <Card>
                             <CardHeader className="pb-3">
-                                <div className="flex items-center justify-between gap-3">
+                                <div className="flex items-center justify-start gap-3">
                                     <div>
                                         <CardTitle className="text-base">Veri Setleri</CardTitle>
                                         <CardDescription>
@@ -225,23 +225,18 @@ export default function OrganizationInfoDesktop() {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {/* Arama & Sıralama */}
-                                <div className="grid  gap-3 grid-cols-5 items-center justify-between">
-                                    <div className="col-span-3">
+                                <div className="flex flex-row items-center justify-start">
+                                    <div className="min-w-1/2">
                                         <Input
                                             placeholder="Veri setlerinde ara..."
                                             value={query}
                                             onChange={(e) => setQuery(e.target.value)}
                                         />
                                     </div>
-                                    <div className="col-span-2">
+                                    <div className="col-span-3">
                                         <div className="flex items-center gap-2 w-full justify-end">
                                             <div className="flex  flex-row items-center gap-2 ml-4 justify-between">
-                                                <label
-                                                    htmlFor="sort"
-                                                    className="text-sm text-muted-foreground whitespace-nowrap"
-                                                >
-                                                    Sırala:
-                                                </label>
+
                                                 <Select
                                                     value={sortBy}
                                                     onValueChange={(value: SortKey) => setSortBy(value)}

@@ -140,7 +140,7 @@ export function AddDataOrgDialog({ organizationId, organizationName }: AddDataOr
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button className="h-full" variant="secondary">
-                    <Plus className="h-4 w-4 mr-1" /> Veri Seti Ekle
+                    <Plus />
                 </Button>
             </DialogTrigger>
 
