@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getPublicDataRequestCounts, getPublicDataRequests } from "@/services/datarequest.service";
+import { getOrganizationDataRequests, getPublicDataRequestCounts } from "@/services/datarequest.service";
 import { SearchIcon } from "lucide-react";
 import {
     InputGroup,
@@ -48,9 +48,9 @@ function DatarequestsDesktop() {
 
     // 🔹 React Query (tipli)
     const { data: datareqResp, isLoading, isError } = useQuery<DataRequestResponse>({
-        queryKey: ["public-datarequests", page, sort, search, status],
+        queryKey: ["organization-datarequests", page, sort, search, status],
         queryFn: () =>
-            getPublicDataRequests({
+            getOrganizationDataRequests({
                 page,
                 limit,
                 status: status === "all" ? null : status,

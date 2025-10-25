@@ -37,7 +37,9 @@ export function RequestMetaCard({
                 {requestedByName && (
                     <div className="flex justify-between gap-3">
                         <dt className="text-muted-foreground">Talep Eden</dt>
-                        <dd className="text-foreground">Vatandaş</dd>
+                        <dd className="text-foreground">
+                            {requestedByName}
+                        </dd>
                     </div>
                 )}
 
@@ -64,13 +66,6 @@ export function RequestMetaCard({
                     <div className="flex justify-between gap-3">
                         <dt className="text-muted-foreground">Yorum Sayısı</dt>
                         <dd className="text-foreground">{request.commentCount}</dd>
-                    </div>
-                )}
-
-                {typeof request.likeCount === "number" && (
-                    <div className="flex justify-between gap-3">
-                        <dt className="text-muted-foreground">Beğeni</dt>
-                        <dd className="text-foreground">{request.likeCount}</dd>
                     </div>
                 )}
             </dl>

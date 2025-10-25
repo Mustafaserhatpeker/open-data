@@ -91,11 +91,11 @@ export default function RequestInfoDesktop() {
     }
 
     return (
-        <div className="w-full px-4 py-6 bg-accent min-h-[100vh]">
-            <div className="max-w-[80%] mx-auto space-y-6">
+        <div className="w-full  min-h-[100vh]">
+            <div className="w-full space-y-6">
                 <RequestHeader
                     request={request}
-                    requestedByName={request.requesterUserId}
+                    requestedByName={request.requesterEmail}
                     organizationName={organizationName}
                 />
 
@@ -104,7 +104,7 @@ export default function RequestInfoDesktop() {
                         {organization && <OrganizationCard organization={organization} />}
                         <RequestMetaCard
                             request={request}
-                            requestedByName={request.requesterUserId}
+                            requestedByName={request.requesterEmail}
                         />
                     </div>
 

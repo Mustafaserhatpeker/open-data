@@ -49,7 +49,7 @@ export default function DataRequestCard({
         <div
             onClick={() => {
                 if (isAuthenticated) {
-                    window.location.href = `/datarequests/${request.id}`;
+                    window.location.href = `/dashboard/datarequests/${request.id}`;
                 }
             }}
             className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm cursor-pointer transition hover:shadow-md"

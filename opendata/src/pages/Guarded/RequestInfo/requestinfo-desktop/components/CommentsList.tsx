@@ -65,7 +65,7 @@ export function CommentsList({ comments, requestId }: Props) {
                                 <div className="inline-flex items-center gap-1">
                                     <User className="h-3.5 w-3.5" />
                                     <span className="font-medium text-foreground">
-                                        {c.role === "USER" ? "Vatandaş" : "Yetkili"}
+                                        {c.userEmail || "Anonim"}
                                     </span>
                                 </div>
                                 <span>
