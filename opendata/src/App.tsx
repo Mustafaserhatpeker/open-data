@@ -16,7 +16,6 @@ import { useAuthStore } from "./stores/auth.store";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { RouteTrackerProvider } from "./contexts/RouteTrackContext";
-import MainDashboard from "./pages/Guarded/MainDashboard/MainDashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
 import StaticsDesktop from "./pages/Statistics/statics-desktop/StaticsDesktop";
 import OpenDictionary from "./pages/Opendictionary/OpenDictionary";
@@ -33,6 +32,7 @@ import RequestInfoGuarded from "./pages/Guarded/RequestInfo/ReguestInfo";
 import DataInfoGuarded from "./pages/Guarded/DataInformation/DataInfo";
 import DatasetsGuarded from "./pages/Guarded/Datasets/Datasets";
 import PreviewGuarded from "./pages/Guarded/Preview/Preview";
+import Dashboard from "./pages/Guarded/Dashboard/Dashboard";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
@@ -44,8 +44,11 @@ const ProtectedRoute = ({ children }: { children: any }) => {
 
 const RedirectAuthenticated = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
-  if (isAuthenticated && (role === "user" || role === "organization")) {
+  if (isAuthenticated && (role === "organization")) {
     return <Navigate to="/dashboard" replace />;
+  }
+  if (isAuthenticated && role === "user") {
+    return <Navigate to="/" replace />;
   }
   return children;
 };
@@ -106,7 +109,7 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<MainDashboard />} />
+              <Route index element={<Dashboard />} />
               <Route path="organizations" element={<OrganizationsGuarded />} />
               <Route path="categories" element={<CategoriesGuarded />} />
               <Route path="organizations/:id" element={<OrganizationInfoGuarded />} />

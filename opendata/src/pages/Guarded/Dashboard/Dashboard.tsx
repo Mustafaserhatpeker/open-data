@@ -8,7 +8,7 @@ function Dashboard() {
     const { role } = useAuthStore()
     const deviceType = useDeviceTypeContext();
     if (role !== "organization") {
-        return <Navigate to="/dashboard" />;
+        return <Navigate to="/" />;
     }
     return deviceType === "mobile" ? <DashboardMobile /> : <DashboardDesktop />;
 }
