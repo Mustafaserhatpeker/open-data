@@ -4,7 +4,6 @@ import Dashboard from "@/pages/Guarded/Dashboard/Dashboard";
 import UDashboard from "@/pages/Guarded/UserDashboard/UDashboard";
 
 function MainDashboardDesktop() {
-    // ✅ Hook burada, ana bileşenin üst düzeyinde
     const { isAuthenticated, role } = useAuthStore();
 
     if (!isAuthenticated) {

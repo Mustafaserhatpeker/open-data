@@ -66,15 +66,15 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     }
   },
 
-  register: async (email, identityNumber, name, surname, password) => {
+  register: async (email, password, name, surname, identityNumber) => {
     set({ isLoading: true });
     try {
       await axiosInstance.post("/auth/register", {
         email,
-        identityNumber,
+        password,
         name,
         surname,
-        password,
+        identityNumber,
       });
       set({ isLoading: false });
       return true;

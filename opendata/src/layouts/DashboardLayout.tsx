@@ -19,6 +19,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export default function DashboardDesktop() {
 
+
     return (
         <ThemeProvider>
             <SidebarProvider>
