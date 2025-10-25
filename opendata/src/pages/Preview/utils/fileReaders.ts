@@ -6,6 +6,14 @@ export function readAsText(file: File): Promise<string> {
         fr.readAsText(file);
     });
 }
+export function readBlobAsUTF8(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsText(blob, "UTF-8"); // ✅ Türkçe karakter garantisi
+    });
+}
 
 export function readAsArrayBuffer(file: File): Promise<ArrayBuffer> {
     return new Promise((resolve, reject) => {

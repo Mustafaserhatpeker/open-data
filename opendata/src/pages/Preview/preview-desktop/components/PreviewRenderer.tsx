@@ -13,18 +13,25 @@ interface Props {
 export const PreviewRenderer: React.FC<Props> = ({ data }) => {
     if (!data) return null;
 
-    switch (data.kind) {
-        case PreviewKind.Table:
-            return <TablePreview rows={data.rows} />;
-        case PreviewKind.PDF:
-            return <PDFPreview data={data.data} />;
-        case PreviewKind.Map:
-            return <GeoJSONMap geojson={data.geojson} />;
-        case PreviewKind.Text:
-            return <TextBlock text={data.text} />;
-        case PreviewKind.HTML:
-            return <HTMLPreview html={data.html} />;
-        default:
-            return <div className="text-sm text-gray-500">Bu veri türü için önizleme bulunamadı.</div>;
+    if (data.kind === PreviewKind.Table) {
+        return <TablePreview rows={data.rows} />;
     }
+
+    if (data.kind === PreviewKind.PDF) {
+        return <PDFPreview data={data.data} />;
+    }
+
+    if (data.kind === PreviewKind.Map) {
+        return <GeoJSONMap geojson={data.geojson} />;
+    }
+
+    if (data.kind === PreviewKind.Text) {
+        return <TextBlock text={data.text} />;
+    }
+
+    if (data.kind === PreviewKind.HTML) {
+        return <HTMLPreview html={data.html} />;
+    }
+
+    return <div className="text-sm text-gray-500">Bu veri türü için önizleme bulunamadı.</div>;
 };

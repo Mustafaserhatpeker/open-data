@@ -1,21 +1,30 @@
+import { useEffect } from "react";
 import { FilePicker } from "./components/inner-components/FilePicker";
 import { PreviewRenderer } from "./components/PreviewRenderer";
 import { PreviewToolbar } from "./components/inner-components/PreviewToolbar";
 import { useFilePreview } from "../hooks/useFilePreview";
 import BackButton from "@/components/back-button";
+import { useParams } from "react-router-dom";
 
 function PreviewDesktop() {
-    const { state, onFileSelect, reset, downloadUrl } = useFilePreview();
+    const { state, onFileSelect, reset, downloadUrl, loadFileFromToken } = useFilePreview();
+    const { token } = useParams();
+    useEffect(() => {
+        if (token) {
+            loadFileFromToken(token);
+        }
+    }, [token]);
 
     return (
         <div className="w-full bg-accent">
-            <div className="w-full h-full  mx-auto p-4 space-y-4">
+            <div className="w-full h-full mx-auto p-4 space-y-4">
                 <div className="text-2xl font-semibold">
                     Dosya Önizleme
                 </div>
                 <BackButton />
 
-                {!state.file && (
+                {/* ✅ Token yoksa FilePicker göster */}
+                {!token && !state.file && (
                     <FilePicker onSelect={onFileSelect} />
                 )}
 

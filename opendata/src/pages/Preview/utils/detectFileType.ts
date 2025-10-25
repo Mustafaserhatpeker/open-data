@@ -41,3 +41,5 @@ export function mapExtToKind(ext: SupportedExtension): PreviewKind {
 
 export const ACCEPT_ATTR =
     ".xlsx,.csv,.pdf,.geojson,.xml,.html,.kml,.txt,.kmz";
+
+export { SupportedExtension };

@@ -30,16 +30,13 @@ const allowedMimeTypes = [
     "application/vnd.ms-excel",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/json",
+    "application/geo+json",
     "application/xml",
     "text/xml",
     "text/html",
     "application/vnd.google-earth.kml+xml",
     "application/vnd.google-earth.kmz",
 ];
-
-// -----------------------------
-// ✅ Zod Şeması
-// -----------------------------
 const FormSchema = z.object({
     resourceName: z.string().min(3, "Kaynak adı en az 3 karakter olmalı"),
     file: z

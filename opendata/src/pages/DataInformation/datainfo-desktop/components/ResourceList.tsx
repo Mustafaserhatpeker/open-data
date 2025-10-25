@@ -55,7 +55,7 @@ export function ResourcesList({ resources }: Props) {
                                             </a>
                                         </Button>
                                         <Button asChild>
-                                            <a href={`/preview/${r._id}`} target="_blank" rel="noreferrer">
+                                            <a href={`/preview/${r.fileUrl}`} rel="noreferrer">
                                                 <Eye className="h-4 w-4 mr-2" />
                                                 Önizleme
                                             </a>
