@@ -26,7 +26,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useAuthStore } from "@/stores/auth.store";
-import { Button } from "@/components/ui/button";
+import { AddDataReqDialog } from "./components/AddDataReqDialog";
 
 type DataRequestResponse = {
     status: number;
@@ -160,11 +160,7 @@ function DatarequestsDesktop() {
                             </Select>
                             {isAuthenticated ? (
                                 <div className=" text-right">
-                                    <Button variant="outline"
-
-                                    >
-                                        Yeni Veri İsteği Oluştur
-                                    </Button>
+                                    <AddDataReqDialog />
                                 </div>
                             ) : (
                                 <div className=" text-left">
