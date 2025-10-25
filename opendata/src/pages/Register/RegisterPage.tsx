@@ -49,7 +49,13 @@ const RegisterPage = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    const res = await register(data.name, data.surname, data.identityNumber, data.email, data.password);
+    const res = await register(
+      data.email,
+      data.password,
+      data.name,
+      data.surname,
+      data.identityNumber
+    );
     if (res) {
       navigate("/login");
     }
