@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getPublicDataRequests } from "@/services/datarequest.service";
-import RightFilter from "./components/RightFilter";
+import { getPublicDataRequestCounts, getPublicDataRequests } from "@/services/datarequest.service";
 import { SearchIcon } from "lucide-react";
 import {
     InputGroup,
@@ -27,7 +26,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useAuthStore } from "@/stores/auth.store";
-import { Button } from "@/components/ui/button";
+import { AddDataReqDialog } from "./components/AddDataReqDialog";
 
 type DataRequestResponse = {
     status: number;
@@ -47,7 +46,7 @@ function DatarequestsDesktop() {
     const [limit] = useState(10);
     const [sort, setSort] = useState("newest");
     const [search, setSearch] = useState("");
-    const [status, setStatus] = useState<string | null>(null);
+    const [status, setStatus] = useState<string>("all");
     const { isAuthenticated } = useAuthStore();
 
     // 🔹 React Query (tipli)
@@ -57,10 +56,16 @@ function DatarequestsDesktop() {
             getPublicDataRequests({
                 page,
                 limit,
-                status,
+                status: status === "all" ? null : status,
                 sort,
                 search,
             }),
+
+    });
+
+    const { data: countsResp } = useQuery({
+        queryKey: ["public-datarequests-counts"],
+        queryFn: getPublicDataRequestCounts,
     });
 
     // 🔹 Güvenli veri erişimi
@@ -77,37 +82,25 @@ function DatarequestsDesktop() {
     const totalPages = Number(pagination.totalPage ?? 1);
 
     // 🔹 Durum sayacı
-    const counts = dataRequests.reduce(
-        (acc: any, item: any) => {
-            const st = item.status;
-            if (st === "approved") acc.approved++;
-            else if (st === "rejected") acc.rejected++;
-            else acc.pending++;
-            return acc;
-        },
-        { approved: 0, pending: 0, rejected: 0 }
-    );
+    const counts = countsResp?.data ?? {
+        approved: 0,
+        pending: 0,
+        rejected: 0,
+        total: 0,
+    };
+
 
     return (
         <div className="w-full flex flex-col items-center justify-between bg-accent min-h-screen">
-            <div className="grid grid-cols-4 w-full gap-8 px-4 py-8 max-w-[80%] mx-auto">
-                {/* SOL FİLTRE */}
-                <div className="col-span-1 rounded-xl">
-                    <RightFilter
-                        counts={counts}
-                        selectedStatus={status}
-                        onStatusChange={(val) => {
-                            setStatus(val);
-                            setPage(1);
-                        }}
-                    />
-                </div>
+            <div className="flex flex-col w-full gap-8 px-4 py-8 max-w-[80%] mx-auto">
 
-                {/* ANA CONTENT */}
-                <div className="col-span-3 bg-white p-4 rounded-xl shadow-sm">
-                    {/* SEARCH + SORT */}
-                    <div className="grid grid-cols-5 w-full gap-6">
-                        <div className="col-span-4">
+
+
+
+                <div className="flex flex-col w-full bg-white p-4 rounded-xl shadow-sm">
+
+                    <div className="flex flex-row items-center justify-between w-full gap-6">
+                        <div className="min-w-1/2">
                             <InputGroup>
                                 <InputGroupInput
                                     placeholder="Ara..."
@@ -124,7 +117,7 @@ function DatarequestsDesktop() {
                                 </InputGroupAddon>
                             </InputGroup>
                         </div>
-                        <div className="col-span-1">
+                        <div className="min-w-1/2 flex flex-row items-center gap-4">
                             <Select
                                 value={sort}
                                 onValueChange={(val) => {
@@ -132,7 +125,7 @@ function DatarequestsDesktop() {
                                     setPage(1);
                                 }}
                             >
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className="">
                                     <SelectValue placeholder="Sırala" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -142,25 +135,48 @@ function DatarequestsDesktop() {
                                     <SelectItem value="z-a">Z-A</SelectItem>
                                 </SelectContent>
                             </Select>
-                        </div>
-                        {isAuthenticated ? (
-                            <div className="col-span-5 text-right">
-                                <Button variant="outline"
+                            <Select
+                                value={status}
+                                onValueChange={(val) => {
+                                    setStatus(val);
+                                    setPage(1);
+                                }}
+                            >
+                                <SelectTrigger >
+                                    <SelectValue placeholder="Durum" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">
+                                        Tümü ({counts.total})
+                                    </SelectItem>
+                                    <SelectItem value="approved">
+                                        Onaylandı ({counts.approved})
+                                    </SelectItem>
+                                    <SelectItem value="pending">
+                                        Beklemede ({counts.pending})
+                                    </SelectItem>
+                                    <SelectItem value="rejected">
+                                        Reddedildi ({counts.rejected})
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                            {isAuthenticated ? (
+                                <div className=" text-right">
+                                    <AddDataReqDialog />
+                                </div>
+                            ) : (
+                                <div className=" text-left">
+                                    <p className="text-sm text-gray-500">
+                                        Veri isteği oluşturmak ve detayları görüntülemek için lütfen {" "}
+                                        <a className="text-accent-foreground" href="/login">
+                                            giriş yapın.
+                                        </a>
+                                    </p>
+                                </div>
+                            )}
 
-                                >
-                                    Yeni Veri İsteği Oluştur
-                                </Button>
-                            </div>
-                        ) : (
-                            <div className="col-span-5 text-right">
-                                <p className="text-sm text-gray-500">
-                                    Veri isteği oluşturmak ve detayları görüntülemek için lütfen {" "}
-                                    <a className="text-accent-foreground" href="/login">
-                                        giriş yapın.
-                                    </a>
-                                </p>
-                            </div>
-                        )}
+                        </div>
+
                     </div>
 
                     {/* CARD LİSTESİ */}
