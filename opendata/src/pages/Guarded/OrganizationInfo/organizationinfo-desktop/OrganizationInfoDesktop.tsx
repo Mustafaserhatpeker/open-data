@@ -30,7 +30,7 @@ import {
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { getOrganizationById } from "@/services/organization.service"
 import { AddDataOrgDialog } from "./components/AddDataOrgDialog"
-import { UpdateOrgDialog } from "../../Organizations/organizations-desktop/components/UpdateOrgDialog"
+import { UpdateOrgDialog } from "./components/UpdateOrgDialog"
 
 // Yardımcı fonksiyonlar
 function formatDate(dateString?: string) {

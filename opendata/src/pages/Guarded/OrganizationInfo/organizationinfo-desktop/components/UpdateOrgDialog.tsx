@@ -42,7 +42,7 @@ export function UpdateOrgDialog({
     const form = useForm<OrganizationForm>({
         resolver: zodResolver(organizationSchema),
         defaultValues: {
-            organizationName: organization?.name ?? "",
+            organizationName: organization?.organizationName ?? "",
             description: organization?.description ?? "",
             logoUrl: organization?.logoUrl ?? "",
             websiteUrl: organization?.websiteUrl ?? "",
@@ -54,7 +54,7 @@ export function UpdateOrgDialog({
     useEffect(() => {
         if (organization) {
             form.reset({
-                organizationName: organization?.name ?? "",
+                organizationName: organization?.organizationName ?? "",
                 description: organization?.description ?? "",
                 logoUrl: organization?.logoUrl ?? "",
                 websiteUrl: organization?.websiteUrl ?? "",
