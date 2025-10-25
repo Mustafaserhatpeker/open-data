@@ -50,7 +50,6 @@ export function UpdateOrgDialog({
         },
     })
 
-    // Organizasyon değiştiğinde formu güncelle
     useEffect(() => {
         if (organization) {
             form.reset({
