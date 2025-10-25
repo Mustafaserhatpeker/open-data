@@ -1,6 +1,7 @@
 import { Building2, User } from "lucide-react"
 import type { DataRequest } from "@/lib/types"
 import BackButton from "@/components/back-button"
+import { StatusChange } from "./inner-components/StatusChange"
 
 function statusBadgeClasses(status: string): string {
     switch (status) {
@@ -10,7 +11,7 @@ function statusBadgeClasses(status: string): string {
             return "bg-red-100 text-red-800 ring-red-600/20"
         case "pending":
         default:
-            return "bg-gray-100 text-gray-800 ring-gray-600/20"
+            return "bg-yellow-100 text-yellow-800 ring-yellow-600/20"
     }
 }
 
@@ -68,6 +69,8 @@ export function RequestHeader({
                         {requestedByName}
                     </span>
                 )}
+                <StatusChange />
+
             </div>
         </div>
     )

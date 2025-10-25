@@ -60,7 +60,8 @@ export const getPublicDataRequests = async (params?: any) => {
     }
 };
 
-export const updateDataRequestStatus = async (id: string, status: string, accessToken: string) => {
+export const updateDataRequestStatus = async (id: string, status: string) => {
+    const accessToken = localStorage.getItem("accessToken") || "";
     try {
         const { data } = await axiosInstance.patch(
             `${Base}/status/${id}`,

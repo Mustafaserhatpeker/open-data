@@ -80,10 +80,6 @@ function DatarequestsDesktop() {
     return (
         <div className="w-full flex flex-col items-center justify-between  min-h-screen">
             <div className="flex flex-col w-full gap-8 ">
-
-
-
-
                 <div className="flex flex-col w-full bg-white p-4 ">
 
                     <div className="flex flex-row items-center justify-between w-full gap-6">
