@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Download, Eye } from "lucide-react"
 import { getResourceTypeMeta } from "./utils"
-import { DOWNLOAD_URL, PREVIEW_URL } from "@/lib/urls"
+import { DOWNLOAD_URL } from "@/lib/urls"
 type Props = {
     resources?: any
 }
@@ -55,7 +55,7 @@ export function ResourcesList({ resources }: Props) {
                                             </a>
                                         </Button>
                                         <Button asChild>
-                                            <a href={`${PREVIEW_URL}/${r.fileUrl}`} target="_blank" rel="noreferrer">
+                                            <a href={`/preview/${r._id}`} target="_blank" rel="noreferrer">
                                                 <Eye className="h-4 w-4 mr-2" />
                                                 Önizleme
                                             </a>
