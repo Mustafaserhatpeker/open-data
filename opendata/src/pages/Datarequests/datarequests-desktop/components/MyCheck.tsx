@@ -38,18 +38,23 @@ const StyledWrapper = styled.div`
 
   .path {
     fill: none;
-    stroke: black;
+    stroke: black; /* default renk */
     stroke-width: 6;
     stroke-linecap: round;
     stroke-linejoin: round;
-    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    transition:
+      stroke 0.3s ease,
+      stroke-dasharray 0.5s ease,
+      stroke-dashoffset 0.5s ease;
     stroke-dasharray: 241 9999999;
     stroke-dashoffset: 0;
   }
 
   .container input:checked ~ svg .path {
+    stroke: #16a34a; /* ✅ Tailwind green-600 */
     stroke-dasharray: 70.5096664428711 9999999;
     stroke-dashoffset: -262.2723388671875;
-  }`;
+  }
+`;
 
 export default MyCheck;

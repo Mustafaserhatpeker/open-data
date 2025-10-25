@@ -173,11 +173,14 @@ function DatarequestsDesktop() {
                                 </SelectContent>
                             </Select>
 
-                            <div className="flex flex-row items-center gap-3 border p-1.5 px-2 rounded-md">
-                                <span className="text-sm font-medium">Sadece Bana Ait</span>
-                                <MyCheck checked={myRequestsOnly} onChange={setMyRequestsOnly} />
 
-                            </div>
+                            {isAuthenticated && (
+                                <div className="flex flex-row items-center gap-3 border p-1.5 px-2 rounded-md">
+                                    <span className={`text-sm font-medium ${myRequestsOnly ? 'text-green-700' : ''}`}>Sadece Bana Ait</span>
+                                    <MyCheck checked={myRequestsOnly} onChange={setMyRequestsOnly} />
+
+                                </div>
+                            )}
                             {isAuthenticated ? (
                                 <div className=" text-right">
                                     <AddDataReqDialog />
