@@ -45,7 +45,7 @@ export function UpdateOrgDialog({
             organizationName: organization?.name ?? "",
             description: organization?.description ?? "",
             logoUrl: organization?.logoUrl ?? "",
-            websiteUrl: organization?.websiteUrl ?? "",
+            websiteUrl: organization?.website ?? "",
             contactEmail: organization?.contactEmail ?? "",
         },
     })
@@ -57,7 +57,7 @@ export function UpdateOrgDialog({
                 organizationName: organization?.name ?? "",
                 description: organization?.description ?? "",
                 logoUrl: organization?.logoUrl ?? "",
-                websiteUrl: organization?.websiteUrl ?? "",
+                websiteUrl: organization?.website ?? "",
                 contactEmail: organization?.contactEmail ?? "",
             })
         }
