@@ -1,9 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Download, Eye } from "lucide-react"
+import { Download } from "lucide-react"
 import { getResourceTypeMeta } from "./utils"
-import { DOWNLOAD_URL, PREVIEW_URL } from "@/lib/urls"
+import { DOWNLOAD_URL } from "@/lib/urls"
 import AddResource from "@/components/add-resource"
 type Props = {
     resources?: any
@@ -55,12 +55,6 @@ export function ResourcesList({ resources, datasetId }: Props) {
                                             <a href={`${DOWNLOAD_URL}/${r.fileUrl}`} target="_blank" >
                                                 <Download className="h-4 w-4 mr-2" />
                                                 İndir
-                                            </a>
-                                        </Button>
-                                        <Button asChild>
-                                            <a href={`${PREVIEW_URL}/${r.fileUrl}`} target="_blank" rel="noreferrer">
-                                                <Eye className="h-4 w-4 mr-2" />
-                                                Önizleme
                                             </a>
                                         </Button>
                                     </div>
