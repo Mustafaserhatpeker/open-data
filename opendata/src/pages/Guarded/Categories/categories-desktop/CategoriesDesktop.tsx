@@ -20,6 +20,7 @@ import { FolderClosed, CalendarClock } from "lucide-react"
 import { getCategories } from "@/services/category.service"
 import { AddDataCatDialog } from "./components/AddDataCatDialog"
 import { AddCatDialog } from "./components/AddCatDialog"
+import { UpdateCatDialog } from "./components/UpdateCatDialog"
 
 function getInitials(name?: string) {
     if (!name) return "CT"
@@ -144,7 +145,7 @@ export default function CategoriesDesktop() {
                         return (
                             <Card
                                 key={cat._id}
-                                className="h-full overflow-hidden border border-border/60 cursor-pointer"
+                                className="h-full overflow-hidden border border-border/60 cursor-pointer relative"
                             >
                                 <CardHeader className="pb-3 flex items-center justify-between w-full">
                                     <div className="flex items-center gap-3">
@@ -203,6 +204,7 @@ export default function CategoriesDesktop() {
                                         />
                                     </div>
                                 </CardContent>
+                                <UpdateCatDialog categoryId={cat._id} category={cat} />
                             </Card>
                         )
                     })}
