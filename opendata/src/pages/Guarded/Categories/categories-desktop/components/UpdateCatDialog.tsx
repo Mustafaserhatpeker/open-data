@@ -84,7 +84,7 @@ export function UpdateCatDialog({
                 <DialogHeader>
                     <DialogTitle>Kategoriyi Güncelle</DialogTitle>
                     <DialogDescription className="text-red-400">
-                        Kategori oluşturmak bütün organizasyonlara açıktır. Lütfen doğru
+                        Kategori bilgilerini güncelliyorsunuz. Lütfen doğru
                         bilgileri girdiğinizden emin olun. Yanlış bilgi girişi kategoriler ve içlerinde
                         bulunan veri setlerinin yanlış sınıflandırılmasına yol açabilir!
                     </DialogDescription>
