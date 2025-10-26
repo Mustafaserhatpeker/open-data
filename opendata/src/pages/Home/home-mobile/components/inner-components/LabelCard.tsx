@@ -66,7 +66,7 @@ const StyledWrapper = styled.div`
   .icon {
     width: 6em;
     margin-top: -1em;
-    margin-left: 3em;
+    margin-left: 4.5em;
     padding-bottom: 1em;
   }
 
