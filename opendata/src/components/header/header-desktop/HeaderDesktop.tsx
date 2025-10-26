@@ -43,11 +43,6 @@ function Header() {
           )}
 
         </div>
-
-
-        {/* <div className="flex flex-row items-center gap-2 ml-4">
-          <Switch />
-        </div> */}
       </div>
     </div >
   );
