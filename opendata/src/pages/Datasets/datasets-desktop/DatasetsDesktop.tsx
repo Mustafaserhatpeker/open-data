@@ -19,7 +19,6 @@ import DatasetCards from "./components/DatasetCards";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -35,7 +34,28 @@ import { useDatasets } from "../hooks/use-datasets";
 import { useState } from "react";
 
 function DatasetsDesktop() {
-  const { items, setSort, search, setSearch } = useDatasets();
+  const {
+    items,
+    search,
+    setSearch,
+    setSort,
+    page,
+    totalPage,
+    nextPage,
+    prevPage,
+    goToPage,
+    organizationId,
+    categoryIDs,
+    tagIDs,
+    formatIDs,
+    licenseID,
+    setOrganizationId,
+    toggleCategoryId,
+    toggleTagId,
+    toggleFormatId,
+    setLicenseID,
+  } = useDatasets();
+
 
   const { data: categoriesResp } = useQuery({
     queryKey: ["categories"],
@@ -69,7 +89,21 @@ function DatasetsDesktop() {
             tags={tagsResp || { data: [] }}
             formats={formatsResp || { data: [] }}
             licences={licencesResp || { data: [] }}
+
+            organizationId={organizationId}
+            categoryIDs={categoryIDs}
+            tagIDs={tagIDs}
+            formatIDs={formatIDs}
+            licenseID={licenseID}
+
+            setOrganizationId={setOrganizationId}
+            toggleCategoryId={toggleCategoryId}
+            toggleTagId={toggleTagId}
+            toggleFormatId={toggleFormatId}
+            setLicenseID={setLicenseID}
           />
+
+
         </div>
         <div className="col-span-3 bg-white p-2 rounded-xl">
           <div className="grid grid-cols-5 w-full gap-6">
@@ -129,24 +163,28 @@ function DatasetsDesktop() {
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious href="#" />
+                <PaginationPrevious
+                  onClick={prevPage}
+                  className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                />
               </PaginationItem>
+
+              {Array.from({ length: totalPage }, (_, i) => i + 1).map((p) => (
+                <PaginationItem key={p}>
+                  <PaginationLink
+                    onClick={() => goToPage(p)}
+                    isActive={page === p}
+                  >
+                    {p}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+
               <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
+                <PaginationNext
+                  onClick={nextPage}
+                  className={page === totalPage ? "pointer-events-none opacity-50" : ""}
+                />
               </PaginationItem>
             </PaginationContent>
           </Pagination>

@@ -76,12 +76,10 @@ export function useDatasets() {
     ]
   );
 
-  // Filtreler değişince sayfayı 1’e çek (page/limit hariç)
   useEffect(() => {
     setPage(1);
   }, [
     debouncedSearch,
-    sort,
     organizationId,
     licenseID,
     categoryIDs.join(","),
