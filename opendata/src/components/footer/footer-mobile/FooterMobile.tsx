@@ -1,20 +1,72 @@
-function FooterMobile() {
+import Logo2 from "@/assets/logoacik.png";
+
+function Footer() {
   return (
-    <footer className="mt-12 text-center text-xs font-light text-gray-600">
-      <div className="mb-4">
-        <iframe
-          title="Harita"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.085366275392!2d-122.41941508468132!3d37.77492977975901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808c34e45a17%3A0xc0e7a8ebddfa2a6b!2sSan+Francisco%2C+CA!5e0!3m2!1str!2str!4v1615483219041!5m2!1str!2str"
-          width="100%"
-          height="200"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-        ></iframe>
+    <div className="w-full flex flex-col md:flex-row p-6 border-t px-12  bg-accent-30">
+
+      <div className="w-full md:w-1/3 flex flex-col items-start justify-start p-4 space-y-4 mt-6 md:mt-0">
+        <img className="h-32" src={Logo2} alt="" />
+        <span className="text-xs text-accent">
+          © 2025 Kocaeli Açık Veri Portalı. Tüm hakları saklıdır.
+        </span>
       </div>
-      © 2023 Omer Sayma. All rights reserved.
-    </footer>
+      <div className="w-full md:w-2/3 flex flex-col items-start justify-start p-4 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+          <div className="flex flex-col">
+
+            <ul className="text-sm text-accent space-y-2">
+              {/* <li className="cursor-pointer">
+                <a href="/about" className="hover:underline">
+                  Hakkımızda
+                </a>
+              </li> */}
+              <li className="cursor-pointer">
+                <a href="https://kocaeli.bel.tr" target="_blank" className="hover:underline">
+                  Kocaeli Belediyesi
+                </a>
+              </li>
+              <li className="cursor-pointer">
+                <a href="https://www.kocaeli.bel.tr/hizmetler/" target="_blank" className="hover:underline">
+                  Hizmetlerimiz
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="flex flex-col">
+
+            <ul className="text-sm text-accent-500 space-y-2">
+              <li className="flex items-center gap-2">
+                <a href="/opendictionary" className="hover:underline flex items-center gap-2 text-accent">
+                  Açık Veri Sözlüğü
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+          <div className="flex flex-col">
+
+            <ul className="text-sm text-accent-500 space-y-2">
+              <li className="flex items-center gap-2">
+                <a href="https://www.kocaeli.bel.tr/iletisim/" target="_blank" className="hover:underline flex items-center gap-2 text-accent">
+                  İletişim
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+
+    </div>
   );
 }
 
-export default FooterMobile;
+export default Footer;
