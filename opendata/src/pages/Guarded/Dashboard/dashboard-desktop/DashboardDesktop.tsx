@@ -1,12 +1,23 @@
 import { CategoryChart } from "./components/linecharts/CategoryChart";
 import { DatarequestChart } from "./components/linecharts/DatarequestChart";
 import { OrganizationChart } from "./components/linecharts/OrganizationChart";
-import { DataStaticCard } from "./components/inner-components/DataStaticCard"
+import { DataStaticCard } from "./components/inner-components/DataStaticCard";
 import { ResourceFormatChart } from "./components/piecharts/ResourceFormatChart";
 import { DatarequestStatusChart } from "./components/piecharts/DatarequestStatusChart";
 import { CategoryDistributionChart } from "./components/piecharts/CategoryDistributionChart";
 import { useQuery } from "@tanstack/react-query";
 import { getStatistics } from "@/services/statistics.service";
+
+// ✅ Lucide icons
+import {
+    Users,
+    Eye,
+    Download,
+    ListTree,
+    Shapes,
+    Tags,
+    Building2,
+} from "lucide-react";
 
 function formatNumber(n?: number) {
     if (typeof n !== "number") return "-";
@@ -24,27 +35,26 @@ export default function DashboardDesktop() {
         queryFn: () => getStatistics(),
     });
 
-
     const generalStats = [
-        { label: "Veri Seti Sayısı", value: statisticsResp?.data?.datasetCount },
-        { label: "Kategori Sayısı", value: statisticsResp?.data?.categoryCount },
-        { label: "Organizasyon Sayısı", value: statisticsResp?.data?.organizationCount },
-        { label: "Kullanıcı Sayısı", value: statisticsResp?.data?.userCount },
-        { label: "Etiket (Tag) Sayısı", value: statisticsResp?.data?.tagCount },
-        { label: "T.İndirme", value: statisticsResp?.data?.totalDownloads },
-        { label: "T.Görüntülenme", value: statisticsResp?.data?.totalViews },
+        { label: "Veri Seti Sayısı", value: statisticsResp?.data?.datasetCount, icon: Shapes },
+        { label: "Kategori Sayısı", value: statisticsResp?.data?.categoryCount, icon: ListTree },
+        { label: "Organizasyon Sayısı", value: statisticsResp?.data?.organizationCount, icon: Building2 },
+        { label: "Kullanıcı Sayısı", value: statisticsResp?.data?.userCount, icon: Users },
+        { label: "Etiket (Tag) Sayısı", value: statisticsResp?.data?.tagCount, icon: Tags },
+        { label: "T.İndirme", value: statisticsResp?.data?.totalDownloads, icon: Download },
+        { label: "T.Görüntülenme", value: statisticsResp?.data?.totalViews, icon: Eye },
     ].filter(Boolean);
+
     return (
-        <div className="w-full ">
-            <section className="w-full pb-12  mx-auto ">
+        <div className="w-full">
+            <section className="w-full pb-12 mx-auto">
                 <div className="mb-4 mt-8 flex items-center justify-between">
                     <h2 className="text-lg font-semibold">Genel İstatistikler</h2>
                 </div>
 
-
                 {isLoading && (
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
-                        {Array.from({ length: 5 }).map((_, i) => (
+                        {Array.from({ length: 7 }).map((_, i) => (
                             <div key={i} className="w-full animate-pulse rounded-xl bg-muted h-24" />
                         ))}
                     </div>
@@ -59,37 +69,31 @@ export default function DashboardDesktop() {
                 {!isLoading && !isError && (
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
                         {generalStats.map((s, idx) => (
-                            <div key={idx} className="w-full">
-                                <DataStaticCard items={[{ label: s.label, value: formatNumber(s.value) }]} />
-                            </div>
+                            <DataStaticCard
+                                key={idx}
+                                items={[{
+                                    label: s.label,
+                                    value: formatNumber(s.value),
+                                    icon: s.icon
+                                }]}
+                            />
                         ))}
                     </div>
                 )}
 
-
+                {/* Grafikler */}
                 <div className="grid grid-cols-3 gap-2 pt-8">
-                    <div className="grid-cols-1">
-                        <OrganizationChart data={statisticsResp?.data.datasetsByOrganization || []} />
-                    </div>
-                    <div className="grid-cols-1">
-                        <CategoryChart data={statisticsResp?.data.datasetsByCategory || []} />
-                    </div>
-                    <div className="grid-cols-1">
-                        <DatarequestChart />
-                    </div>
+                    <OrganizationChart data={statisticsResp?.data.datasetsByOrganization || []} />
+                    <CategoryChart data={statisticsResp?.data.datasetsByCategory || []} />
+                    <DatarequestChart />
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 pt-8">
-                    <div className="grid-cols-1">
-                        <ResourceFormatChart data={statisticsResp?.data.datasetsByFormat || []} />
-                    </div>
-                    <div className="grid-cols-1">
-                        <DatarequestStatusChart />
-                    </div>
-                    <div className="grid-cols-1">
-                        <CategoryDistributionChart data={statisticsResp?.data.datasetsByCategory || []} />
-                    </div>
+                    <ResourceFormatChart data={statisticsResp?.data.datasetsByFormat || []} />
+                    <DatarequestStatusChart />
+                    <CategoryDistributionChart data={statisticsResp?.data.datasetsByCategory || []} />
                 </div>
+
             </section>
         </div>
     );
