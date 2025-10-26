@@ -23,10 +23,16 @@ export const getCategoryById = async (id: string) => {
 };
 
 export const updateCategory = async (id: string, payload: any) => {
+  const accesToken = localStorage.getItem("accessToken");
   try {
     const { data } = await axiosInstance.put(
       `${Base}/update-category/${id}`,
-      payload
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${accesToken}`,
+        },
+      }
     );
     return data;
   } catch (error) {
@@ -35,10 +41,17 @@ export const updateCategory = async (id: string, payload: any) => {
 };
 
 export const createCategory = async (payload: any) => {
+  const accesToken = localStorage.getItem("accessToken");
   try {
     const { data } = await axiosInstance.post(
+
       `${Base}/create-category`,
-      payload
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${accesToken}`,
+        },
+      }
     );
     return data;
   } catch (error) {

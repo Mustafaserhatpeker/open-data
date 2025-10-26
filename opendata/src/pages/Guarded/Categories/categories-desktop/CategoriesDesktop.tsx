@@ -19,6 +19,7 @@ import { Separator } from "@/components/ui/separator"
 import { FolderClosed, CalendarClock } from "lucide-react"
 import { getCategories } from "@/services/category.service"
 import { AddDataCatDialog } from "./components/AddDataCatDialog"
+import { AddCatDialog } from "./components/AddCatDialog"
 
 function getInitials(name?: string) {
     if (!name) return "CT"
@@ -123,7 +124,9 @@ export default function CategoriesDesktop() {
                                     <option value="datasets">Veri seti sayısı (çoktan aza)</option>
                                     <option value="recent">En yeni güncellenen</option>
                                 </select>
+                                <AddCatDialog />
                             </div>
+
                         </div>
                     </div>
                 </div>

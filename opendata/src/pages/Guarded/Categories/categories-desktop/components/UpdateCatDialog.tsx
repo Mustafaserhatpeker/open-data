@@ -83,8 +83,10 @@ export function UpdateCatDialog({
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
                     <DialogTitle>Kategoriyi Güncelle</DialogTitle>
-                    <DialogDescription>
-                        Mevcut kategori bilgilerini güncelleyin.
+                    <DialogDescription className="text-red-400">
+                        Kategori oluşturmak bütün organizasyonlara açıktır. Lütfen doğru
+                        bilgileri girdiğinizden emin olun. Yanlış bilgi girişi kategoriler ve içlerinde
+                        bulunan veri setlerinin yanlış sınıflandırılmasına yol açabilir!
                     </DialogDescription>
                 </DialogHeader>
 
