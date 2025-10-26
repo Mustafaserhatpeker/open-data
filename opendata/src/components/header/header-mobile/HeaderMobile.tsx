@@ -14,7 +14,7 @@ export default function MobileHeader() {
   const { theme } = useThemeContext();
 
   return (
-    <header className="flex w-full h-16 items-center justify-between px-4 bg-white border-b shadow-sm z-50">
+    <header className="flex w-full h-16 items-center justify-between px-4 fixed bg-[#D5C6FF] top-0 left-0 shadow-sm z-50">
 
       {/* Logo */}
       <Link to="/" className="flex items-center">
