@@ -67,6 +67,11 @@ export default function MobileHeader() {
           <SheetContent side="right" className="w-3/4 px-6 pt-10">
             <nav className="flex flex-col gap-5">
 
+              <Link to="/" className="flex items-center gap-3 text-md font-semibold text-[#221A4C]">
+                <Menu className="h-5 w-5" />
+                Anasayfa
+              </Link>
+
               <Link to="/datasets" className="flex items-center gap-3 text-md font-semibold text-[#221A4C]">
                 <Database className="h-5 w-5" />
                 Veri Setleri
