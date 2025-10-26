@@ -1,5 +1,6 @@
 // shadcn/ui components
 import { Card, CardContent } from "@/components/ui/card";
+import CountUp from "@/components/CountUp";
 
 export function DataStaticCard({
     items,
@@ -12,10 +13,17 @@ export function DataStaticCard({
                 {items.map((it) => (
                     <div
                         key={it.label}
-                        className="flex flex-col items-center justify-center flex-1 gap-1 rounded-md  p-3 text-center"
+                        className="flex flex-col items-center justify-center flex-1 gap-1 p-3 text-center"
                     >
                         <div className="text-lg font-semibold">
-                            {it.value ?? "-"}
+                            <CountUp
+                                from={0}
+                                to={it.value ? Number(it.value) : 0}
+                                separator=","
+                                direction="up"
+                                duration={1}
+                                className="count-up-text"
+                            />
                         </div>
                         <div className="text-[11px] text-muted-foreground">{it.label}</div>
                     </div>
