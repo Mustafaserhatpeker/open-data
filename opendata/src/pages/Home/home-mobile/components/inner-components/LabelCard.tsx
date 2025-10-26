@@ -45,7 +45,7 @@ const StyledWrapper = styled.div`
     background: transparent;
     box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.45);
     position: relative;
-    width: 240px;
+    width: 300px;
     height: 330px;
     border-radius: 16px;
     overflow: hidden;
