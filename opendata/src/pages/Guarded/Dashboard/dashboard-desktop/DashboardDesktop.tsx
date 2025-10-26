@@ -7,6 +7,7 @@ import { DatarequestStatusChart } from "./components/piecharts/DatarequestStatus
 import { CategoryDistributionChart } from "./components/piecharts/CategoryDistributionChart";
 import { useQuery } from "@tanstack/react-query";
 import { getStatistics } from "@/services/statistics.service";
+import { ManagementDialog } from "./components/ManagementDialog";
 
 // ✅ Lucide icons
 import {
@@ -18,6 +19,8 @@ import {
     Tags,
     Building2,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 function formatNumber(n?: number) {
     if (typeof n !== "number") return "-";
@@ -34,7 +37,8 @@ export default function DashboardDesktop() {
         queryKey: ["statistics"],
         queryFn: () => getStatistics(),
     });
-
+    const [openDialog, setOpenDialog] = useState(false);
+    const [activeTab, setActiveTab] = useState<"tag" | "licence" | "format">("tag");
     const generalStats = [
         { label: "Veri Seti Sayısı", value: statisticsResp?.data?.datasetCount, icon: Shapes },
         { label: "Kategori Sayısı", value: statisticsResp?.data?.categoryCount, icon: ListTree },
@@ -80,6 +84,26 @@ export default function DashboardDesktop() {
                         ))}
                     </div>
                 )}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
+                    <Button onClick={() => { setActiveTab("tag"); setOpenDialog(true); }}>
+                        Etiket Yönetimi
+                    </Button>
+                    <Button onClick={() => { setActiveTab("licence"); setOpenDialog(true); }}>
+                        Lisans Yönetimi
+                    </Button>
+                    <Button onClick={() => { setActiveTab("format"); setOpenDialog(true); }}>
+                        Format Yönetimi
+                    </Button>
+                </div>
+
+                <ManagementDialog
+                    open={openDialog}
+                    onOpenChange={setOpenDialog}
+                    defaultTab={activeTab}
+                />
+                <div className="mt-8">
+                    <h3 className="text-lg font-semibold">Grafikler</h3>
+                </div>
 
                 {/* Grafikler */}
                 <div className="grid grid-cols-3 gap-2 pt-8">
