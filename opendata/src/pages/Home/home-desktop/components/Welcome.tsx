@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Background from "@/assets/background.svg";
 import { Building2, Bus, CarFront, Droplets, MousePointerClick, Ship, Trees, WavesLadder } from "lucide-react";
 import { HomeTooltip } from "./inner-components/HomeTooltip";
+import BlurText from "@/components/BlurText";
 function Welcome() {
   const tooltips = [
     {
@@ -118,10 +119,14 @@ function Welcome() {
             rotationInterval={2000}
           />
         </h1>
-        <h1 className="text-center text-[#221A4C] max-w-[80%] px-4 mt-12 font-extrabold text-7xl">
-          Kocaeli Büyükşehir Belediyesi&apos;nin açık veri portalına hoş geldiniz!
 
-        </h1>
+        <BlurText
+          text="Kocaeli Büyükşehir Belediyesi açık veri portalına hoş geldiniz!"
+          delay={150}
+          animateBy="words"
+          direction="top"
+          className="text-6xl mb-8 max-w-7xl text-center font-extrabold"
+        />
 
         <Button variant={"outline"} className="mt-16 px-4 py-6 rounded-md bg-[#6558F6] border-none text-accent">
           <a href="datasets" className="text-sm font-semibold">
