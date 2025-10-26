@@ -17,7 +17,7 @@ function HomeDesktop() {
   return (
     <div className="flex flex-col items-center justify-start ">
       <Welcome />
-      <IntroductionArea organizations={organizationsResp?.data} />
+      <IntroductionArea organizations={organizationsResp} />
 
       <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex flex-row  items-center justify-around pb-32 bg-[#6A60F2] ">
         <div className="absolute top-1/4 left-1/3 transform -translate-x-1/2 ">
