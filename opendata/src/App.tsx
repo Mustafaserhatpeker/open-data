@@ -17,7 +17,7 @@ import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { RouteTrackerProvider } from "./contexts/RouteTrackContext";
 import DashboardLayout from "./layouts/DashboardLayout";
-import StaticsDesktop from "./pages/Statistics/statics-desktop/StaticsDesktop";
+import Statistics from "./pages/Statistics/Statics";
 import OpenDictionary from "./pages/Opendictionary/OpenDictionary";
 import Preview from "./pages/Preview/Preview";
 
@@ -79,7 +79,7 @@ function App() {
               <Route path="/categories/:id" element={<CategoryInfo />} />
               <Route path="/datarequests" element={<Datarequests />} />
               <Route path="/datarequests/:id" element={<RequestInfo />} />
-              <Route path="/statistics" element={<StaticsDesktop />} />
+              <Route path="/statistics" element={<Statistics />} />
               <Route path="/opendictionary" element={<OpenDictionary />} />
 
               <Route path="/preview/:id/:token" element={<Preview />} />
