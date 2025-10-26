@@ -21,3 +21,27 @@ export const getCategoryById = async (id: string) => {
     throw error;
   }
 };
+
+export const updateCategory = async (id: string, payload: any) => {
+  try {
+    const { data } = await axiosInstance.put(
+      `${Base}/update-category/${id}`,
+      payload
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createCategory = async (payload: any) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${Base}/create-category`,
+      payload
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
