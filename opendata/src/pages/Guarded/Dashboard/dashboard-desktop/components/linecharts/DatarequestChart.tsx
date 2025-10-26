@@ -1,103 +1,111 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
+import { useQuery } from "@tanstack/react-query";
+import { getPublicDataRequests } from "@/services/datarequest.service";
 
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
-    type ChartConfig,
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
-} from "@/components/ui/chart"
-
-export const description = "A bar chart with a custom label"
-
-const chartData = [
-    { month: "A Organizasyon", desktop: 186, mobile: 80 },
-    { month: "B Organizasyon", desktop: 305, mobile: 200 },
-    { month: "C Organizasyon", desktop: 237, mobile: 120 },
-    { month: "D Organizasyon", desktop: 73, mobile: 190 },
-    { month: "E Organizasyon", desktop: 209, mobile: 130 },
-    { month: "F Organizasyon", desktop: 214, mobile: 140 },
-]
-
-const chartConfig = {
-    desktop: {
-        label: "Desktop",
-        color: "var(--chart-2)",
-    },
-    mobile: {
-        label: "Mobile",
-        color: "var(--chart-2)",
-    },
-    label: {
-        color: "var(--background)",
-    },
-} satisfies ChartConfig
+} from "@/components/ui/chart";
 
 export function DatarequestChart() {
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["public-data-requests"],
+        queryFn: () => getPublicDataRequests({ limit: 100 }),
+    });
+
+    const requests = data?.data?.data ?? [];
+
+    // ✅ Organizasyona göre grupla
+    const countsByOrg = requests.reduce((acc: any, item: any) => {
+        const name = item.organizationName ?? "Diğer";
+        acc[name] = (acc[name] || 0) + 1;
+        return acc;
+    }, {});
+
+    // ✅ Recharts formatına çevir
+    const chartData = Object.entries(countsByOrg).map(([org, count]) => ({
+        organization: org,
+        count
+    }));
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Organizasyon Bazlı Veri İsteği Sayısı</CardTitle>
-                <CardDescription>Organizasyonlar</CardDescription>
+                <CardTitle>Organizasyona Göre Veri İstekleri</CardTitle>
+                <CardDescription>Her organizasyondan kaç istek geldi?</CardDescription>
             </CardHeader>
+
             <CardContent>
-                <ChartContainer config={chartConfig}>
-                    <BarChart
-                        accessibilityLayer
-                        data={chartData}
-                        layout="vertical"
-                        margin={{
-                            right: 16,
+                {isLoading ? (
+                    <div className="h-40 animate-pulse rounded-md bg-muted" />
+                ) : isError ? (
+                    <p className="text-red-500 text-sm">Veriler yüklenemedi</p>
+                ) : chartData.length === 0 ? (
+                    <p className="text-muted-foreground text-sm">Veri isteği bulunamadı</p>
+                ) : (
+                    <ChartContainer
+                        config={{
+                            count: { label: "İstek Sayısı", color: "var(--chart-2)" }
                         }}
                     >
-                        <CartesianGrid horizontal={false} />
-                        <YAxis
-                            dataKey="month"
-                            type="category"
-                            tickLine={false}
-                            tickMargin={10}
-                            axisLine={false}
-                            tickFormatter={(value) => value.slice(0, 3)}
-                            hide
-                        />
-                        <XAxis dataKey="desktop" type="number" hide />
-                        <ChartTooltip
-                            cursor={false}
-                            content={<ChartTooltipContent indicator="line" />}
-                        />
-                        <Bar
-                            dataKey="desktop"
+                        <BarChart
+                            data={chartData}
                             layout="vertical"
-                            fill="var(--color-desktop)"
-                            radius={4}
+                            margin={{ right: 40 }}
                         >
-                            <LabelList
-                                dataKey="month"
-                                position="insideLeft"
-                                offset={8}
-                                className="fill-(--color-label)"
-                                fontSize={12}
+                            <CartesianGrid horizontal={false} />
+
+                            <YAxis
+                                dataKey="organization"
+                                type="category"
+                                tickLine={false}
+                                tickMargin={10}
+                                axisLine={false}
+                                width={120}
                             />
-                            <LabelList
-                                dataKey="desktop"
-                                position="right"
-                                offset={8}
-                                className="fill-foreground"
-                                fontSize={12}
+
+                            <XAxis
+                                dataKey="count"
+                                type="number"
+                                allowDecimals={false}
                             />
-                        </Bar>
-                    </BarChart>
-                </ChartContainer>
+
+                            <ChartTooltip
+                                cursor={false}
+                                content={<ChartTooltipContent />}
+                            />
+
+                            <Bar
+                                dataKey="count"
+                                fill="var(--chart-2)"
+                                radius={[4, 4, 4, 4]}
+                            >
+                                <LabelList
+                                    dataKey="organization"
+                                    position="insideLeft"
+                                    className="fill-background"
+                                />
+                                <LabelList
+                                    dataKey="count"
+                                    position="right"
+                                    offset={8}
+                                    className="fill-foreground"
+                                />
+                            </Bar>
+                        </BarChart>
+                    </ChartContainer>
+                )}
             </CardContent>
-            
         </Card>
-    )
+    );
 }

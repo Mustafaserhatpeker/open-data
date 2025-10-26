@@ -1,75 +1,96 @@
-"use client"
+"use client";
 
-import { Pie, PieChart } from "recharts"
+import { useQuery } from "@tanstack/react-query";
+import { getPublicDataRequests } from "@/services/datarequest.service";
 
+import { Pie, PieChart, LabelList } from "recharts";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
-    type ChartConfig,
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
-} from "@/components/ui/chart"
-
-export const description = "A pie chart with a label"
-
-const chartData = [
-    { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-    { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-    { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    { browser: "other", visitors: 90, fill: "var(--color-other)" },
-]
-
-const chartConfig = {
-    visitors: {
-        label: "Visitors",
-    },
-    chrome: {
-        label: "Chrome",
-        color: "var(--chart-1)",
-    },
-    safari: {
-        label: "Safari",
-        color: "var(--chart-2)",
-    },
-    firefox: {
-        label: "Firefox",
-        color: "var(--chart-3)",
-    },
-    edge: {
-        label: "Edge",
-        color: "var(--chart-4)",
-    },
-    other: {
-        label: "Other",
-        color: "var(--chart-5)",
-    },
-} satisfies ChartConfig
+} from "@/components/ui/chart";
 
 export function DatarequestStatusChart() {
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["public-data-requests"],
+        queryFn: () => getPublicDataRequests({ limit: 200 }),
+    });
+
+    const requests = data?.data?.data ?? [];
+
+    // ✅ Status'a göre grupla: pending, approved, rejected
+    const statusCounts = requests.reduce((acc: any, item: any) => {
+        const status = item.status ?? "other";
+        acc[status] = (acc[status] || 0) + 1;
+        return acc;
+    }, {});
+
+    // ✅ Recharts formatına çevir
+    const chartData = Object.entries(statusCounts).map(([status, count]) => ({
+        status,
+        count,
+        fill: colorByStatus(status)
+    }));
+
+    function colorByStatus(status: string) {
+        switch (status) {
+            case "approved":
+                return "var(--chart-3)";
+            case "rejected":
+                return "var(--chart-1)";
+            case "pending":
+                return "var(--chart-2)";
+            default:
+                return "var(--chart-5)";
+        }
+    }
+
     return (
         <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
                 <CardTitle>Veri İstekleri Durum Dağılımı</CardTitle>
-                <CardDescription>Durum Dağılımı</CardDescription>
+                <CardDescription>Pending, Approved, Rejected</CardDescription>
             </CardHeader>
+
             <CardContent className="flex-1 pb-0">
-                <ChartContainer
-                    config={chartConfig}
-                    className="[&_.recharts-pie-label-text]:fill-foreground mx-auto aspect-square max-h-[250px] pb-0"
-                >
-                    <PieChart>
-                        <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-                        <Pie data={chartData} dataKey="visitors" label nameKey="browser" />
-                    </PieChart>
-                </ChartContainer>
+                {isLoading ? (
+                    <div className="animate-pulse bg-muted rounded-md w-full h-[250px]" />
+                ) : isError ? (
+                    <p className="text-sm text-red-500">Veriler yüklenemedi</p>
+                ) : chartData.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">Veri bulunamadı</p>
+                ) : (
+                    <ChartContainer config={{} as any}
+                        className="mx-auto aspect-square max-h-[260px]"
+                    >
+                        <PieChart>
+                            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+
+                            <Pie
+                                data={chartData}
+                                dataKey="count"
+                                nameKey="status"
+                                labelLine={false}
+                                innerRadius="45%"
+                                stroke="none"
+                            >
+                                <LabelList
+                                    dataKey="count"
+                                    position="outside"
+                                    className="fill-foreground"
+                                />
+                            </Pie>
+                        </PieChart>
+                    </ChartContainer>
+                )}
             </CardContent>
         </Card>
-    )
+    );
 }
