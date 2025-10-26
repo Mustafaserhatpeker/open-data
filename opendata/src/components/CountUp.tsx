@@ -1,6 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { useInView, useMotionValue, useSpring } from 'motion/react';
 
+interface CountUpProps {
+  to: number;
+  from?: number;
+  direction?: 'up' | 'down';
+  delay?: number;
+  duration?: number;
+  className?: string;
+  startWhen?: boolean;
+  separator?: string;
+  onStart?: () => void;
+  onEnd?: () => void;
+}
+
 export default function CountUp({
   to,
   from = 0,
@@ -12,8 +25,8 @@ export default function CountUp({
   separator = '',
   onStart,
   onEnd
-}) {
-  const ref = useRef(null);
+}: CountUpProps) {
+  const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(direction === 'down' ? to : from);
 
   const damping = 20 + 40 * (1 / duration);
@@ -26,17 +39,14 @@ export default function CountUp({
 
   const isInView = useInView(ref, { once: true, margin: '0px' });
 
-  const getDecimalPlaces = num => {
+  const getDecimalPlaces = (num: number): number => {
     const str = num.toString();
-
     if (str.includes('.')) {
       const decimals = str.split('.')[1];
-
       if (parseInt(decimals) !== 0) {
         return decimals.length;
       }
     }
-
     return 0;
   };
 
@@ -50,7 +60,9 @@ export default function CountUp({
 
   useEffect(() => {
     if (isInView && startWhen) {
-      if (typeof onStart === 'function') onStart();
+      if (typeof onStart === 'function') {
+        onStart();
+      }
 
       const timeoutId = setTimeout(() => {
         motionValue.set(direction === 'down' ? from : to);
@@ -58,7 +70,9 @@ export default function CountUp({
 
       const durationTimeoutId = setTimeout(
         () => {
-          if (typeof onEnd === 'function') onEnd();
+          if (typeof onEnd === 'function') {
+            onEnd();
+          }
         },
         delay * 1000 + duration * 1000
       );
@@ -75,7 +89,7 @@ export default function CountUp({
       if (ref.current) {
         const hasDecimals = maxDecimals > 0;
 
-        const options = {
+        const options: Intl.NumberFormatOptions = {
           useGrouping: !!separator,
           minimumFractionDigits: hasDecimals ? maxDecimals : 0,
           maximumFractionDigits: hasDecimals ? maxDecimals : 0
