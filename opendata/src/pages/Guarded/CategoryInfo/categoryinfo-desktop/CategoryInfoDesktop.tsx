@@ -30,6 +30,7 @@ import { useAuthStore } from "@/stores/auth.store"
 import { getCategoryById } from "@/services/category.service"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AddDataCatDialog } from "./components/AddDataCatDialog"
+import { UpdateCatDialog } from "./components/UpdateCatDialog"
 
 type SortKey = "recent" | "views" | "downloads" | "title"
 
@@ -164,15 +165,18 @@ export default function CategoryInfo() {
                                 {getInitials(category.categoryName)}
                             </AvatarFallback>
                         </Avatar>
-                        <div className="min-w-0">
-                            <h1 className="text-2xl font-semibold leading-tight">
-                                {category.categoryName}
-                            </h1>
-                            {category.description ? (
-                                <p className="mt-2 text-muted-foreground">
-                                    {category.description}
-                                </p>
-                            ) : null}
+                        <div className="min-w-0 flex items-center justify-between gap-4">
+                            <div>
+                                <h1 className="text-2xl font-semibold leading-tight">
+                                    {category.categoryName}
+                                </h1>
+                                {category.description ? (
+                                    <p className="mt-2 text-muted-foreground">
+                                        {category.description}
+                                    </p>
+                                ) : null}
+                            </div>
+                            <UpdateCatDialog categoryId={category._id} category={category} />
                         </div>
                     </div>
                 ) : (

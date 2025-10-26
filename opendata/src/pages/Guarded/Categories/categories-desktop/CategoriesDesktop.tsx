@@ -194,7 +194,7 @@ export default function CategoriesDesktop() {
                                         <Button variant="secondary" asChild>
                                             <Link to={`/dashboard/categories/${cat._id}`}>
                                                 <FolderClosed className="h-4 w-4 mr-2" />
-                                                Veri setleri
+                                                Ayrıntılar
                                             </Link>
 
                                         </Button>
