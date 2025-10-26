@@ -5,7 +5,9 @@ const LabelCard = (
 ) => {
   return (
     <StyledWrapper>
-      <div className="e-card playing">
+      <div onClick={() => {
+        window.location.href = `/categories/${category._id}`;
+      }} className="e-card playing">
         <div className="image" />
         <div className="wave" />
         <div className="wave" />

@@ -38,32 +38,30 @@ function HomeDesktop() {
           delay={5000}
           pauseOnHover={false}
         >
-          <Card>
+          <Card onClick={() => {
+            window.location.href = "/datasets";
+          }}>
             <div className="p-6">
               <h3 className="text-xl font-semibold">Veri Setlerinde Gezinin</h3>
               <img className="h-90" src={photo1} alt="" />
             </div>
           </Card>
-          <Card>
+          <Card
+            onClick={() => {
+              window.location.href = "/organizations";
+            }}
+          >
             <div className="p-6">
               <h3 className="text-xl font-semibold">Organizasyonlara Göz Atın</h3>
               <img className="h-90" src={photo2} alt="" />
 
             </div>
           </Card>
-          <Card>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold">Bulamadığınız Veri Setini Talep Edin</h3>
-              <img className="h-90" src={photo3} alt="" />
-            </div>
-          </Card>
-          <Card>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold">Bulamadığınız Veri Setini Talep Edin</h3>
-              <img className="h-90" src={photo3} alt="" />
-            </div>
-          </Card>
-          <Card>
+          <Card
+            onClick={() => {
+              window.location.href = "/datarequests";
+            }}
+          >
             <div className="p-6">
               <h3 className="text-xl font-semibold">Bulamadığınız Veri Setini Talep Edin</h3>
               <img className="h-90" src={photo3} alt="" />
