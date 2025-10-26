@@ -1,4 +1,3 @@
-import { Contact } from "lucide-react";
 import Logo2 from "@/assets/logoacik.png";
 
 function Footer() {
@@ -14,13 +13,13 @@ function Footer() {
       <div className="w-full md:w-2/3 flex flex-col items-start justify-start p-4 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
           <div className="flex flex-col">
-            <h2 className="text-lg font-bold mb-2 text-accent">Hakkında</h2>
+
             <ul className="text-sm text-accent space-y-2">
-              <li className="cursor-pointer">
+              {/* <li className="cursor-pointer">
                 <a href="/about" className="hover:underline">
                   Hakkımızda
                 </a>
-              </li>
+              </li> */}
               <li className="cursor-pointer">
                 <a href="https://kocaeli.bel.tr" target="_blank" className="hover:underline">
                   Kocaeli Belediyesi
@@ -35,11 +34,23 @@ function Footer() {
           </div>
 
           <div className="flex flex-col">
-            <h2 className="text-lg font-bold mb-2 text-accent">İletişim</h2>
+
+            <ul className="text-sm text-accent-500 space-y-2">
+              <li className="flex items-center gap-2">
+                <a href="/opendictionary" className="hover:underline flex items-center gap-2 text-accent">
+                  Açık Veri Sözlüğü
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+          <div className="flex flex-col">
+
             <ul className="text-sm text-accent-500 space-y-2">
               <li className="flex items-center gap-2">
                 <a href="https://www.kocaeli.bel.tr/iletisim/" target="_blank" className="hover:underline flex items-center gap-2 text-accent">
-                  <Contact size={16} /> İletişim
+                  İletişim
                 </a>
               </li>
 
