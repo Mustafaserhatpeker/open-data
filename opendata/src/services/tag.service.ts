@@ -9,7 +9,7 @@ export const getTags = async () => {
 
 export const addTag = async (tagData: { tagName: string }) => {
     const accessToken = localStorage.getItem("accessToken");
-    const { data } = await axiosInstance.post(`${Base}/add-tag`, tagData, {
+    const { data } = await axiosInstance.post(`${Base}/create-tag`, tagData, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
