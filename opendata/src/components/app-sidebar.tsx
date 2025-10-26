@@ -48,6 +48,11 @@ const baseData = {
       icon: Frame,
     },
     {
+      name: "Web Arayüzü",
+      url: "/",
+      icon: Frame,
+    },
+    {
       name: "Organizasyonlar",
       url: "/dashboard/organizations",
       icon: Frame,
