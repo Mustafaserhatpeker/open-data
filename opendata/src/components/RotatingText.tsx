@@ -185,7 +185,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
         layout
         transition={transition}
       >
-        <span className="sr-only text-[#544795]">{texts[currentTextIndex]}</span>
+        <span className="sr-only">{texts[currentTextIndex]}</span>
         <AnimatePresence mode={animatePresenceMode} initial={animatePresenceInitial}>
           <motion.span
             key={currentTextIndex}
@@ -212,7 +212,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
                           array.reduce((sum, word) => sum + word.characters.length, 0)
                         )
                       }}
-                      className={cn('inline-block text-[#544795]', elementLevelClassName)}
+                      className={cn('inline-block', elementLevelClassName)}
                     >
                       {char}
                     </motion.span>
