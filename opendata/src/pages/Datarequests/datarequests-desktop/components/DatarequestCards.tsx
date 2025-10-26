@@ -5,10 +5,9 @@ type Props = {
     data: DataRequest[];
 };
 
-// Backend’den gelen verileri DataRequestCardModel tipine dönüştürür
 function toCardDataRequest(dr: any): any {
     return {
-        id: dr._id, // backend UUID kullanıyor
+        id: dr._id,
         title: dr.title,
         description: dr.description,
         status: dr.status,
