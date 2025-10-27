@@ -10,7 +10,7 @@ export const getFormats = async () => {
 export const addFormat = async (formatData: { formatName: string }) => {
     const accessToken = localStorage.getItem("accessToken");
     const { data } = await axiosInstance.post(
-        `${Base}/add-format`,
+        `${Base}/create-format`,
         formatData,
         {
             headers: {

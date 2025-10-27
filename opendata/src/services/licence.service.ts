@@ -10,7 +10,7 @@ export const getLicences = async () => {
 export const addLicence = async (licenceData: { licenceName: string; licenceUrl: string }) => {
     const accessToken = localStorage.getItem("accessToken");
     const { data } = await axiosInstance.post(
-        `${Base}/add-licence`,
+        `${Base}/create-licence`,
         licenceData,
         {
             headers: {
