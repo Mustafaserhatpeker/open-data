@@ -71,3 +71,4 @@ export default defineConfig([
   },
 ])
 ```
+//sudo rsync -av --delete dist/ /var/www/opendata/
