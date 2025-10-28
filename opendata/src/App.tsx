@@ -21,8 +21,6 @@ import Statistics from "./pages/Statistics/Statics";
 import OpenDictionary from "./pages/Opendictionary/OpenDictionary";
 import Preview from "./pages/Preview/Preview";
 
-
-
 import OrganizationsGuarded from "./pages/Guarded/Organizations/Organizations";
 import CategoriesGuarded from "./pages/Guarded/Categories/Categories";
 import OrganizationInfoGuarded from "./pages/Guarded/OrganizationInfo/OrganizationInfo";
