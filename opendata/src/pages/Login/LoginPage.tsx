@@ -40,7 +40,6 @@ const LoginPage = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log("aaa");
     await login(data.email, data.password);
     if (isAuthenticated) {
       navigate("/dashboard");
