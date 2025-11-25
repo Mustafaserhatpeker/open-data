@@ -19,7 +19,7 @@ function HomeDesktop() {
       <Welcome />
       <IntroductionArea organizations={organizationsResp} />
 
-      <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex flex-row  items-center justify-around pb-32 bg-[#6A60F2] ">
+      <div style={{ height: '600px', position: 'relative', width: '100%' }} className="flex flex-row  items-center justify-around pb-32 ">
         <div className="absolute top-1/4 left-1/3 transform -translate-x-1/2 ">
           <h1 className="text-6xl font-bold text-white">
             Aradığınız Veri Setini Bulun.<br /> Bulamadınız mı? İsteyin!
