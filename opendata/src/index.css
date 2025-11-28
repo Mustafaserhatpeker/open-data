@@ -193,7 +193,8 @@
 
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(circle farthest-side at 50% -75%, #d6c7ff 54%, #8a9bff 76%);
+     background-image: radial-gradient(circle farthest-side at 50% -75%, #ebebeb 54%, #b2b2b2 76%); 
+    /* background-color: #c1c1c1; */
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;

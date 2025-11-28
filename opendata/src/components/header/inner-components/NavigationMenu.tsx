@@ -33,6 +33,11 @@ export default function MavigationMenu() {
             <Link to="/datarequests" className="text-[#221A4C]">Veri İsteği</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link to="/opendictionary" className="text-[#221A4C]"> Açık Veri Sözlüğü</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
 
       </NavigationMenuList>
     </NavigationMenu>

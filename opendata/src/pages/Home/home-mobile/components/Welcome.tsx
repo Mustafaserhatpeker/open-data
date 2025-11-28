@@ -30,7 +30,7 @@ function Welcome() {
           delay={150}
           animateBy="words"
           direction="top"
-          className="text-xl mb-8 max-w-sm text-center font-extrabold p-2"
+          className="text-xl mb-8 max-w-sm text-center font-extrabold p-2 "
         />
 
         <Button

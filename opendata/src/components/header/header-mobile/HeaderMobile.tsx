@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, Database, Building2, BarChart2, Shapes, MailPlus } from "lucide-react";
+import { Menu, Database, Building2, BarChart2, Shapes, MailPlus, Book } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "@/stores/auth.store";
 import { useThemeContext } from "@/contexts/ThemeContext";
@@ -77,6 +77,9 @@ export default function MobileHeader() {
 
               <Link to="/datarequests" onClick={closeSheet} className="flex items-center gap-3 text-md font-semibold text-[#221A4C]">
                 <MailPlus className="h-5 w-5" /> Veri İsteği
+              </Link>
+              <Link to="/opendictionary" onClick={closeSheet} className="flex items-center gap-3 text-md font-semibold text-[#221A4C]">
+                <Book className="h-5 w-5" /> Açık Veri Sözlüğü
               </Link>
 
             </nav>

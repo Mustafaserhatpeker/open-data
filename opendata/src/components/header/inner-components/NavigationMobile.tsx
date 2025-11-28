@@ -41,6 +41,12 @@ export default function NavigationMenu({ mobile }: { mobile?: boolean }) {
                 >
                     Veri İsteği
                 </Link>
+                <Link
+                    to="/opendictionary"
+                    className="w-full py-3 rounded-md font-semibold text-sm bg-[#221A4C] text-white"
+                >
+                    Açık Veri Sözlüğü
+                </Link>
             </div>
         );
     }
