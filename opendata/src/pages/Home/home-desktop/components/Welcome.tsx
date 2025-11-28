@@ -189,7 +189,9 @@ function Welcome() {
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center justify-between pt-24">
       <div className="flex flex-col items-center justify-center w-full">
-        <h1 className="text-sm font-extrabold text-center mb-8 flex items-center gap-2 bg-white/70 px-4 py-2 rounded-full">
+        <h1 onClick={() => {
+          window.location.href = "/login"
+        }} className="text-sm cursor-pointer font-extrabold text-center mb-8 flex items-center gap-2 bg-white/70 px-4 py-2 rounded-full">
           Kocaeli Veri Portalında
           <RotatingText
             texts={['Veri İsteyin', 'Veri Bulun', 'Üye Olun', 'Giriş Yapın']}
@@ -206,7 +208,7 @@ function Welcome() {
         </h1>
 
         <BlurText
-          text="Kocaeli Büyükşehir Belediyesi açık veri portalına hoş geldiniz!"
+          text="Dijital Kalbiyle Yükselen Kocaeli!"
           delay={150}
           animateBy="words"
           direction="top"
