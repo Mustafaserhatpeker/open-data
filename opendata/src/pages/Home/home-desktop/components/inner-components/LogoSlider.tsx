@@ -21,7 +21,7 @@ export default function LogoCarousel({ organizations }: { organizations: any }) 
                 pauseOnHover
                 scaleOnHover
                 fadeOut
-                fadeOutColor="#6A60F2"
+                fadeOutColor="#b2b2b2"
                 ariaLabel="Organization partners"
             />
         </div>
