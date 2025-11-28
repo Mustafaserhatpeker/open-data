@@ -75,10 +75,10 @@ const RegisterPage = () => {
                   <div className="flex flex-col gap-6">
                     <div className="flex flex-col items-center text-center">
                       <h1 className="text-2xl font-bold">
-                        Hadi Kayıt Olalım!
+                        Kocaeli Açık Veri Ailesine Katılın!
                       </h1>
                       <p className="text-muted-foreground text-balance">
-                        Kaydolmak için bilgilerinizi girin
+                        Veriye erişmek, paylaşmak ve şehrin dijital dönüşümüne katkı sağlamak için hemen üye olun.
                       </p>
                     </div>
 
@@ -92,7 +92,7 @@ const RegisterPage = () => {
                             <FormControl>
                               <Input
                                 type="text"
-                                placeholder="John Doe"
+                                placeholder="Ahmet"
                                 {...field}
                               />
                             </FormControl>
@@ -111,7 +111,7 @@ const RegisterPage = () => {
                             <FormControl>
                               <Input
                                 type="text"
-                                placeholder="John Doe"
+                                placeholder="Yılmaz"
                                 {...field}
                               />
                             </FormControl>
@@ -151,7 +151,7 @@ const RegisterPage = () => {
                             <FormControl>
                               <Input
                                 type="email"
-                                placeholder="m.example.com"
+                                placeholder="ahmet@ornek.com"
                                 {...field}
                               />
                             </FormControl>

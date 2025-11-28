@@ -60,7 +60,7 @@ const LoginPage = () => {
                   <div className="flex flex-col gap-6">
                     <div className="flex flex-col items-center text-center">
                       <h1 className="text-2xl font-bold">
-                        Hadi Giriş Yapalım!
+                        Veri dünyasına adım atmak için hesabınıza giriş yapın.
                       </h1>
                       <p className="text-muted-foreground text-balance">
                         Email ve şifrenizi girin
@@ -79,7 +79,7 @@ const LoginPage = () => {
                             <FormControl>
                               <Input
                                 type="email"
-                                placeholder="m.example.com"
+                                placeholder="ahmet@ornek.com"
                                 {...field}
                               />
                             </FormControl>
