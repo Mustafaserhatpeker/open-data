@@ -110,7 +110,7 @@ function DatasetsDesktop() {
             <div className="col-span-3 ">
               <InputGroup>
                 <InputGroupInput
-                  placeholder="Type to search..."
+                  placeholder="Veri Seti Arayın..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
