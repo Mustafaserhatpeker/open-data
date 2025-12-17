@@ -10,7 +10,7 @@ function DefaultLayout() {
 
   return (
     <ThemeProvider>
-      <div className="flex min-h-screen overflow-x-hidden " >
+      <div className="flex min-h-screen overflow-x-hidden bg-gray-400 " >
         <div className="flex-1 flex flex-col w-full h-full  ">
           <Header />
           <main
