@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
+import { Download } from "lucide-react";
 
 interface OpenDataStats {
   totalDatasets: number;
@@ -57,26 +58,64 @@ export default function AdminStatistics() {
   const [openDataStats, setOpenDataStats] = useState<OpenDataStats | null>(null);
   const [requestStats, setRequestStats] = useState<OpenDataRequestStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [createdFrom, setCreatedFrom] = useState<string>("");
+  const [createdTo, setCreatedTo] = useState<string>("");
+  const [exporting, setExporting] = useState(false);
+
+  const fetchStats = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams();
+      if (createdFrom) params.append("createdFrom", createdFrom);
+      if (createdTo) params.append("createdTo", createdTo);
+
+      const query = params.toString() ? `?${params.toString()}` : "";
+
+      const [dataRes, reqRes] = await Promise.all([
+        api.get(`/opendata/admin/statistics${query}`),
+        api.get(`/opendatarequests/admin/statistics${query}`),
+      ]);
+
+      setOpenDataStats(dataRes.data);
+      setRequestStats(reqRes.data);
+    } catch (error) {
+      console.error("İstatistikler yüklenirken hata oluştu:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [dataRes, reqRes] = await Promise.all([
-          api.get("/opendata/admin/statistics"),
-          api.get("/opendatarequests/admin/statistics"),
-        ]);
-
-        setOpenDataStats(dataRes.data);
-        setRequestStats(reqRes.data);
-      } catch (error) {
-        console.error("İstatistikler yüklenirken hata oluştu:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchStats();
-  }, []);
+  }, [createdFrom, createdTo]);
+
+  const handleExport = async (type: "opendata" | "requests", format: "excel" | "pdf") => {
+    try {
+      setExporting(true);
+      const params = new URLSearchParams({ format });
+      if (createdFrom) params.append("createdFrom", createdFrom);
+      if (createdTo) params.append("createdTo", createdTo);
+
+      const url = type === "opendata"
+        ? `/opendata/admin/statistics/export?${params.toString()}`
+        : `/opendatarequests/admin/statistics/export?${params.toString()}`;
+
+      const response = await api.get(url, { responseType: "blob" });
+      const blob = new Blob([response.data]);
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = `${type}-istatistikleri-${new Date().toISOString().slice(0, 10)}.${format === "pdf" ? "pdf" : "txt"}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error("Dışa aktarırken hata oluştu:", error);
+    } finally {
+      setExporting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -91,12 +130,72 @@ export default function AdminStatistics() {
 
   return (
     <div className="space-y-6 p-6">
-      <h1 className="text-3xl font-bold">Admin İstatistikleri</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Admin İstatistikleri</h1>
+      </div>
+
+      {/* Filtre Alanı */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Tarih Filtresi</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-4 items-end flex-wrap">
+            <div>
+              <label className="block text-sm font-medium mb-1">Başlangıç Tarihi</label>
+              <input
+                type="date"
+                value={createdFrom}
+                onChange={(e) => setCreatedFrom(e.target.value)}
+                className="border rounded px-3 py-2 text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Bitiş Tarihi</label>
+              <input
+                type="date"
+                value={createdTo}
+                onChange={(e) => setCreatedTo(e.target.value)}
+                className="border rounded px-3 py-2 text-sm"
+              />
+            </div>
+            <button
+              onClick={() => {
+                setCreatedFrom("");
+                setCreatedTo("");
+              }}
+              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded text-sm"
+            >
+              Temizle
+            </button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Açık Veri İstatistikleri */}
       {openDataStats && (
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">Açık Veri Portalı</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-semibold">Açık Veri Portalı</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleExport("opendata", "excel")}
+                disabled={exporting}
+                className="bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white px-3 py-2 rounded text-sm flex items-center gap-2"
+              >
+                <Download size={16} />
+                Excel
+              </button>
+              <button
+                onClick={() => handleExport("opendata", "pdf")}
+                disabled={exporting}
+                className="bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white px-3 py-2 rounded text-sm flex items-center gap-2"
+              >
+                <Download size={16} />
+                PDF
+              </button>
+            </div>
+          </div>
 
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -210,7 +309,27 @@ export default function AdminStatistics() {
       {/* Veri İstek İstatistikleri */}
       {requestStats && (
         <div className="space-y-4 mt-8">
-          <h2 className="text-2xl font-semibold">Veri İstekleri</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-semibold">Veri İstekleri</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleExport("requests", "excel")}
+                disabled={exporting}
+                className="bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white px-3 py-2 rounded text-sm flex items-center gap-2"
+              >
+                <Download size={16} />
+                Excel
+              </button>
+              <button
+                onClick={() => handleExport("requests", "pdf")}
+                disabled={exporting}
+                className="bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white px-3 py-2 rounded text-sm flex items-center gap-2"
+              >
+                <Download size={16} />
+                PDF
+              </button>
+            </div>
+          </div>
 
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
