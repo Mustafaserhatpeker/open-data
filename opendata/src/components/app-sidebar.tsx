@@ -48,6 +48,11 @@ const baseData = {
       icon: Frame,
     },
     {
+      name: "İstatistikler",
+      url: "/dashboard/statistics",
+      icon: Frame,
+    },
+    {
       name: "Web Arayüzü",
       url: "/",
       icon: Frame,

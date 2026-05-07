@@ -31,6 +31,7 @@ import DataInfoGuarded from "./pages/Guarded/DataInformation/DataInfo";
 import DatasetsGuarded from "./pages/Guarded/Datasets/Datasets";
 import PreviewGuarded from "./pages/Guarded/Preview/Preview";
 import Dashboard from "./pages/Guarded/Dashboard/Dashboard";
+import AdminStatistics from "./pages/Guarded/Dashboard/AdminStatistics";
 
 const ProtectedRoute = ({ children }: { children: any }) => {
   const { isAuthenticated, role } = useAuthStore();
@@ -108,6 +109,7 @@ function App() {
               }
             >
               <Route index element={<Dashboard />} />
+              <Route path="statistics" element={<AdminStatistics />} />
               <Route path="organizations" element={<OrganizationsGuarded />} />
               <Route path="categories" element={<CategoriesGuarded />} />
               <Route path="organizations/:id" element={<OrganizationInfoGuarded />} />
